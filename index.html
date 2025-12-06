@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rzeczy Znalezione - dane.gov.pl</title>
+    
+    <!-- Fonts (same as dane.gov.pl) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SheetJS for Excel parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- Our styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header - exactly like dane.gov.pl -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <a href="https://www.gov.pl" class="gov-link" target="_blank">
+                    <img src="https://dane.gov.pl/assets/images/godlo.svg" alt="Godło Polski" class="godlo" onerror="this.style.display='none'">
+                    <span>gov.pl</span>
+                </a>
+                <span class="header-divider">Serwis Rzeczypospolitej Polskiej</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="#" class="logo">
+                        <span class="logo-text">dane.gov.pl</span>
+                        <span class="logo-subtitle">Otwarte Dane</span>
+                    </a>
+                    <nav class="nav">
+                        <a href="#" class="nav-link active">Rzeczy Znalezione</a>
+                        <a href="https://dane.gov.pl" class="nav-link" target="_blank">Portal dane.gov.pl</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1><i class="fas fa-search"></i> Rzeczy Znalezione</h1>
+                <p class="lead">Mechanizm do szybkiego udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="steps-container">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Wybierz źródło</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Wprowadź dane</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Sprawdź podgląd</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Pobierz plik</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Choose Source -->
+            <section class="step-content active" id="step1">
+                <div class="card">
+                    <h2><i class="fas fa-folder-open"></i> Krok 1: Wybierz sposób wprowadzania danych</h2>
+                    <p>Wybierz, w jaki sposób chcesz dodać dane o rzeczach znalezionych:</p>
+                    
+                    <div class="source-options">
+                        <!-- Option 1: Upload File -->
+                        <div class="source-option" id="option-file">
+                            <div class="source-icon">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <h3>Wgraj plik Excel/CSV</h3>
+                            <p>Przeciągnij i upuść plik lub kliknij, aby wybrać. Obsługiwane formaty: .xlsx, .xls, .csv</p>
+                            
+                            <div class="drop-zone" id="dropZone">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Przeciągnij plik tutaj</p>
+                                <span>lub</span>
+                                <label class="btn btn-outline">
+                                    Wybierz plik
+                                    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
+                                </label>
+                            </div>
+                            <div class="file-info" id="fileInfo" style="display: none;">
+                                <i class="fas fa-file"></i>
+                                <span id="fileName"></span>
+                                <button type="button" class="btn-icon" id="removeFile">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <a href="#" class="template-link" id="downloadTemplate">
+                                <i class="fas fa-download"></i> Pobierz szablon Excel
+                            </a>
+                        </div>
+
+                        <!-- Option 2: Manual Form -->
+                        <div class="source-option" id="option-form">
+                            <div class="source-icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <h3>Wypełnij formularz</h3>
+                            <p>Wprowadź dane ręcznie. Idealne dla pojedynczych przedmiotów lub małej liczby wpisów.</p>
+                            <button type="button" class="btn btn-secondary" id="startForm">
+                                <i class="fas fa-plus"></i> Rozpocznij wprowadzanie
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Enter Data (Form) -->
+            <section class="step-content" id="step2">
+                <div class="card">
+                    <h2><i class="fas fa-edit"></i> Krok 2: Wprowadź dane o rzeczy znalezionej</h2>
+                    
+                    <form id="itemForm" class="item-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="kategoria" class="required">Kategoria przedmiotu</label>
+                                <select id="kategoria" name="kategoria" required>
+                                    <option value="">-- Wybierz kategorię --</option>
+                                    <option value="telefon">📱 Telefon</option>
+                                    <option value="portfel">👛 Portfel / Dokumenty</option>
+                                    <option value="klucze">🔑 Klucze</option>
+                                    <option value="torba">👜 Torba / Plecak</option>
+                                    <option value="odziez">👕 Odzież</option>
+                                    <option value="bizuteria">💍 Biżuteria / Zegarek</option>
+                                    <option value="elektronika">💻 Elektronika</option>
+                                    <option value="dokumenty">📄 Dokumenty</option>
+                                    <option value="inne">📦 Inne</option>
+                                </select>
+                                <span class="error-message"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dataZnalezienia" class="required">Data znalezienia</label>
+                                <input type="date" id="dataZnalezienia" name="data_znalezienia" required>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="opis" class="required">Opis przedmiotu</label>
+                            <textarea id="opis" name="opis" rows="3" required 
+                                placeholder="Np. iPhone 14 Pro, kolor czarny, bez etui, ekran pęknięty w prawym górnym rogu"></textarea>
+                            <span class="hint">Podaj szczegółowy opis, który pomoże właścicielowi rozpoznać przedmiot</span>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="kolor">Kolor</label>
+                                <input type="text" id="kolor" name="kolor" placeholder="Np. czarny, srebrny">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="marka">Marka / Producent</label>
+                                <input type="text" id="marka" name="marka" placeholder="Np. Samsung, Nike">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="miejsceZnalezienia" class="required">Miejsce znalezienia</label>
+                            <input type="text" id="miejsceZnalezienia" name="miejsce_znalezienia" required
+                                placeholder="Np. Autobus linii 144, przystanek Rynek Główny">
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="typMiejsca">Typ miejsca</label>
+                                <select id="typMiejsca" name="typ_miejsca">
+                                    <option value="">-- Wybierz --</option>
+                                    <option value="transport_publiczny">🚌 Transport publiczny</option>
+                                    <option value="urzad">🏛️ Urząd / Instytucja</option>
+                                    <option value="sklep">🛒 Sklep / Centrum handlowe</option>
+                                    <option value="park">🌳 Park / Teren zielony</option>
+                                    <option value="ulica">🛣️ Ulica / Chodnik</option>
+                                    <option value="parking">🅿️ Parking</option>
+                                    <option value="inne">📍 Inne</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status" name="status">
+                                    <option value="oczekuje_na_wlasciciela">⏳ Oczekuje na właściciela</option>
+                                    <option value="odebrane">✅ Odebrane</option>
+                                    <option value="przekazane_do_skarbu">📦 Przekazane do Skarbu Państwa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="miejscePrzechowywania" class="required">Miejsce przechowywania / odbioru</label>
+                            <input type="text" id="miejscePrzechowywania" name="miejsce_przechowywania" required
+                                placeholder="Np. Biuro Rzeczy Znalezionych, ul. Główna 1, pok. 101">
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="kontaktTelefon" class="required">Telefon kontaktowy</label>
+                                <input type="tel" id="kontaktTelefon" name="kontakt_telefon" required
+                                    placeholder="+48 12 345 67 89">
+                                <span class="error-message"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="kontaktEmail">Email kontaktowy</label>
+                                <input type="email" id="kontaktEmail" name="kontakt_email"
+                                    placeholder="biuro@urzad.gov.pl">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zdjecieUrl">Link do zdjęcia (opcjonalne)</label>
+                            <input type="url" id="zdjecieUrl" name="zdjecie_url"
+                                placeholder="https://example.com/zdjecie.jpg">
+                            <span class="hint">Podaj link do zdjęcia przedmiotu (jeśli dostępne)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dataWaznosci">Data ważności (do kiedy przechowywane)</label>
+                            <input type="date" id="dataWaznosci" name="data_waznosci">
+                            <span class="hint">Zgodnie z ustawą, rzeczy znalezione przechowywane są przez 2 lata</span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="addAnother">
+                                <i class="fas fa-plus"></i> Dodaj i wprowadź kolejny
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-arrow-right"></i> Dalej do podglądu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Items List -->
+                <div class="card" id="itemsListCard" style="display: none;">
+                    <h3><i class="fas fa-list"></i> Dodane przedmioty (<span id="itemsCount">0</span>)</h3>
+                    <div class="items-list" id="itemsList"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="backToStep1">
+                            <i class="fas fa-arrow-left"></i> Wróć
+                        </button>
+                        <button type="button" class="btn btn-primary" id="goToPreview">
+                            <i class="fas fa-eye"></i> Przejdź do podglądu
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Preview -->
+            <section class="step-content" id="step3">
+                <div class="card">
+                    <h2><i class="fas fa-eye"></i> Krok 3: Sprawdź podgląd danych</h2>
+                    <p>Sprawdź poprawność danych przed wygenerowaniem pliku do portalu dane.gov.pl</p>
+                    
+                    <div class="preview-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="previewCount">0</span>
+                            <span class="stat-label">przedmiotów</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="previewValid">0</span>
+                            <span class="stat-label">poprawnych</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="previewErrors">0</span>
+                            <span class="stat-label">błędów</span>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="previewTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Kategoria</th>
+                                    <th>Opis</th>
+                                    <th>Data znalezienia</th>
+                                    <th>Miejsce</th>
+                                    <th>Status</th>
+                                    <th>Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="previewBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="backToStep2">
+                            <i class="fas fa-arrow-left"></i> Wróć do edycji
+                        </button>
+                        <button type="button" class="btn btn-primary" id="goToExport">
+                            <i class="fas fa-download"></i> Przejdź do eksportu
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: Export -->
+            <section class="step-content" id="step4">
+                <div class="card">
+                    <h2><i class="fas fa-download"></i> Krok 4: Pobierz plik do portalu dane.gov.pl</h2>
+                    <p>Wybierz format pliku i pobierz dane gotowe do publikacji w portalu dane.gov.pl</p>
+                    
+                    <div class="export-options">
+                        <div class="export-option">
+                            <div class="export-icon json">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Format JSON</h3>
+                            <p>Zalecany format dla dane.gov.pl. Maszynowo czytelny, gotowy do API.</p>
+                            <button type="button" class="btn btn-primary" id="exportJSON">
+                                <i class="fas fa-download"></i> Pobierz JSON
+                            </button>
+                        </div>
+                        
+                        <div class="export-option">
+                            <div class="export-icon csv">
+                                <i class="fas fa-file-csv"></i>
+                            </div>
+                            <h3>Format CSV</h3>
+                            <p>Uniwersalny format tabelaryczny. Można otworzyć w Excel.</p>
+                            <button type="button" class="btn btn-secondary" id="exportCSV">
+                                <i class="fas fa-download"></i> Pobierz CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><i class="fas fa-info-circle"></i> Co dalej?</h4>
+                        <ol>
+                            <li>Pobierz plik w wybranym formacie</li>
+                            <li>Zaloguj się do <a href="https://dane.gov.pl" target="_blank">dane.gov.pl</a></li>
+                            <li>Przejdź do Panel Administratora → Dane → Dodaj zbiór danych</li>
+                            <li>Wgraj pobrany plik jako zasób</li>
+                            <li>Opublikuj zbiór danych</li>
+                        </ol>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="backToStep3">
+                            <i class="fas fa-arrow-left"></i> Wróć do podglądu
+                        </button>
+                        <button type="button" class="btn btn-success" id="startOver">
+                            <i class="fas fa-redo"></i> Rozpocznij od nowa
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer - like dane.gov.pl -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Rzeczy Znalezione</h4>
+                    <p>Mechanizm do udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
+                    <p class="footer-note">Projekt stworzony na HackNation 2024</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Linki</h4>
+                    <ul>
+                        <li><a href="https://dane.gov.pl" target="_blank">Portal dane.gov.pl</a></li>
+                        <li><a href="https://dane.gov.pl/pl/knowledgebase" target="_blank">Baza wiedzy</a></li>
+                        <li><a href="https://api.dane.gov.pl/doc" target="_blank">API dokumentacja</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Kontakt</h4>
+                    <p><i class="fas fa-envelope"></i> kontakt@dane.gov.pl</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Our JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
