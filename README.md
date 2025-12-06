@@ -1,4 +1,4 @@
-# 🏆 Rzeczy Znalezione - HackNation 2024
+# 🏆 Rzeczy Znalezione - HackNation 2025
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![dane.gov.pl](https://img.shields.io/badge/dane.gov.pl-compatible-blue)](https://dane.gov.pl)
