@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 async function initializeAdmin() {
     initializeTabs();
     initializeUserForm();
+    initializeLanguageSwitcher();
     updateAuthUI();
 
     await loadDashboardStats();
@@ -502,6 +503,35 @@ function showToast(type, title, message) {
             }
         }, 300);
     }, 4000);
+}
+
+// Initialize language switcher
+function initializeLanguageSwitcher() {
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    // Set active button based on current language
+    const currentLang = typeof i18n !== 'undefined' ? i18n.getCurrentLanguage() : 'pl';
+    langBtns.forEach(btn => {
+        if (btn.dataset.lang === currentLang) {
+            btn.classList.add('active');
+        }
+
+        btn.addEventListener('click', () => {
+            const lang = btn.dataset.lang;
+            if (typeof i18n !== 'undefined') {
+                i18n.setLanguage(lang);
+
+                // Update active state
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
+    });
+
+    // Initialize UI with current language on page load
+    if (typeof i18n !== 'undefined') {
+        i18n.updateUI();
+    }
 }
 
 // Make functions global

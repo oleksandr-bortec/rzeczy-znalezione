@@ -33,7 +33,7 @@
 </head>
 <body>
     <!-- Skip link for accessibility -->
-    <a href="#main-content" class="skip-link">Przejdź do treści głównej</a>
+    <a href="#main-content" class="skip-link" data-i18n="skip_to_content">Przejdź do treści głównej</a>
 
     <!-- Gov.pl Bar - official government bar -->
     <div class="govpl">
@@ -41,7 +41,7 @@
             <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">
                 gov.pl
             </a>
-            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+            <span class="govpl__text" data-i18n="govpl_text">Serwis Rzeczypospolitej Polskiej</span>
             <div class="govpl__eu-logo-wrapper">
                 <img src="https://dane.gov.pl/assets/images/eu-logo.svg" alt="Unia Europejska" class="govpl__eu-logo" onerror="this.style.display='none'">
             </div>
@@ -55,7 +55,7 @@
                 <div class="header-content">
                     <a href="index.html" class="logo">
                         <span class="logo-text">dane.gov.pl</span>
-                        <span class="logo-subtitle">Otwarte Dane</span>
+                        <span class="logo-subtitle" data-i18n="open_data">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
                         <a href="index.html" class="nav-link active" data-i18n="nav_admin">Panel urzędnika</a>
@@ -80,38 +80,38 @@
 
             <!-- Page Title -->
             <div class="page-header">
-                <h1><i class="fas fa-search"></i> Rzeczy Znalezione</h1>
-                <p class="lead">Mechanizm do szybkiego udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
+                <h1><i class="fas fa-search"></i> <span data-i18n="app_name">Rzeczy Znalezione</span></h1>
+                <p class="lead" data-i18n="app_subtitle">Mechanizm do szybkiego udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
             </div>
 
             <!-- Progress Steps -->
             <div class="steps-container">
                 <div class="step active" data-step="1">
                     <div class="step-number">1</div>
-                    <div class="step-label">Wybierz źródło</div>
+                    <div class="step-label" data-i18n="step1_label">Wybierz źródło</div>
                 </div>
                 <div class="step-line"></div>
                 <div class="step" data-step="2">
                     <div class="step-number">2</div>
-                    <div class="step-label">Wprowadź dane</div>
+                    <div class="step-label" data-i18n="step2_label">Wprowadź dane</div>
                 </div>
                 <div class="step-line"></div>
                 <div class="step" data-step="3">
                     <div class="step-number">3</div>
-                    <div class="step-label">Sprawdź podgląd</div>
+                    <div class="step-label" data-i18n="step3_label">Sprawdź podgląd</div>
                 </div>
                 <div class="step-line"></div>
                 <div class="step" data-step="4">
                     <div class="step-number">4</div>
-                    <div class="step-label">Pobierz plik</div>
+                    <div class="step-label" data-i18n="step4_label">Pobierz plik</div>
                 </div>
             </div>
 
             <!-- Step 1: Choose Source -->
             <section class="step-content active" id="step1">
                 <div class="card">
-                    <h2><i class="fas fa-folder-open"></i> Krok 1: Wybierz sposób wprowadzania danych</h2>
-                    <p>Wybierz, w jaki sposób chcesz dodać dane o rzeczach znalezionych:</p>
+                    <h2><i class="fas fa-folder-open"></i> <span data-i18n="step1_title">Krok 1: Wybierz sposób wprowadzania danych</span></h2>
+                    <p data-i18n="step1_desc">Wybierz, w jaki sposób chcesz dodać dane o rzeczach znalezionych:</p>
                     
                     <div class="source-options">
                         <!-- Option 1: Upload File -->
@@ -119,15 +119,15 @@
                             <div class="source-icon">
                                 <i class="fas fa-file-excel"></i>
                             </div>
-                            <h3>Wgraj plik Excel/CSV</h3>
-                            <p>Przeciągnij i upuść plik lub kliknij, aby wybrać. Obsługiwane formaty: .xlsx, .xls, .csv</p>
-                            
+                            <h3 data-i18n="upload_file">Wgraj plik Excel/CSV</h3>
+                            <p data-i18n="upload_desc">Przeciągnij i upuść plik lub kliknij, aby wybrać. Obsługiwane formaty: .xlsx, .xls, .csv</p>
+
                             <div class="drop-zone" id="dropZone">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Przeciągnij plik tutaj</p>
-                                <span>lub</span>
+                                <p data-i18n="drag_file">Przeciągnij plik tutaj</p>
+                                <span data-i18n="or">lub</span>
                                 <label class="btn btn-outline">
-                                    Wybierz plik
+                                    <span data-i18n="choose_file">Wybierz plik</span>
                                     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
                                 </label>
                             </div>
@@ -140,7 +140,7 @@
                             </div>
                             
                             <a href="#" class="template-link" id="downloadTemplate">
-                                <i class="fas fa-download"></i> Pobierz szablon Excel
+                                <i class="fas fa-download"></i> <span data-i18n="download_template">Pobierz szablon Excel</span>
                             </a>
                         </div>
 
@@ -149,10 +149,10 @@
                             <div class="source-icon">
                                 <i class="fas fa-edit"></i>
                             </div>
-                            <h3>Wypełnij formularz</h3>
-                            <p>Wprowadź dane ręcznie. Idealne dla pojedynczych przedmiotów lub małej liczby wpisów.</p>
+                            <h3 data-i18n="fill_form">Wypełnij formularz</h3>
+                            <p data-i18n="form_desc">Wprowadź dane ręcznie. Idealne dla pojedynczych przedmiotów lub małej liczby wpisów.</p>
                             <button type="button" class="btn btn-secondary" id="startForm">
-                                <i class="fas fa-plus"></i> Rozpocznij wprowadzanie
+                                <i class="fas fa-plus"></i> <span data-i18n="start_entry">Rozpocznij wprowadzanie</span>
                             </button>
                         </div>
                     </div>
@@ -162,117 +162,117 @@
             <!-- Step 2: Enter Data (Form) -->
             <section class="step-content" id="step2">
                 <div class="card">
-                    <h2><i class="fas fa-edit"></i> Krok 2: Wprowadź dane o rzeczy znalezionej</h2>
-                    
+                    <h2><i class="fas fa-edit"></i> <span data-i18n="step2_title">Krok 2: Wprowadź dane o rzeczy znalezionej</span></h2>
+
                     <form id="itemForm" class="item-form">
                         <!-- Podstawowe informacje -->
-                        <h3 class="form-section-title"><i class="fas fa-info-circle"></i> Podstawowe informacje</h3>
+                        <h3 class="form-section-title"><i class="fas fa-info-circle"></i> <span data-i18n="basic_info">Podstawowe informacje</span></h3>
 
                         <div class="form-group">
-                            <label for="itemName" class="required">Nazwa przedmiotu</label>
+                            <label for="itemName" class="required" data-i18n="item_name">Nazwa przedmiotu</label>
                             <input type="text" id="itemName" name="item_name" required
-                                placeholder="Np. Telefon Samsung Galaxy S23, Portfel skorzany">
+                                data-i18n-placeholder="item_name_placeholder" placeholder="Np. Telefon Samsung Galaxy S23, Portfel skorzany">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kategoria" class="required">Kategoria przedmiotu</label>
+                                <label for="kategoria" class="required" data-i18n="category">Kategoria przedmiotu</label>
                                 <select id="kategoria" name="category" required>
-                                    <option value="">-- Wybierz kategorię --</option>
-                                    <option value="phone">Telefon</option>
-                                    <option value="documents">Dokumenty</option>
-                                    <option value="jewelry">Biżuteria / Zegarek</option>
-                                    <option value="keys">Klucze</option>
-                                    <option value="wallet">Portfel</option>
-                                    <option value="clothing">Odzież</option>
-                                    <option value="electronics">Elektronika</option>
-                                    <option value="bicycle">Rower</option>
-                                    <option value="other">Inne</option>
+                                    <option value="" data-i18n="select_category">-- Wybierz kategorię --</option>
+                                    <option value="phone" data-i18n="categories.phone">Telefon</option>
+                                    <option value="documents" data-i18n="categories.documents">Dokumenty</option>
+                                    <option value="jewelry" data-i18n="categories.jewelry">Biżuteria / Zegarek</option>
+                                    <option value="keys" data-i18n="categories.keys">Klucze</option>
+                                    <option value="wallet" data-i18n="categories.wallet">Portfel</option>
+                                    <option value="clothing" data-i18n="categories.clothing">Odzież</option>
+                                    <option value="electronics" data-i18n="categories.electronics">Elektronika</option>
+                                    <option value="bicycle" data-i18n="categories.bicycle">Rower</option>
+                                    <option value="other" data-i18n="categories.other">Inne</option>
                                 </select>
                                 <span class="error-message"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="dataZnalezienia" class="required">Data znalezienia</label>
+                                <label for="dataZnalezienia" class="required" data-i18n="date_found">Data znalezienia</label>
                                 <input type="date" id="dataZnalezienia" name="date_found" required>
                                 <span class="error-message"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="opis" class="required">Opis przedmiotu</label>
+                            <label for="opis" class="required" data-i18n="description">Opis przedmiotu</label>
                             <textarea id="opis" name="description" rows="3" required
-                                placeholder="Np. Telefon Samsung Galaxy S23, kolor czarny, pęknięty ekran w lewym górnym rogu, etui silikonowe niebieskie"></textarea>
-                            <span class="hint">Podaj szczegółowy opis z kolorem, marką, cechami szczególnymi</span>
+                                data-i18n-placeholder="description_placeholder" placeholder="Np. Telefon Samsung Galaxy S23, kolor czarny, pęknięty ekran w lewym górnym rogu, etui silikonowe niebieskie"></textarea>
+                            <span class="hint" data-i18n="description_hint">Podaj szczegółowy opis z kolorem, marką, cechami szczególnymi</span>
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="szacunkowaWartosc">Szacunkowa wartość (PLN)</label>
+                                <label for="szacunkowaWartosc" data-i18n="estimated_value">Szacunkowa wartość (PLN)</label>
                                 <input type="number" id="szacunkowaWartosc" name="estimated_value" min="0" step="1"
-                                    placeholder="Np. 2500">
-                                <span class="hint">Wymagane dla przedmiotów o wartości powyżej 100 PLN</span>
+                                    data-i18n-placeholder="estimated_value_placeholder" placeholder="Np. 2500">
+                                <span class="hint" data-i18n="value_hint">Wymagane dla przedmiotów o wartości powyżej 100 PLN</span>
                             </div>
 
                             <div class="form-group">
-                                <label for="status">Status</label>
+                                <label for="status" data-i18n="status">Status</label>
                                 <select id="status" name="status">
-                                    <option value="stored">Przechowywany</option>
-                                    <option value="returned">Zwrócony właścicielowi</option>
-                                    <option value="liquidated">Zlikwidowany</option>
+                                    <option value="stored" data-i18n="statuses.stored">Przechowywany</option>
+                                    <option value="returned" data-i18n="statuses.returned">Zwrócony właścicielowi</option>
+                                    <option value="liquidated" data-i18n="statuses.liquidated">Zlikwidowany</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Lokalizacja znalezienia -->
-                        <h3 class="form-section-title"><i class="fas fa-map-marker-alt"></i> Lokalizacja znalezienia</h3>
+                        <h3 class="form-section-title"><i class="fas fa-map-marker-alt"></i> <span data-i18n="location_section">Lokalizacja znalezienia</span></h3>
 
                         <div class="form-group">
-                            <label for="miejsceZnalezienia" class="required">Miejsce znalezienia</label>
+                            <label for="miejsceZnalezienia" class="required" data-i18n="location_found">Miejsce znalezienia</label>
                             <input type="text" id="miejsceZnalezienia" name="location_found" required
-                                placeholder="Np. Autobus linii 144, przystanek Rynek Glowny">
+                                data-i18n-placeholder="location_placeholder" placeholder="Np. Autobus linii 144, przystanek Rynek Glowny">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="typMiejsca">Typ miejsca</label>
+                                <label for="typMiejsca" data-i18n="location_type">Typ miejsca</label>
                                 <select id="typMiejsca" name="location_type">
-                                    <option value="">-- Wybierz --</option>
-                                    <option value="public_transport">Transport publiczny</option>
-                                    <option value="office">Urząd / Instytucja</option>
-                                    <option value="shop">Sklep / Centrum handlowe</option>
-                                    <option value="park">Park / Teren zielony</option>
-                                    <option value="street">Ulica / Chodnik</option>
-                                    <option value="parking">Parking</option>
-                                    <option value="school">Szkoła / Uczelnia</option>
-                                    <option value="hospital">Szpital / Przychodnia</option>
-                                    <option value="other">Inne</option>
+                                    <option value="" data-i18n="select">-- Wybierz --</option>
+                                    <option value="public_transport" data-i18n="location_types.public_transport">Transport publiczny</option>
+                                    <option value="office" data-i18n="location_types.office">Urząd / Instytucja</option>
+                                    <option value="shop" data-i18n="location_types.shop">Sklep / Centrum handlowe</option>
+                                    <option value="park" data-i18n="location_types.park">Park / Teren zielony</option>
+                                    <option value="street" data-i18n="location_types.street">Ulica / Chodnik</option>
+                                    <option value="parking" data-i18n="location_types.parking">Parking</option>
+                                    <option value="school" data-i18n="location_types.school">Szkoła / Uczelnia</option>
+                                    <option value="hospital" data-i18n="location_types.hospital">Szpital / Przychodnia</option>
+                                    <option value="other" data-i18n="location_types.other">Inne</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="gmina" class="required">Gmina</label>
+                                <label for="gmina" class="required" data-i18n="municipality">Gmina</label>
                                 <input type="text" id="gmina" name="municipality" required
-                                    placeholder="Np. Kraków">
+                                    data-i18n-placeholder="municipality_placeholder" placeholder="Np. Kraków">
                                 <span class="error-message"></span>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="powiat" class="required">Powiat</label>
+                                <label for="powiat" class="required" data-i18n="county">Powiat</label>
                                 <input type="text" id="powiat" name="county" required
-                                    placeholder="Np. Kraków">
+                                    data-i18n-placeholder="county_placeholder" placeholder="Np. Kraków">
                                 <span class="error-message"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="wojewodztwo" class="required">Województwo</label>
+                                <label for="wojewodztwo" class="required" data-i18n="voivodeship">Województwo</label>
                                 <select id="wojewodztwo" name="voivodeship" required>
-                                    <option value="">-- Wybierz województwo --</option>
+                                    <option value="" data-i18n="select_voivodeship">-- Wybierz województwo --</option>
                                     <option value="dolnoslaskie">Dolnośląskie</option>
                                     <option value="kujawsko-pomorskie">Kujawsko-pomorskie</option>
                                     <option value="lubelskie">Lubelskie</option>
@@ -295,32 +295,32 @@
                         </div>
 
                         <!-- Biuro Rzeczy Znalezionych -->
-                        <h3 class="form-section-title"><i class="fas fa-building"></i> Biuro Rzeczy Znalezionych</h3>
+                        <h3 class="form-section-title"><i class="fas fa-building"></i> <span data-i18n="office_section">Biuro Rzeczy Znalezionych</span></h3>
 
                         <div class="form-group">
-                            <label for="officeName" class="required">Nazwa biura</label>
+                            <label for="officeName" class="required" data-i18n="office_name">Nazwa biura</label>
                             <input type="text" id="officeName" name="office_name" required
-                                placeholder="Np. Biuro Rzeczy Znalezionych Starostwa Powiatowego">
+                                data-i18n-placeholder="office_name_placeholder" placeholder="Np. Biuro Rzeczy Znalezionych Starostwa Powiatowego">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="officeAddress" class="required">Adres biura</label>
+                            <label for="officeAddress" class="required" data-i18n="office_address">Adres biura</label>
                             <input type="text" id="officeAddress" name="office_address" required
-                                placeholder="Np. ul. Glowna 1, pok. 101, 31-000 Krakow">
+                                data-i18n-placeholder="office_address_placeholder" placeholder="Np. ul. Glowna 1, pok. 101, 31-000 Krakow">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="officePhone" class="required">Telefon kontaktowy</label>
+                                <label for="officePhone" class="required" data-i18n="office_phone">Telefon kontaktowy</label>
                                 <input type="tel" id="officePhone" name="office_phone" required
                                     placeholder="+48 12 345 67 89">
                                 <span class="error-message"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="officeEmail">Email kontaktowy</label>
+                                <label for="officeEmail" data-i18n="office_email">Email kontaktowy</label>
                                 <input type="email" id="officeEmail" name="office_email"
                                     placeholder="rzeczy.znalezione@urzad.gov.pl">
                                 <span class="error-message"></span>
@@ -328,39 +328,39 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="officeHours">Godziny otwarcia</label>
+                            <label for="officeHours" data-i18n="office_hours">Godziny otwarcia</label>
                             <input type="text" id="officeHours" name="office_hours"
-                                placeholder="Np. Pon-Pt: 8:00-16:00">
+                                data-i18n-placeholder="office_hours_placeholder" placeholder="Np. Pon-Pt: 8:00-16:00">
                         </div>
 
                         <!-- Dodatkowe informacje -->
-                        <h3 class="form-section-title"><i class="fas fa-plus-circle"></i> Dodatkowe informacje</h3>
+                        <h3 class="form-section-title"><i class="fas fa-plus-circle"></i> <span data-i18n="additional_info">Dodatkowe informacje</span></h3>
 
                         <div class="form-group">
-                            <label for="zdjecieUrl">Link do zdjęcia (opcjonalne)</label>
+                            <label for="zdjecieUrl" data-i18n="photo_url">Link do zdjęcia (opcjonalne)</label>
                             <input type="url" id="zdjecieUrl" name="photo_url"
                                 placeholder="https://example.com/zdjecie.jpg">
-                            <span class="hint">Podaj link do zdjęcia przedmiotu (jeśli dostępne)</span>
+                            <span class="hint" data-i18n="photo_hint">Podaj link do zdjęcia przedmiotu (jeśli dostępne)</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="dataWaznosci">Termin odbioru</label>
+                            <label for="dataWaznosci" data-i18n="collection_deadline">Termin odbioru</label>
                             <input type="date" id="dataWaznosci" name="collection_deadline">
-                            <span class="hint">Zgodnie z ustawą, rzeczy znalezione przechowywane są przez 2 lata</span>
+                            <span class="hint" data-i18n="deadline_hint">Zgodnie z ustawą, rzeczy znalezione przechowywane są przez 2 lata</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="uwagi">Dodatkowe uwagi</label>
+                            <label for="uwagi" data-i18n="notes">Dodatkowe uwagi</label>
                             <textarea id="uwagi" name="notes" rows="2"
-                                placeholder="Dodatkowe informacje o przedmiocie..."></textarea>
+                                data-i18n-placeholder="notes_placeholder" placeholder="Dodatkowe informacje o przedmiocie..."></textarea>
                         </div>
 
                         <div class="form-actions">
                             <button type="button" class="btn btn-outline" id="addAnother">
-                                <i class="fas fa-plus"></i> Dodaj i wprowadź kolejny
+                                <i class="fas fa-plus"></i> <span data-i18n="add_another">Dodaj i wprowadź kolejny</span>
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-arrow-right"></i> Dalej do podglądu
+                                <i class="fas fa-arrow-right"></i> <span data-i18n="next_preview">Dalej do podglądu</span>
                             </button>
                         </div>
                     </form>
@@ -368,14 +368,14 @@
 
                 <!-- Items List -->
                 <div class="card" id="itemsListCard" style="display: none;">
-                    <h3><i class="fas fa-list"></i> Dodane przedmioty (<span id="itemsCount">0</span>)</h3>
+                    <h3><i class="fas fa-list"></i> <span data-i18n="added_items">Dodane przedmioty</span> (<span id="itemsCount">0</span>)</h3>
                     <div class="items-list" id="itemsList"></div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline" id="backToStep1">
-                            <i class="fas fa-arrow-left"></i> Wróć
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="back">Wróć</span>
                         </button>
                         <button type="button" class="btn btn-primary" id="goToPreview">
-                            <i class="fas fa-eye"></i> Przejdź do podglądu
+                            <i class="fas fa-eye"></i> <span data-i18n="go_to_preview">Przejdź do podglądu</span>
                         </button>
                     </div>
                 </div>
@@ -384,21 +384,21 @@
             <!-- Step 3: Preview -->
             <section class="step-content" id="step3">
                 <div class="card">
-                    <h2><i class="fas fa-eye"></i> Krok 3: Sprawdź podgląd danych</h2>
-                    <p>Sprawdź poprawność danych przed wygenerowaniem pliku do portalu dane.gov.pl</p>
-                    
+                    <h2><i class="fas fa-eye"></i> <span data-i18n="step3_title">Krok 3: Sprawdź podgląd danych</span></h2>
+                    <p data-i18n="step3_desc">Sprawdź poprawność danych przed wygenerowaniem pliku do portalu dane.gov.pl</p>
+
                     <div class="preview-stats">
                         <div class="stat">
                             <span class="stat-number" id="previewCount">0</span>
-                            <span class="stat-label">przedmiotów</span>
+                            <span class="stat-label" data-i18n="items">przedmiotów</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="previewValid">0</span>
-                            <span class="stat-label">poprawnych</span>
+                            <span class="stat-label" data-i18n="valid">poprawnych</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="previewErrors">0</span>
-                            <span class="stat-label">błędów</span>
+                            <span class="stat-label" data-i18n="errors">błędów</span>
                         </div>
                     </div>
 
@@ -407,12 +407,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Kategoria</th>
-                                    <th>Opis</th>
-                                    <th>Data znalezienia</th>
-                                    <th>Miejsce</th>
-                                    <th>Status</th>
-                                    <th>Akcje</th>
+                                    <th data-i18n="category">Kategoria</th>
+                                    <th data-i18n="description">Opis</th>
+                                    <th data-i18n="date_found">Data znalezienia</th>
+                                    <th data-i18n="location">Miejsce</th>
+                                    <th data-i18n="status">Status</th>
+                                    <th data-i18n="actions">Akcje</th>
                                 </tr>
                             </thead>
                             <tbody id="previewBody">
@@ -422,10 +422,10 @@
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline" id="backToStep2">
-                            <i class="fas fa-arrow-left"></i> Wróć do edycji
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_edit">Wróć do edycji</span>
                         </button>
                         <button type="button" class="btn btn-primary" id="goToExport">
-                            <i class="fas fa-download"></i> Przejdź do eksportu
+                            <i class="fas fa-download"></i> <span data-i18n="go_to_export">Przejdź do eksportu</span>
                         </button>
                     </div>
                 </div>
@@ -434,50 +434,50 @@
             <!-- Step 4: Export -->
             <section class="step-content" id="step4">
                 <div class="card">
-                    <h2><i class="fas fa-download"></i> Krok 4: Pobierz plik do portalu dane.gov.pl</h2>
-                    <p>Wybierz format pliku i pobierz dane gotowe do publikacji w portalu dane.gov.pl</p>
-                    
+                    <h2><i class="fas fa-download"></i> <span data-i18n="step4_title">Krok 4: Pobierz plik do portalu dane.gov.pl</span></h2>
+                    <p data-i18n="step4_desc">Wybierz format pliku i pobierz dane gotowe do publikacji w portalu dane.gov.pl</p>
+
                     <div class="export-options">
                         <div class="export-option">
                             <div class="export-icon json">
                                 <i class="fas fa-code"></i>
                             </div>
-                            <h3>Format JSON</h3>
-                            <p>Zalecany format dla dane.gov.pl. Maszynowo czytelny, gotowy do API.</p>
+                            <h3 data-i18n="format_json">Format JSON</h3>
+                            <p data-i18n="json_desc">Zalecany format dla dane.gov.pl. Maszynowo czytelny, gotowy do API.</p>
                             <button type="button" class="btn btn-primary" id="exportJSON">
-                                <i class="fas fa-download"></i> Pobierz JSON
+                                <i class="fas fa-download"></i> <span data-i18n="download_json">Pobierz JSON</span>
                             </button>
                         </div>
-                        
+
                         <div class="export-option">
                             <div class="export-icon csv">
                                 <i class="fas fa-file-csv"></i>
                             </div>
-                            <h3>Format CSV</h3>
-                            <p>Uniwersalny format tabelaryczny. Można otworzyć w Excel.</p>
+                            <h3 data-i18n="format_csv">Format CSV</h3>
+                            <p data-i18n="csv_desc">Uniwersalny format tabelaryczny. Można otworzyć w Excel.</p>
                             <button type="button" class="btn btn-secondary" id="exportCSV">
-                                <i class="fas fa-download"></i> Pobierz CSV
+                                <i class="fas fa-download"></i> <span data-i18n="download_csv">Pobierz CSV</span>
                             </button>
                         </div>
                     </div>
 
                     <div class="info-box">
-                        <h4><i class="fas fa-info-circle"></i> Co dalej?</h4>
+                        <h4><i class="fas fa-info-circle"></i> <span data-i18n="what_next">Co dalej?</span></h4>
                         <ol>
-                            <li>Pobierz plik w wybranym formacie</li>
-                            <li>Zaloguj się do <a href="https://dane.gov.pl" target="_blank">dane.gov.pl</a></li>
-                            <li>Przejdź do Panel Administratora → Dane → Dodaj zbiór danych</li>
-                            <li>Wgraj pobrany plik jako zasób</li>
-                            <li>Opublikuj zbiór danych</li>
+                            <li data-i18n="next_step1">Pobierz plik w wybranym formacie</li>
+                            <li data-i18n="next_step2">Zaloguj się do dane.gov.pl</li>
+                            <li data-i18n="next_step3">Przejdź do Panel Administratora → Dane → Dodaj zbiór danych</li>
+                            <li data-i18n="next_step4">Wgraj pobrany plik jako zasób</li>
+                            <li data-i18n="next_step5">Opublikuj zbiór danych</li>
                         </ol>
                     </div>
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline" id="backToStep3">
-                            <i class="fas fa-arrow-left"></i> Wróć do podglądu
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_preview">Wróć do podglądu</span>
                         </button>
                         <button type="button" class="btn btn-success" id="startOver">
-                            <i class="fas fa-redo"></i> Rozpocznij od nowa
+                            <i class="fas fa-redo"></i> <span data-i18n="start_over">Rozpocznij od nowa</span>
                         </button>
                     </div>
                 </div>
@@ -491,25 +491,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>Rzeczy Znalezione</h4>
-                    <p>Mechanizm do udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
-                    <p class="footer-note">Projekt stworzony na HackNation 2024</p>
+                    <h4 data-i18n="app_name">Rzeczy Znalezione</h4>
+                    <p data-i18n="footer_desc">Mechanizm do udostępniania danych o rzeczach znalezionych w portalu dane.gov.pl</p>
+                    <p class="footer-note" data-i18n="footer_note">Projekt stworzony na HackNation 2024</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Linki</h4>
+                    <h4 data-i18n="links">Linki</h4>
                     <ul>
-                        <li><a href="https://dane.gov.pl" target="_blank">Portal dane.gov.pl</a></li>
-                        <li><a href="https://dane.gov.pl/pl/knowledgebase" target="_blank">Baza wiedzy</a></li>
-                        <li><a href="https://api.dane.gov.pl/doc" target="_blank">API dokumentacja</a></li>
+                        <li><a href="https://dane.gov.pl" target="_blank" data-i18n="portal_link">Portal dane.gov.pl</a></li>
+                        <li><a href="https://dane.gov.pl/pl/knowledgebase" target="_blank" data-i18n="knowledge_base">Baza wiedzy</a></li>
+                        <li><a href="https://api.dane.gov.pl/doc" target="_blank" data-i18n="api_docs">API dokumentacja</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Kontakt</h4>
+                    <h4 data-i18n="contact">Kontakt</h4>
                     <p><i class="fas fa-envelope"></i> kontakt@dane.gov.pl</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
+                <p data-i18n="copyright">&copy; 2025 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
             </div>
         </div>
     </footer>
@@ -518,8 +518,8 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Our JavaScript -->
-    <script src="i18n.js"></script>
-    <script src="api.js"></script>
-    <script src="app.js"></script>
+    <script src="i18n.js?v=2.0.2"></script>
+    <script src="api.js?v=2.0.2"></script>
+    <script src="app.js?v=2.0.2"></script>
 </body>
 </html>

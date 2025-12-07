@@ -29,7 +29,7 @@
     <div class="govpl">
         <div class="container">
             <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">gov.pl</a>
-            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+            <span class="govpl__text" data-i18n="govpl_text">Serwis Rzeczypospolitej Polskiej</span>
         </div>
     </div>
 
@@ -40,11 +40,11 @@
                 <div class="header-content">
                     <a href="index.html" class="logo">
                         <span class="logo-text">dane.gov.pl</span>
-                        <span class="logo-subtitle">Otwarte Dane</span>
+                        <span class="logo-subtitle" data-i18n="open_data">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
-                        <a href="index.html" class="nav-link">Panel urzędnika</a>
-                        <a href="public.html" class="nav-link">Szukaj rzeczy</a>
+                        <a href="index.html" class="nav-link" data-i18n="nav_admin">Panel urzędnika</a>
+                        <a href="public.html" class="nav-link" data-i18n="nav_search">Szukaj rzeczy</a>
                         <div class="nav-auth" id="navAuth"></div>
                         <div class="lang-switcher">
                             <button type="button" class="lang-btn active" data-lang="pl">PL</button>
@@ -61,8 +61,8 @@
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1><i class="fas fa-user-circle"></i> Profil użytkownika</h1>
-                <p class="lead">Zarządzaj swoim profilem i ustawieniami konta</p>
+                <h1><i class="fas fa-user-circle"></i> <span data-i18n="profile_title">Profil użytkownika</span></h1>
+                <p class="lead" data-i18n="profile_subtitle">Zarządzaj swoim profilem i ustawieniami konta</p>
             </div>
 
             <div class="profile-layout">
@@ -78,19 +78,19 @@
 
                         <nav class="profile-nav">
                             <button type="button" class="profile-nav-link active" data-tab="info">
-                                <i class="fas fa-user"></i> Informacje
+                                <i class="fas fa-user"></i> <span data-i18n="personal_info">Informacje</span>
                             </button>
                             <button type="button" class="profile-nav-link" data-tab="security">
-                                <i class="fas fa-lock"></i> Bezpieczeństwo
+                                <i class="fas fa-lock"></i> <span data-i18n="security">Bezpieczeństwo</span>
                             </button>
                             <button type="button" class="profile-nav-link" data-tab="settings">
-                                <i class="fas fa-cog"></i> Ustawienia
+                                <i class="fas fa-cog"></i> <span data-i18n="settings">Ustawienia</span>
                             </button>
                             <button type="button" class="profile-nav-link" data-tab="activity" id="activityTab" style="display: none;">
-                                <i class="fas fa-history"></i> Aktywność
+                                <i class="fas fa-history"></i> <span data-i18n="activity">Aktywność</span>
                             </button>
                             <a href="admin.html" class="profile-nav-link" id="adminLink" style="display: none;">
-                                <i class="fas fa-user-shield"></i> Panel administratora
+                                <i class="fas fa-user-shield"></i> <span data-i18n="admin_panel">Panel administratora</span>
                             </a>
                         </nav>
                     </div>
@@ -102,49 +102,49 @@
                     <div class="profile-tab active" id="tab-info">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-user"></i> Informacje osobiste</h2>
+                                <h2><i class="fas fa-user"></i> <span data-i18n="personal_info">Informacje osobiste</span></h2>
                                 <button type="button" class="btn btn-outline" id="editProfileBtn">
-                                    <i class="fas fa-edit"></i> Edytuj
+                                    <i class="fas fa-edit"></i> <span data-i18n="edit">Edytuj</span>
                                 </button>
                             </div>
                             <div class="card-body">
                                 <form id="profileForm">
                                     <div class="form-group">
-                                        <label for="profileName" class="required">Imię i nazwisko</label>
+                                        <label for="profileName" class="required" data-i18n="name">Imię i nazwisko</label>
                                         <input type="text" id="profileName" name="name" required disabled>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <label for="profileEmail" class="required">Email</label>
+                                            <label for="profileEmail" class="required" data-i18n="email">Email</label>
                                             <input type="email" id="profileEmail" name="email" required disabled>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="profilePhone">Telefon</label>
+                                            <label for="profilePhone" data-i18n="phone">Telefon</label>
                                             <input type="tel" id="profilePhone" name="phone" disabled>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="profileOrganization">Organizacja</label>
+                                        <label for="profileOrganization" data-i18n="organization">Organizacja</label>
                                         <input type="text" id="profileOrganization" name="organization" disabled>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Rola</label>
+                                        <label data-i18n="role">Rola</label>
                                         <input type="text" id="profileRole" disabled>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Utworzono</label>
+                                        <label data-i18n="created">Utworzono</label>
                                         <input type="text" id="profileCreatedAt" disabled>
                                     </div>
 
                                     <div class="form-actions" id="profileActions" style="display: none;">
-                                        <button type="button" class="btn btn-outline" id="cancelEditBtn">Anuluj</button>
+                                        <button type="button" class="btn btn-outline" id="cancelEditBtn" data-i18n="cancel">Anuluj</button>
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-save"></i> Zapisz zmiany
+                                            <i class="fas fa-save"></i> <span data-i18n="save_changes">Zapisz zmiany</span>
                                         </button>
                                     </div>
                                 </form>
@@ -156,32 +156,32 @@
                     <div class="profile-tab" id="tab-security">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-lock"></i> Bezpieczeństwo</h2>
+                                <h2><i class="fas fa-lock"></i> <span data-i18n="security">Bezpieczeństwo</span></h2>
                             </div>
                             <div class="card-body">
-                                <h3>Zmiana hasła</h3>
-                                <p class="text-muted">Regularnie zmieniaj hasło, aby zabezpieczyć swoje konto</p>
+                                <h3 data-i18n="change_password">Zmiana hasła</h3>
+                                <p class="text-muted" data-i18n="change_password_desc">Regularnie zmieniaj hasło, aby zabezpieczyć swoje konto</p>
 
                                 <form id="passwordForm">
                                     <div class="form-group">
-                                        <label for="currentPassword" class="required">Obecne hasło</label>
+                                        <label for="currentPassword" class="required" data-i18n="current_password">Obecne hasło</label>
                                         <input type="password" id="currentPassword" name="currentPassword" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="newPassword" class="required">Nowe hasło</label>
+                                        <label for="newPassword" class="required" data-i18n="new_password">Nowe hasło</label>
                                         <input type="password" id="newPassword" name="newPassword" required minlength="8">
-                                        <span class="hint">Minimum 8 znaków</span>
+                                        <span class="hint" data-i18n="password_min_length">Minimum 8 znaków</span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="confirmPassword" class="required">Potwierdź nowe hasło</label>
+                                        <label for="confirmPassword" class="required" data-i18n="confirm_password_label">Potwierdź nowe hasło</label>
                                         <input type="password" id="confirmPassword" name="confirmPassword" required>
                                     </div>
 
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-key"></i> Zmień hasło
+                                            <i class="fas fa-key"></i> <span data-i18n="change_password">Zmień hasło</span>
                                         </button>
                                     </div>
                                 </form>
@@ -191,7 +191,7 @@
                         <!-- Active Sessions -->
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-laptop"></i> Aktywne sesje</h2>
+                                <h2><i class="fas fa-laptop"></i> <span data-i18n="active_sessions">Aktywne sesje</span></h2>
                             </div>
                             <div class="card-body">
                                 <div id="sessionsList">
@@ -199,8 +199,8 @@
                                         <div class="session-info">
                                             <i class="fas fa-desktop"></i>
                                             <div>
-                                                <strong>Bieżąca sesja</strong>
-                                                <p class="text-muted">Zalogowano: <span id="currentSessionTime">Ładowanie...</span></p>
+                                                <strong data-i18n="current_session">Bieżąca sesja</strong>
+                                                <p class="text-muted"><span data-i18n="logged_in">Zalogowano</span>: <span id="currentSessionTime" data-i18n="loading">Ładowanie...</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -213,12 +213,12 @@
                     <div class="profile-tab" id="tab-settings">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-cog"></i> Ustawienia</h2>
+                                <h2><i class="fas fa-cog"></i> <span data-i18n="settings">Ustawienia</span></h2>
                             </div>
                             <div class="card-body">
                                 <form id="settingsForm">
                                     <div class="form-group">
-                                        <label for="settingsLanguage">Język interfejsu</label>
+                                        <label for="settingsLanguage" data-i18n="language_interface">Język interfejsu</label>
                                         <select id="settingsLanguage" name="language">
                                             <option value="pl">Polski</option>
                                             <option value="en">English</option>
@@ -227,7 +227,7 @@
 
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-save"></i> Zapisz ustawienia
+                                            <i class="fas fa-save"></i> <span data-i18n="save_settings">Zapisz ustawienia</span>
                                         </button>
                                     </div>
                                 </form>
@@ -237,13 +237,13 @@
                         <!-- Danger Zone -->
                         <div class="card card-danger">
                             <div class="card-header">
-                                <h2><i class="fas fa-exclamation-triangle"></i> Strefa niebezpieczna</h2>
+                                <h2><i class="fas fa-exclamation-triangle"></i> <span data-i18n="danger_zone">Strefa niebezpieczna</span></h2>
                             </div>
                             <div class="card-body">
-                                <h3>Dezaktywacja konta</h3>
-                                <p class="text-muted">Po dezaktywacji konta nie będziesz mógł się zalogować. Skontaktuj się z administratorem aby reaktywować konto.</p>
+                                <h3 data-i18n="deactivate_account">Dezaktywacja konta</h3>
+                                <p class="text-muted" data-i18n="deactivate_desc">Po dezaktywacji konta nie będziesz mógł się zalogować. Skontaktuj się z administratorem aby reaktywować konto.</p>
                                 <button type="button" class="btn btn-danger" id="deactivateBtn">
-                                    <i class="fas fa-user-slash"></i> Dezaktywuj konto
+                                    <i class="fas fa-user-slash"></i> <span data-i18n="deactivate_button">Dezaktywuj konto</span>
                                 </button>
                             </div>
                         </div>
@@ -286,8 +286,8 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Scripts -->
-    <script src="i18n.js"></script>
-    <script src="api.js"></script>
+    <script src="i18n.js?v=2.0.2"></script>
+    <script src="api.js?v=2.0.2"></script>
     <script>
         let currentUser = null;
         let isEditing = false;
@@ -591,6 +591,11 @@
                     }
                 });
             });
+
+            // Initialize UI with current language on page load
+            if (typeof i18n !== 'undefined') {
+                i18n.updateUI();
+            }
         }
 
         // Initialize language switcher on load

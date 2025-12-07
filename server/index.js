@@ -51,6 +51,18 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
+// Cache control middleware for static files (disable caching in development)
+app.use((req, res, next) => {
+    // Disable caching for JS, CSS, and HTML files
+    if (req.url.endsWith('.js') || req.url.endsWith('.css') || req.url.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+        res.setHeader('Surrogate-Control', 'no-store');
+    }
+    next();
+});
+
 // Static files
 app.use(express.static(path.join(__dirname, '..')));
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));

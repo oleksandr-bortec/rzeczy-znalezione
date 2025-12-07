@@ -7,7 +7,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="alternate icon" type="image/png" href="/icons/icon-192.png">
+    <link rel="alternate icon" type="image/svg+xml" href="/icons/icon-192.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -203,7 +203,10 @@
     <div class="govpl">
         <div class="container">
             <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">gov.pl</a>
-            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+            <span class="govpl__text" data-i18n="govpl_text">Serwis Rzeczypospolitej Polskiej</span>
+            <div class="govpl__eu-logo-wrapper">
+                <img src="https://dane.gov.pl/assets/images/eu-logo.svg" alt="Unia Europejska" class="govpl__eu-logo" onerror="this.style.display='none'">
+            </div>
         </div>
     </div>
 
@@ -214,11 +217,11 @@
                 <div class="header-content">
                     <a href="index.html" class="logo">
                         <span class="logo-text">dane.gov.pl</span>
-                        <span class="logo-subtitle">Otwarte Dane</span>
+                        <span class="logo-subtitle" data-i18n="open_data">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
-                        <a href="index.html" class="nav-link">Panel urzędnika</a>
-                        <a href="public.html" class="nav-link">Szukaj rzeczy</a>
+                        <a href="index.html" class="nav-link" data-i18n="nav_admin">Panel urzędnika</a>
+                        <a href="public.html" class="nav-link" data-i18n="nav_search">Szukaj rzeczy</a>
                         <div class="nav-auth" id="navAuth"></div>
                         <div class="lang-switcher">
                             <button type="button" class="lang-btn active" data-lang="pl">PL</button>
@@ -235,8 +238,8 @@
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1><i class="fas fa-user-shield"></i> Panel Administratora</h1>
-                <p class="lead">Zarządzaj użytkownikami, uprawnieniami i systemem</p>
+                <h1><i class="fas fa-user-shield"></i> <span data-i18n="admin_title">Panel Administratora</span></h1>
+                <p class="lead" data-i18n="admin_subtitle">Zarządzaj użytkownikami, uprawnieniami i systemem</p>
             </div>
 
             <div class="profile-layout">
@@ -245,22 +248,22 @@
                     <div class="card">
                         <nav class="profile-nav">
                             <a href="#" class="profile-nav-link active" data-tab="dashboard">
-                                <i class="fas fa-chart-line"></i> Dashboard
+                                <i class="fas fa-chart-line"></i> <span data-i18n="dashboard">Dashboard</span>
                             </a>
                             <a href="#" class="profile-nav-link" data-tab="users">
-                                <i class="fas fa-users"></i> Użytkownicy
+                                <i class="fas fa-users"></i> <span data-i18n="users">Użytkownicy</span>
                             </a>
                             <a href="#" class="profile-nav-link" data-tab="permissions">
-                                <i class="fas fa-shield-alt"></i> Uprawnienia
+                                <i class="fas fa-shield-alt"></i> <span data-i18n="permissions">Uprawnienia</span>
                             </a>
                             <a href="#" class="profile-nav-link" data-tab="audit">
-                                <i class="fas fa-history"></i> Dziennik zdarzeń
+                                <i class="fas fa-history"></i> <span data-i18n="audit_log">Dziennik zdarzeń</span>
                             </a>
                             <a href="#" class="profile-nav-link" data-tab="system">
-                                <i class="fas fa-cog"></i> Ustawienia systemu
+                                <i class="fas fa-cog"></i> <span data-i18n="system_settings">Ustawienia systemu</span>
                             </a>
                             <a href="profile.html" class="profile-nav-link">
-                                <i class="fas fa-user"></i> Mój profil
+                                <i class="fas fa-user"></i> <span data-i18n="my_profile">Mój profil</span>
                             </a>
                         </nav>
                     </div>
@@ -275,7 +278,7 @@
                                 <div class="stat-card-header">
                                     <div>
                                         <div class="stat-card-value" id="statsUsers">0</div>
-                                        <div class="stat-card-label">Użytkowników</div>
+                                        <div class="stat-card-label" data-i18n="users_count">Użytkowników</div>
                                     </div>
                                     <div class="stat-card-icon users">
                                         <i class="fas fa-users"></i>
@@ -287,7 +290,7 @@
                                 <div class="stat-card-header">
                                     <div>
                                         <div class="stat-card-value" id="statsItems">0</div>
-                                        <div class="stat-card-label">Przedmiotów</div>
+                                        <div class="stat-card-label" data-i18n="items_count">Przedmiotów</div>
                                     </div>
                                     <div class="stat-card-icon items">
                                         <i class="fas fa-box"></i>
@@ -299,7 +302,7 @@
                                 <div class="stat-card-header">
                                     <div>
                                         <div class="stat-card-value" id="statsActivity">0</div>
-                                        <div class="stat-card-label">Zdarzeń (dzisiaj)</div>
+                                        <div class="stat-card-label" data-i18n="events_today">Zdarzeń (dzisiaj)</div>
                                     </div>
                                     <div class="stat-card-icon activity">
                                         <i class="fas fa-chart-line"></i>
@@ -311,7 +314,7 @@
                                 <div class="stat-card-header">
                                     <div>
                                         <div class="stat-card-value" id="statsStorage">0 KB</div>
-                                        <div class="stat-card-label">Baza danych</div>
+                                        <div class="stat-card-label" data-i18n="database">Baza danych</div>
                                     </div>
                                     <div class="stat-card-icon storage">
                                         <i class="fas fa-database"></i>
@@ -322,10 +325,10 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-chart-bar"></i> Najnowsza aktywność</h2>
+                                <h2><i class="fas fa-chart-bar"></i> <span data-i18n="recent_activity">Najnowsza aktywność</span></h2>
                             </div>
                             <div class="card-body" id="recentActivity">
-                                <p class="text-muted">Ładowanie...</p>
+                                <p class="text-muted" data-i18n="loading">Ładowanie...</p>
                             </div>
                         </div>
                     </div>
@@ -334,27 +337,27 @@
                     <div class="profile-tab" id="tab-users">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-users"></i> Zarządzanie użytkownikami</h2>
+                                <h2><i class="fas fa-users"></i> <span data-i18n="user_management">Zarządzanie użytkownikami</span></h2>
                                 <button type="button" class="btn btn-primary" id="addUserBtn">
-                                    <i class="fas fa-user-plus"></i> Dodaj użytkownika
+                                    <i class="fas fa-user-plus"></i> <span data-i18n="add_user">Dodaj użytkownika</span>
                                 </button>
                             </div>
                             <div class="card-body">
                                 <table class="users-table" id="usersTable">
                                     <thead>
                                         <tr>
-                                            <th>Użytkownik</th>
-                                            <th>Email</th>
-                                            <th>Rola</th>
-                                            <th>Organizacja</th>
-                                            <th>Status</th>
-                                            <th>Akcje</th>
+                                            <th data-i18n="user">Użytkownik</th>
+                                            <th data-i18n="email">Email</th>
+                                            <th data-i18n="role">Rola</th>
+                                            <th data-i18n="organization">Organizacja</th>
+                                            <th data-i18n="status">Status</th>
+                                            <th data-i18n="actions">Akcje</th>
                                         </tr>
                                     </thead>
                                     <tbody id="usersTableBody">
                                         <tr>
                                             <td colspan="6" style="text-align: center; padding: 2rem;">
-                                                Ładowanie użytkowników...
+                                                <span data-i18n="loading_users">Ładowanie użytkowników...</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -367,42 +370,42 @@
                     <div class="profile-tab" id="tab-permissions">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-shield-alt"></i> Uprawnienia użytkowników</h2>
+                                <h2><i class="fas fa-shield-alt"></i> <span data-i18n="permissions">Uprawnienia</span> <span data-i18n="permissions_users">użytkowników</span></h2>
                             </div>
                             <div class="card-body">
-                                <h3>Role i uprawnienia</h3>
-                                <p class="text-muted">System obsługuje trzy role użytkowników z różnymi poziomami dostępu:</p>
+                                <h3 data-i18n="roles_permissions">Role i uprawnienia</h3>
+                                <p class="text-muted" data-i18n="roles_description">System obsługuje trzy role użytkowników z różnymi poziomami dostępu:</p>
 
                                 <div style="margin: 2rem 0;">
                                     <h4><span class="badge badge-admin">Administrator</span></h4>
                                     <ul>
-                                        <li>Pełny dostęp do wszystkich funkcji systemu</li>
-                                        <li>Zarządzanie użytkownikami i uprawnieniami</li>
-                                        <li>Dostęp do panelu administratora</li>
-                                        <li>Przeglądanie dziennika zdarzeń</li>
-                                        <li>Konfiguracja systemu</li>
-                                        <li>Tworzenie, edycja i usuwanie wszystkich danych</li>
+                                        <li data-i18n="admin_permissions">Pełny dostęp do wszystkich funkcji systemu</li>
+                                        <li data-i18n="manage_users_permissions">Zarządzanie użytkownikami i uprawnieniami</li>
+                                        <li data-i18n="admin_panel_access">Dostęp do panelu administratora</li>
+                                        <li data-i18n="view_audit_log">Przeglądanie dziennika zdarzeń</li>
+                                        <li data-i18n="system_config">Konfiguracja systemu</li>
+                                        <li data-i18n="create_edit_delete">Tworzenie, edycja i usuwanie wszystkich danych</li>
                                     </ul>
 
-                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-official">Urzędnik</span></h4>
+                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-official" data-i18n="official">Urzędnik</span></h4>
                                     <ul>
-                                        <li>Dodawanie i edycja rzeczy znalezionych</li>
-                                        <li>Zarządzanie danymi swojej organizacji</li>
-                                        <li>Eksport danych do dane.gov.pl</li>
-                                        <li>Przeglądanie statystyk</li>
+                                        <li data-i18n="add_edit_items">Dodawanie i edycja rzeczy znalezionych</li>
+                                        <li data-i18n="manage_org_data">Zarządzanie danymi swojej organizacji</li>
+                                        <li data-i18n="export_data">Eksport danych do dane.gov.pl</li>
+                                        <li data-i18n="view_statistics">Przeglądanie statystyk</li>
                                     </ul>
 
-                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-user">Użytkownik</span></h4>
+                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-user" data-i18n="user">Użytkownik</span></h4>
                                     <ul>
-                                        <li>Przeglądanie publicznego portalu</li>
-                                        <li>Wyszukiwanie rzeczy znalezionych</li>
-                                        <li>Dostęp tylko do odczytu</li>
+                                        <li data-i18n="browse_public">Przeglądanie publicznego portalu</li>
+                                        <li data-i18n="search_items">Wyszukiwanie rzeczy znalezionych</li>
+                                        <li data-i18n="read_only">Dostęp tylko do odczytu</li>
                                     </ul>
                                 </div>
 
                                 <div class="info-box">
-                                    <h4><i class="fas fa-info-circle"></i> Zmiana uprawnień</h4>
-                                    <p>Aby zmienić rolę użytkownika, przejdź do zakładki "Użytkownicy" i kliknij przycisk "Edytuj" przy wybranym użytkowniku.</p>
+                                    <h4><i class="fas fa-info-circle"></i> <span data-i18n="change_permissions">Zmiana uprawnień</span></h4>
+                                    <p data-i18n="change_permissions_desc">Aby zmienić rolę użytkownika, przejdź do zakładki "Użytkownicy" i kliknij przycisk "Edytuj" przy wybranym użytkowniku.</p>
                                 </div>
                             </div>
                         </div>
@@ -412,22 +415,22 @@
                     <div class="profile-tab" id="tab-audit">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-history"></i> Dziennik zdarzeń</h2>
+                                <h2><i class="fas fa-history"></i> <span data-i18n="audit_log">Dziennik zdarzeń</span></h2>
                                 <div style="display: flex; gap: 0.5rem;">
                                     <select id="auditFilter" class="form-control" style="width: auto;">
-                                        <option value="">Wszystkie akcje</option>
-                                        <option value="create">Utworzenie</option>
-                                        <option value="update">Aktualizacja</option>
-                                        <option value="delete">Usunięcie</option>
-                                        <option value="login">Logowanie</option>
+                                        <option value="" data-i18n="all_actions">Wszystkie akcje</option>
+                                        <option value="create" data-i18n="create_action">Utworzenie</option>
+                                        <option value="update" data-i18n="update_action">Aktualizacja</option>
+                                        <option value="delete" data-i18n="delete_action">Usunięcie</option>
+                                        <option value="login" data-i18n="login_action">Logowanie</option>
                                     </select>
                                     <button type="button" class="btn btn-outline" id="refreshAuditBtn">
-                                        <i class="fas fa-sync"></i> Odśwież
+                                        <i class="fas fa-sync"></i> <span data-i18n="refresh_btn">Odśwież</span>
                                     </button>
                                 </div>
                             </div>
                             <div class="card-body" id="auditLog">
-                                <p class="text-muted">Ładowanie...</p>
+                                <p class="text-muted" data-i18n="loading">Ładowanie...</p>
                             </div>
                         </div>
                     </div>
@@ -436,34 +439,34 @@
                     <div class="profile-tab" id="tab-system">
                         <div class="card">
                             <div class="card-header">
-                                <h2><i class="fas fa-cog"></i> Ustawienia systemu</h2>
+                                <h2><i class="fas fa-cog"></i> <span data-i18n="system_settings">Ustawienia systemu</span></h2>
                             </div>
                             <div class="card-body">
-                                <h3>Informacje o systemie</h3>
+                                <h3 data-i18n="system_info">Informacje o systemie</h3>
                                 <div style="margin: 1.5rem 0;">
-                                    <p><strong>Wersja:</strong> 2.0.0</p>
-                                    <p><strong>Baza danych:</strong> SQLite (sql.js)</p>
-                                    <p><strong>Środowisko:</strong> <span id="envInfo">development</span></p>
+                                    <p><strong data-i18n="version">Wersja:</strong> 2.0.0</p>
+                                    <p><strong data-i18n="database">Baza danych:</strong> SQLite (sql.js)</p>
+                                    <p><strong data-i18n="environment">Środowisko:</strong> <span id="envInfo">development</span></p>
                                 </div>
 
-                                <h3 style="margin-top: 2rem;">Konserwacja</h3>
+                                <h3 style="margin-top: 2rem;" data-i18n="maintenance">Konserwacja</h3>
                                 <div style="margin: 1.5rem 0;">
                                     <button type="button" class="btn btn-outline" id="backupDbBtn">
-                                        <i class="fas fa-download"></i> Pobierz kopię zapasową bazy danych
+                                        <i class="fas fa-download"></i> <span data-i18n="download_backup">Pobierz kopię zapasową bazy danych</span>
                                     </button>
                                     <button type="button" class="btn btn-outline" id="clearCacheBtn">
-                                        <i class="fas fa-trash"></i> Wyczyść cache
+                                        <i class="fas fa-trash"></i> <span data-i18n="clear_cache">Wyczyść cache</span>
                                     </button>
                                 </div>
 
                                 <div class="card card-danger" style="margin-top: 2rem;">
                                     <div class="card-header">
-                                        <h3><i class="fas fa-exclamation-triangle"></i> Strefa niebezpieczna</h3>
+                                        <h3><i class="fas fa-exclamation-triangle"></i> <span data-i18n="danger_zone_title">Strefa niebezpieczna</span></h3>
                                     </div>
                                     <div class="card-body">
-                                        <p class="text-muted">Poniższe akcje są nieodwracalne. Zachowaj ostrożność.</p>
+                                        <p class="text-muted" data-i18n="danger_zone_desc">Poniższe akcje są nieodwracalne. Zachowaj ostrożność.</p>
                                         <button type="button" class="btn btn-danger" id="resetDbBtn">
-                                            <i class="fas fa-database"></i> Zresetuj bazę danych
+                                            <i class="fas fa-database"></i> <span data-i18n="reset_database">Zresetuj bazę danych</span>
                                         </button>
                                     </div>
                                 </div>
@@ -483,58 +486,58 @@
                 <i class="fas fa-times"></i>
             </button>
             <div class="modal-body">
-                <h2 id="userModalTitle"><i class="fas fa-user-plus"></i> Dodaj użytkownika</h2>
+                <h2 id="userModalTitle"><i class="fas fa-user-plus"></i> <span data-i18n="add_user_title">Dodaj użytkownika</span></h2>
                 <form id="userForm">
                     <input type="hidden" id="userId">
 
                     <div class="form-group">
-                        <label for="userName" class="required">Imię i nazwisko</label>
+                        <label for="userName" class="required" data-i18n="full_name">Imię i nazwisko</label>
                         <input type="text" id="userName" name="name" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="userEmail" class="required">Email</label>
+                            <label for="userEmail" class="required" data-i18n="email">Email</label>
                             <input type="email" id="userEmail" name="email" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="userPhone">Telefon</label>
+                            <label for="userPhone" data-i18n="phone_number">Telefon</label>
                             <input type="tel" id="userPhone" name="phone">
                         </div>
                     </div>
 
                     <div class="form-group" id="passwordGroup">
-                        <label for="userPassword" class="required">Hasło</label>
+                        <label for="userPassword" class="required" data-i18n="user_password">Hasło</label>
                         <input type="password" id="userPassword" name="password" required minlength="8">
-                        <span class="hint">Minimum 8 znaków</span>
+                        <span class="hint" data-i18n="password_min">Minimum 8 znaków</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="userOrganization">Organizacja</label>
+                        <label for="userOrganization" data-i18n="user_organization">Organizacja</label>
                         <input type="text" id="userOrganization" name="organization">
                     </div>
 
                     <div class="form-group">
-                        <label for="userRole" class="required">Rola</label>
+                        <label for="userRole" class="required" data-i18n="user_role">Rola</label>
                         <select id="userRole" name="role" required>
-                            <option value="user">Użytkownik</option>
-                            <option value="official">Urzędnik</option>
-                            <option value="admin">Administrator</option>
+                            <option value="user" data-i18n="role_user">Użytkownik</option>
+                            <option value="official" data-i18n="role_official">Urzędnik</option>
+                            <option value="admin" data-i18n="role_admin">Administrator</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>
                             <input type="checkbox" id="userActive" name="is_active" checked>
-                            Konto aktywne
+                            <span data-i18n="account_active">Konto aktywne</span>
                         </label>
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-outline" onclick="closeUserModal()">Anuluj</button>
+                        <button type="button" class="btn btn-outline" onclick="closeUserModal()"><span data-i18n="cancel">Anuluj</span></button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Zapisz
+                            <i class="fas fa-save"></i> <span data-i18n="save">Zapisz</span>
                         </button>
                     </div>
                 </form>
@@ -555,8 +558,8 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Scripts -->
-    <script src="i18n.js"></script>
-    <script src="api.js"></script>
-    <script src="admin.js"></script>
+    <script src="i18n.js?v=2.0.2"></script>
+    <script src="api.js?v=2.0.2"></script>
+    <script src="admin.js?v=2.0.2"></script>
 </body>
 </html>

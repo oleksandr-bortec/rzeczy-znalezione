@@ -203,6 +203,11 @@ function initializeLanguageSwitcher() {
             }
         });
     });
+
+    // Initialize UI with current language on page load
+    if (typeof i18n !== 'undefined') {
+        i18n.updateUI();
+    }
 }
 
 /**

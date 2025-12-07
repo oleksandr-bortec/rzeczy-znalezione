@@ -91,6 +91,11 @@ function initializeLanguageSwitcher() {
             }
         });
     });
+
+    // Initialize UI with current language on page load
+    if (typeof i18n !== 'undefined') {
+        i18n.updateUI();
+    }
 }
 
 // =====================================================
@@ -123,7 +128,7 @@ function updateAuthUI(isLoggedIn) {
 
     if (isLoggedIn && typeof api !== 'undefined' && api.user) {
         const isAdmin = api.user.role === 'admin';
-        const adminMenuItem = isAdmin ? '<a href="admin.html" id="adminBtn"><i class="fas fa-user-shield"></i> Administrator</a>' : '';
+        const adminMenuItem = isAdmin ? `<a href="admin.html" id="adminBtn"><i class="fas fa-user-shield"></i> <span data-i18n="admin_panel">Administrator</span></a>` : '';
 
         navAuth.innerHTML = `
             <div class="user-menu">
@@ -133,12 +138,17 @@ function updateAuthUI(isLoggedIn) {
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="user-menu-dropdown" id="userMenuDropdown">
-                    <a href="profile.html" id="profileBtn"><i class="fas fa-user"></i> Profil</a>
+                    <a href="profile.html" id="profileBtn"><i class="fas fa-user"></i> <span data-i18n="nav_profile">Profil</span></a>
                     ${adminMenuItem}
-                    <a href="javascript:void(0)" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
+                    <a href="javascript:void(0)" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav_logout">Wyloguj</span></a>
                 </div>
             </div>
         `;
+
+        // Update translations for dynamically added elements
+        if (typeof i18n !== 'undefined') {
+            i18n.updateUI();
+        }
 
         // Add dropdown toggle
         const userMenuBtn = document.getElementById('userMenuBtn');
@@ -161,11 +171,18 @@ function updateAuthUI(isLoggedIn) {
             if (typeof api !== 'undefined') {
                 await api.logout();
                 updateAuthUI(false);
-                showToast('Wylogowano pomyslnie', 'success');
+                const logoutMsg = (typeof i18n !== 'undefined') ? i18n.t('logout_success') : 'Wylogowano pomyslnie';
+                showToast('success', 'Sukces', logoutMsg);
             }
         });
     } else {
         navAuth.innerHTML = `<a href="javascript:void(0)" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>`;
+
+        // Update translations
+        if (typeof i18n !== 'undefined') {
+            i18n.updateUI();
+        }
+
         document.getElementById('loginBtn').addEventListener('click', (e) => {
             e.preventDefault();
             showLoginModal();
@@ -187,25 +204,30 @@ function showLoginModal() {
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="modal-body">
-                    <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-sign-in-alt"></i> Logowanie</h2>
+                    <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">Logowanie</span></h2>
                     <form id="loginForm" class="item-form">
                         <div class="form-group">
-                            <label for="loginEmail" class="required">Email</label>
+                            <label for="loginEmail" class="required" data-i18n="email">Email</label>
                             <input type="email" id="loginEmail" required placeholder="twoj@email.pl">
                         </div>
                         <div class="form-group">
-                            <label for="loginPassword" class="required">Haslo</label>
+                            <label for="loginPassword" class="required" data-i18n="password">Haslo</label>
                             <input type="password" id="loginPassword" required placeholder="Twoje haslo">
                         </div>
                         <div class="form-actions" style="justify-content: flex-end;">
-                            <button type="button" class="btn btn-outline" onclick="closeLoginModal()">Anuluj</button>
-                            <button type="submit" class="btn btn-primary">Zaloguj</button>
+                            <button type="button" class="btn btn-outline" onclick="closeLoginModal()"><span data-i18n="cancel">Anuluj</span></button>
+                            <button type="submit" class="btn btn-primary"><span data-i18n="login_button">Zaloguj</span></button>
                         </div>
                     </form>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
+
+        // Update translations for modal elements
+        if (typeof i18n !== 'undefined') {
+            i18n.updateUI();
+        }
 
         // Handle form submission
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -218,10 +240,12 @@ function showLoginModal() {
                     await api.login(email, password);
                     closeLoginModal();
                     updateAuthUI(true);
-                    showToast('Zalogowano pomyslnie', 'success');
+                    const successMsg = (typeof i18n !== 'undefined') ? i18n.t('login_success') : 'Zalogowano pomyslnie';
+                    showToast('success', 'Sukces', successMsg);
                 }
             } catch (error) {
-                showToast(error.message || 'Blad logowania', 'error');
+                const errorMsg = error.message || ((typeof i18n !== 'undefined') ? i18n.t('invalid_credentials') : 'Blad logowania');
+                showToast('error', 'Blad', errorMsg);
             }
         });
     }
