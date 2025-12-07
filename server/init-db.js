@@ -11,28 +11,53 @@ const db = require('./database');
 
 console.log('Initializing database...\n');
 
-// Create admin user
-async function createAdminUser() {
-    const email = process.env.ADMIN_EMAIL || 'admin@rzeczy-znalezione.gov.pl';
-    const password = process.env.ADMIN_PASSWORD || 'AdminHackNation2025!';
+// Create test users for HackNation demo
+async function createTestUsers() {
+    const testUsers = [
+        {
+            email: 'admin@example.com',
+            password: 'admin123',
+            name: 'Admin User',
+            role: 'admin',
+            organization: 'System Administrator'
+        },
+        {
+            email: 'official@example.com',
+            password: 'official123',
+            name: 'Official User',
+            role: 'official',
+            organization: 'Urząd Miasta Krakowa'
+        },
+        {
+            email: 'user@example.com',
+            password: 'user123',
+            name: 'Regular User',
+            role: 'user',
+            organization: null
+        }
+    ];
 
-    const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
+    console.log('Creating test users...\n');
 
-    if (existing) {
-        console.log(`Admin user already exists: ${email}`);
-        return;
+    for (const user of testUsers) {
+        const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(user.email);
+
+        if (existing) {
+            console.log(`✓ User already exists: ${user.email}`);
+            continue;
+        }
+
+        const hashedPassword = await bcrypt.hash(user.password, 12);
+
+        db.prepare(`
+            INSERT INTO users (email, password, name, role, organization, is_active)
+            VALUES (?, ?, ?, ?, ?, 1)
+        `).run(user.email, hashedPassword, user.name, user.role, user.organization);
+
+        console.log(`✓ Created ${user.role}: ${user.email} / ${user.password}`);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    db.prepare(`
-        INSERT INTO users (email, password, name, role, organization, is_active)
-        VALUES (?, ?, ?, 'admin', 'System Administrator', 1)
-    `).run(email, hashedPassword, 'Administrator');
-
-    console.log(`Admin user created: ${email}`);
-    console.log(`Password: ${password}`);
-    console.log('\n*** CHANGE THIS PASSWORD AFTER FIRST LOGIN! ***\n');
+    console.log('\n✅ All test users created!\n');
 }
 
 // Insert sample data
@@ -254,18 +279,25 @@ async function main() {
         // Initialize database first
         await initDatabase();
 
-        await createAdminUser();
+        await createTestUsers();
         insertSampleData();
 
-        console.log('\nDatabase initialization complete!');
-        console.log('\nTo start the server, run: npm start');
+        console.log('\n═══════════════════════════════════════════════════════');
+        console.log('✅ Database initialization complete!');
+        console.log('═══════════════════════════════════════════════════════');
+        console.log('\n🔑 Login Credentials:');
+        console.log('   👑 Admin:    admin@example.com    / admin123');
+        console.log('   👔 Official: official@example.com / official123');
+        console.log('   👤 User:     user@example.com     / user123');
+        console.log('\n🚀 To start the server, run: npm run dev');
+        console.log('═══════════════════════════════════════════════════════\n');
 
         // Save and exit
         const { saveDatabase } = require('./database');
         saveDatabase();
         process.exit(0);
     } catch (error) {
-        console.error('Initialization error:', error);
+        console.error('❌ Initialization error:', error);
         process.exit(1);
     }
 }
