@@ -39,7 +39,7 @@ const STATIC_FILES = [
     'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
-    // Leaflet is lazy-loaded when map view is used
+    // Note: Leaflet is lazy-loaded when map view is used
 ];
 
 // API endpoints to cache with network-first strategy
