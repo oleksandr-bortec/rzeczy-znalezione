@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-function initializeApp() {
+async function initializeApp() {
     // Set default date to today
     const today = new Date().toISOString().split('T')[0];
     const dateFoundInput = document.getElementById('dataZnalezienia');
@@ -61,7 +61,7 @@ function initializeApp() {
     initializeNavigationListeners();
     initializeExportListeners();
     initializeLanguageSwitcher();
-    initializeAuth();
+    await initializeAuth();
 
     // Show first step
     showStep(1);
@@ -96,7 +96,7 @@ function initializeLanguageSwitcher() {
 // =====================================================
 // AUTHENTICATION
 // =====================================================
-function initializeAuth() {
+async function initializeAuth() {
     const loginBtn = document.getElementById('loginBtn');
     const navAuth = document.getElementById('navAuth');
 
@@ -104,6 +104,8 @@ function initializeAuth() {
 
     // Check if user is logged in
     if (typeof api !== 'undefined' && api.isAuthenticated()) {
+        // Fetch current user data to ensure we have the latest info
+        await api.getCurrentUser();
         updateAuthUI(true);
     }
 
@@ -121,7 +123,7 @@ function updateAuthUI(isLoggedIn) {
 
     if (isLoggedIn && typeof api !== 'undefined' && api.user) {
         const isAdmin = api.user.role === 'admin';
-        const adminMenuItem = isAdmin ? '<a href="#" id="adminBtn"><i class="fas fa-user-shield"></i> Administrator</a>' : '';
+        const adminMenuItem = isAdmin ? '<a href="admin.html" id="adminBtn"><i class="fas fa-user-shield"></i> Administrator</a>' : '';
 
         navAuth.innerHTML = `
             <div class="user-menu">
@@ -131,9 +133,9 @@ function updateAuthUI(isLoggedIn) {
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="user-menu-dropdown" id="userMenuDropdown">
-                    <a href="#" id="profileBtn"><i class="fas fa-user"></i> Profil</a>
+                    <a href="profile.html" id="profileBtn"><i class="fas fa-user"></i> Profil</a>
                     ${adminMenuItem}
-                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
+                    <a href="javascript:void(0)" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
                 </div>
             </div>
         `;
@@ -153,21 +155,6 @@ function updateAuthUI(isLoggedIn) {
             }
         });
 
-        // Profile handler
-        document.getElementById('profileBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'profile.html';
-        });
-
-        // Admin handler (only for admin users)
-        const adminBtn = document.getElementById('adminBtn');
-        if (adminBtn) {
-            adminBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = 'admin.html';
-            });
-        }
-
         // Logout handler
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
@@ -178,7 +165,7 @@ function updateAuthUI(isLoggedIn) {
             }
         });
     } else {
-        navAuth.innerHTML = `<a href="#" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>`;
+        navAuth.innerHTML = `<a href="javascript:void(0)" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>`;
         document.getElementById('loginBtn').addEventListener('click', (e) => {
             e.preventDefault();
             showLoginModal();

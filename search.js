@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * Initialize authentication
  */
-function initializeAuth() {
+async function initializeAuth() {
     const loginBtn = document.getElementById('loginBtn');
     const navAuth = document.getElementById('navAuth');
 
@@ -51,6 +51,8 @@ function initializeAuth() {
 
     // Check if user is logged in
     if (typeof api !== 'undefined' && api.isAuthenticated()) {
+        // Fetch current user data to ensure we have the latest info
+        await api.getCurrentUser();
         updateAuthUI(true);
     }
 
@@ -67,6 +69,9 @@ function updateAuthUI(isLoggedIn) {
     if (!navAuth) return;
 
     if (isLoggedIn && typeof api !== 'undefined' && api.user) {
+        const isAdmin = api.user.role === 'admin';
+        const adminMenuItem = isAdmin ? '<a href="admin.html" id="adminBtn"><i class="fas fa-user-shield"></i> Administrator</a>' : '';
+
         navAuth.innerHTML = `
             <div class="user-menu">
                 <button type="button" class="user-menu-btn" id="userMenuBtn">
@@ -75,7 +80,9 @@ function updateAuthUI(isLoggedIn) {
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="user-menu-dropdown" id="userMenuDropdown">
-                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
+                    <a href="profile.html" id="profileBtn"><i class="fas fa-user"></i> Profil</a>
+                    ${adminMenuItem}
+                    <a href="javascript:void(0)" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
                 </div>
             </div>
         `;
@@ -93,6 +100,7 @@ function updateAuthUI(isLoggedIn) {
             }
         });
 
+        // Logout handler
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             if (typeof api !== 'undefined') {
@@ -102,7 +110,7 @@ function updateAuthUI(isLoggedIn) {
             }
         });
     } else {
-        navAuth.innerHTML = `<a href="#" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>`;
+        navAuth.innerHTML = `<a href="javascript:void(0)" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>`;
         document.getElementById('loginBtn').addEventListener('click', (e) => {
             e.preventDefault();
             showLoginModal();

@@ -52,6 +52,13 @@
                         <a href="public.html" class="nav-link active">Szukaj rzeczy</a>
                         <a href="index.html" class="nav-link">Panel urzędnika</a>
                         <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener">Portal dane.gov.pl</a>
+                        <div class="nav-auth" id="navAuth">
+                            <a href="#" class="nav-link" id="loginBtn">Zaloguj</a>
+                        </div>
+                        <div class="lang-switcher">
+                            <button type="button" class="lang-btn active" data-lang="pl">PL</button>
+                            <button type="button" class="lang-btn" data-lang="en">EN</button>
+                        </div>
                     </nav>
                 </div>
             </div>
@@ -355,6 +362,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- JavaScript -->
+    <script src="i18n.js"></script>
     <script src="api.js"></script>
     <script src="search.js"></script>
 </body>
