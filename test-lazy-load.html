@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Lazy Load</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        #map {
+            height: 400px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log div {
+            margin: 3px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Lazy Loading Leaflet</h1>
+
+    <button onclick="testLoadLeaflet()">Load Leaflet</button>
+    <button onclick="clearLog()">Clear Log</button>
+
+    <div id="map"></div>
+
+    <div class="log" id="log"></div>
+
+    <script>
+        let leafletLoaded = false;
+        let leafletLoading = false;
+        let map = null;
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function loadLeaflet() {
+            if (leafletLoaded) {
+                log('✓ Leaflet already loaded');
+                return Promise.resolve();
+            }
+
+            if (leafletLoading) {
+                log('⏳ Leaflet is already loading, waiting...');
+                return new Promise((resolve) => {
+                    const checkInterval = setInterval(() => {
+                        if (leafletLoaded) {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 100);
+                });
+            }
+
+            leafletLoading = true;
+            log('📦 Starting Leaflet lazy load...');
+
+            return new Promise((resolve, reject) => {
+                // Load CSS
+                log('📄 Loading Leaflet CSS...');
+                const cssLink = document.createElement('link');
+                cssLink.rel = 'stylesheet';
+                cssLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+                cssLink.crossOrigin = 'anonymous';
+                document.head.appendChild(cssLink);
+
+                // Load JavaScript
+                log('📜 Loading Leaflet JS...');
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+                script.crossOrigin = 'anonymous';
+
+                script.onload = () => {
+                    log('✓ Script loaded, waiting for initialization...');
+                    setTimeout(() => {
+                        if (typeof L !== 'undefined') {
+                            log('✓ Leaflet loaded successfully!');
+                            log(`✓ Leaflet version: ${L.version}`);
+                            leafletLoaded = true;
+                            leafletLoading = false;
+                            resolve();
+                        } else {
+                            log('✗ Leaflet object not found after script load');
+                            leafletLoading = false;
+                            reject(new Error('Leaflet object not found'));
+                        }
+                    }, 100);
+                };
+
+                script.onerror = (error) => {
+                    log(`✗ Failed to load Leaflet: ${error.message || 'Unknown error'}`);
+                    console.error('Script error:', error);
+                    leafletLoading = false;
+                    reject(new Error('Failed to load Leaflet'));
+                };
+
+                document.head.appendChild(script);
+            });
+        }
+
+        async function testLoadLeaflet() {
+            try {
+                log('🚀 Starting test...');
+                await loadLeaflet();
+
+                if (map) {
+                    log('ℹ Map already initialized');
+                    return;
+                }
+
+                log('🗺️ Creating map...');
+                const mapContainer = document.getElementById('map');
+
+                map = L.map('map', {
+                    center: [52.0, 19.0],
+                    zoom: 6
+                });
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                log('✓ Map created successfully!');
+
+                // Add marker
+                const marker = L.marker([52.2297, 21.0122]).addTo(map);
+                marker.bindPopup('Warszawa, Polska').openPopup();
+                log('✓ Marker added');
+
+            } catch (error) {
+                log(`✗ Error: ${error.message}`);
+                console.error(error);
+            }
+        }
+
+        log('✓ Test page loaded');
+    </script>
+</body>
+</html>

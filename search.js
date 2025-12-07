@@ -517,22 +517,33 @@ async function loadLeaflet() {
         const cssLink = document.createElement('link');
         cssLink.rel = 'stylesheet';
         cssLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        cssLink.crossOrigin = 'anonymous';
         document.head.appendChild(cssLink);
 
         // Load JavaScript
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        script.async = true;
+        script.crossOrigin = 'anonymous';
 
         script.onload = () => {
-            console.log('[Lazy Load] Leaflet loaded successfully');
-            leafletLoaded = true;
-            leafletLoading = false;
-            resolve();
+            console.log('[Lazy Load] Leaflet script loaded');
+            // Wait a bit for Leaflet to fully initialize
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    console.log('[Lazy Load] Leaflet ready, version:', L.version);
+                    leafletLoaded = true;
+                    leafletLoading = false;
+                    resolve();
+                } else {
+                    console.error('[Lazy Load] Leaflet object not found after script load');
+                    leafletLoading = false;
+                    reject(new Error('Leaflet object not found'));
+                }
+            }, 100);
         };
 
-        script.onerror = () => {
-            console.error('[Lazy Load] Failed to load Leaflet');
+        script.onerror = (error) => {
+            console.error('[Lazy Load] Failed to load Leaflet script:', error);
             leafletLoading = false;
             reject(new Error('Failed to load Leaflet'));
         };
