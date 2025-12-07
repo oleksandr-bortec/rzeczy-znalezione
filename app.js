@@ -120,6 +120,9 @@ function updateAuthUI(isLoggedIn) {
     if (!navAuth) return;
 
     if (isLoggedIn && typeof api !== 'undefined' && api.user) {
+        const isAdmin = api.user.role === 'admin';
+        const adminMenuItem = isAdmin ? '<a href="#" id="adminBtn"><i class="fas fa-user-shield"></i> Administrator</a>' : '';
+
         navAuth.innerHTML = `
             <div class="user-menu">
                 <button type="button" class="user-menu-btn" id="userMenuBtn">
@@ -129,6 +132,7 @@ function updateAuthUI(isLoggedIn) {
                 </button>
                 <div class="user-menu-dropdown" id="userMenuDropdown">
                     <a href="#" id="profileBtn"><i class="fas fa-user"></i> Profil</a>
+                    ${adminMenuItem}
                     <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
                 </div>
             </div>
@@ -154,6 +158,15 @@ function updateAuthUI(isLoggedIn) {
             e.preventDefault();
             window.location.href = 'profile.html';
         });
+
+        // Admin handler (only for admin users)
+        const adminBtn = document.getElementById('adminBtn');
+        if (adminBtn) {
+            adminBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = 'admin.html';
+            });
+        }
 
         // Logout handler
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
