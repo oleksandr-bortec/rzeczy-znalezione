@@ -74,19 +74,32 @@ app.use('/api/users', usersRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/dane-gov', daneGovRoutes);
 
+// Application version
+const APP_VERSION = '2.0.6';
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
         timestamp: new Date().toISOString(),
-        version: '2.0.5'
+        version: APP_VERSION
     });
 });
 
-// Cache version endpoint for cache busting
+// Version endpoint for auto-update checks
+app.get('/api/version', (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    res.json({
+        version: APP_VERSION,
+        timestamp: Date.now(),
+        serviceWorker: '2.0.6'
+    });
+});
+
+// Legacy cache version endpoint (deprecated, use /api/version)
 app.get('/api/cache-version', (req, res) => {
     res.json({
-        version: '2.0.5',
+        version: APP_VERSION,
         timestamp: Date.now()
     });
 });

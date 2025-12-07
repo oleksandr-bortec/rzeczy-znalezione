@@ -7,6 +7,8 @@
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
     "init-db": "node server/init-db.js",
+    "setup": "node setup.js",
+    "postinstall": "node setup.js",
     "test": "jest",
     "build": "echo 'Static frontend - no build needed'"
   },

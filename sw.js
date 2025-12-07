@@ -1,15 +1,18 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
- * Version: 2.0.5 (Beta 0.2.0)
+ * Version: 2.0.6 (Auto-update enabled)
  */
 
-const VERSION = '2.0.5';
+const VERSION = '2.0.6';
 const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
 const STATIC_CACHE = `static-v${VERSION}`;
 const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
 
 // Development mode - disable aggressive caching
 const IS_DEVELOPMENT = self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1';
+
+// Auto-update check interval (every 5 minutes)
+const UPDATE_CHECK_INTERVAL = 5 * 60 * 1000;
 
 // Files to cache immediately
 const STATIC_FILES = [
@@ -104,10 +107,61 @@ self.addEventListener('activate', (event) => {
             })
             .then(() => {
                 console.log('[SW] Service worker activated');
+                // Start periodic update checks
+                if (!IS_DEVELOPMENT) {
+                    startPeriodicUpdateCheck();
+                }
                 return self.clients.claim();
             })
     );
 });
+
+/**
+ * Periodic update check - checks for new SW version
+ */
+function startPeriodicUpdateCheck() {
+    setInterval(() => {
+        checkForUpdates();
+    }, UPDATE_CHECK_INTERVAL);
+}
+
+/**
+ * Check for service worker updates
+ */
+async function checkForUpdates() {
+    try {
+        console.log('[SW] Checking for updates...');
+
+        // Fetch version info from server
+        const response = await fetch('/api/version', {
+            cache: 'no-store'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // If server version differs, trigger update
+            if (data.version && data.version !== VERSION) {
+                console.log(`[SW] New version available: ${data.version} (current: ${VERSION})`);
+
+                // Notify all clients about update
+                const clients = await self.clients.matchAll();
+                clients.forEach(client => {
+                    client.postMessage({
+                        type: 'UPDATE_AVAILABLE',
+                        version: data.version,
+                        currentVersion: VERSION
+                    });
+                });
+
+                // Skip waiting and activate new SW immediately
+                self.skipWaiting();
+            }
+        }
+    } catch (error) {
+        console.warn('[SW] Update check failed:', error);
+    }
+}
 
 /**
  * Fetch event - serve from cache or network

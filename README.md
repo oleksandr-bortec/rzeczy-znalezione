@@ -124,21 +124,60 @@ Plik `schema.json` zawiera kompletną specyfikację danych:
 
 ## 🔧 Instalacja i uruchomienie
 
-### Opcja 1: Bezpośrednio w przeglądarce
-1. Otwórz plik `index.html` w przeglądarce
-2. Gotowe!
+### ⚡ Szybki start (3 kroki)
 
-### Opcja 2: Lokalny serwer
 ```bash
-# Python 3
-python -m http.server 8000
+# 1. Sklonuj repozytorium
+git clone <repository-url>
+cd rzeczy-znalezione
 
-# Node.js
-npx serve .
+# 2. Zainstaluj zależności (automatyczne ustawienie!)
+npm install
 
-# PHP
-php -S localhost:8000
+# 3. Uruchom serwer
+npm run dev
 ```
+
+**Gotowe!** Otwórz http://localhost:3000
+
+**Co się stało automatycznie?**
+- ✅ Utworzono `.env` z bezpiecznym JWT kluczem
+- ✅ Zainicjalizowano bazę danych SQLite
+- ✅ Dodano 3 testowych użytkowników
+- ✅ Dodano 16 przykładowych przedmiotów
+
+**Dane logowania:**
+```
+👑 Admin:    admin@example.com    / admin123
+👔 Official: official@example.com / official123
+👤 User:     user@example.com     / user123
+```
+
+**Szczegółowa dokumentacja:**
+- 📖 [QUICK-SETUP.md](QUICK-SETUP.md) - Błyskawiczny start
+- 📘 [SETUP-GUIDE.md](SETUP-GUIDE.md) - Pełny przewodnik instalacji
+- 📗 [START_HERE.md](START_HERE.md) - Pierwsze kroki
+
+---
+
+## 🔄 Auto-update cache
+
+**Nowe w wersji 2.0.6!**
+
+System automatycznie:
+- ✅ Sprawdza dostępność nowych wersji co 5 minut
+- ✅ Wyświetla powiadomienie o aktualizacji
+- ✅ Umożliwia aktualizację jednym kliknięciem
+- ✅ Działa offline dzięki Service Worker
+
+**Manualne czyszczenie cache:**
+
+```javascript
+// W konsoli przeglądarki
+await window.clearAllCaches();
+```
+
+Lub odwiedź: http://localhost:3000/clear-cache.html
 
 ---
 
