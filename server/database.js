@@ -115,6 +115,7 @@ function createTables() {
             office_hours TEXT,
             photo_url TEXT,
             notes TEXT,
+            custom_fields TEXT,
             created_by INTEGER,
             entry_date TEXT DEFAULT CURRENT_DATE,
             update_date TEXT DEFAULT CURRENT_DATE,
@@ -125,6 +126,19 @@ function createTables() {
             FOREIGN KEY (created_by) REFERENCES users(id)
         )
     `);
+
+    // KILLER FEATURE #2: Migration - Add custom_fields column if it doesn't exist
+    db.run(`
+        SELECT sql FROM sqlite_master WHERE type='table' AND name='items'
+    `, (err, row) => {
+        if (!err && row && row.sql && !row.sql.includes('custom_fields')) {
+            db.run(`ALTER TABLE items ADD COLUMN custom_fields TEXT`, (alterErr) => {
+                if (!alterErr) {
+                    console.log('✓ Added custom_fields column to items table');
+                }
+            });
+        }
+    });
 
     // Audit log
     db.run(`

@@ -30,6 +30,16 @@
 
     <!-- Our styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Dynamic Forms (KILLER FEATURE #2) -->
+    <script src="dynamic-forms-config.js"></script>
+    <script src="dynamic-forms.js"></script>
+
+    <!-- Voice Assistant (KILLER FEATURE #3) -->
+    <script src="voice-assistant.js"></script>
+
+    <!-- Express Mode (KILLER FEATURE #5) -->
+    <script src="express-mode.js"></script>
 </head>
 <body>
     <!-- Skip link for accessibility -->
@@ -198,6 +208,11 @@
                                 <input type="date" id="dataZnalezienia" name="date_found" required>
                                 <span class="error-message"></span>
                             </div>
+                        </div>
+
+                        <!-- KILLER FEATURE #2: Dynamic Category-Specific Fields -->
+                        <div id="dynamicFieldsContainer" class="dynamic-fields-section" style="display: none;">
+                            <!-- Fields will be rendered here by DynamicFormManager -->
                         </div>
 
                         <div class="form-group">

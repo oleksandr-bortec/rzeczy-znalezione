@@ -1489,3 +1489,461 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 .card-danger .card-header h2 {
     color: var(--color-error);
 }
+
+/* =====================================================
+   KILLER FEATURE #2: DYNAMIC FORMS STYLING
+   ===================================================== */
+
+.dynamic-fields-section {
+    background: var(--color-grey-light-2);
+    border: 2px solid var(--color-blue-light);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dynamic-form-header {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-blue-light);
+}
+
+.dynamic-form-header h3 {
+    color: var(--color-blue-light);
+    margin: 0 0 var(--spacing-sm) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.dynamic-form-header h3 i {
+    font-size: 1.5rem;
+}
+
+.dynamic-form-header .form-help-text {
+    color: var(--color-grey-dark);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.dynamic-field {
+    margin-bottom: var(--spacing-md);
+}
+
+.dynamic-field label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--color-grey-darker);
+}
+
+.dynamic-field .required {
+    color: var(--color-error);
+    font-weight: bold;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.radio-option,
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--color-white);
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.radio-option:hover,
+.checkbox-option:hover {
+    background: var(--color-hover);
+}
+
+.radio-option input[type="radio"],
+.checkbox-option input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-option label,
+.checkbox-option label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: normal;
+    flex: 1;
+}
+
+.dynamic-field .form-help-text {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.85rem;
+    color: var(--color-grey-dark);
+    font-style: italic;
+}
+
+.dynamic-field .error-message {
+    display: none;
+    color: var(--color-error);
+    font-size: 0.85rem;
+    margin-top: var(--spacing-xs);
+}
+
+.dynamic-field .error-message:not(:empty) {
+    display: block;
+}
+
+/* Responsive design for dynamic forms */
+@media (max-width: 768px) {
+    .dynamic-fields-section {
+        padding: var(--spacing-md);
+    }
+
+    .radio-group,
+    .checkbox-group {
+        gap: var(--spacing-xs);
+    }
+}
+
+/* =====================================================
+   KILLER FEATURE #3: VOICE ASSISTANT STYLING
+   ===================================================== */
+
+.voice-assistant-wrapper {
+    margin-top: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.voice-assistant-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-blue-light);
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.voice-assistant-btn:hover {
+    background: var(--color-hover-2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.voice-assistant-btn.listening {
+    background: var(--color-error);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.voice-assistant-btn i {
+    font-size: 1.1rem;
+}
+
+.voice-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--color-grey-light-2);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--color-grey-dark);
+}
+
+.voice-status-indicator.listening {
+    background: #e3f2fd;
+    color: var(--color-blue-light);
+}
+
+.voice-status-indicator.error {
+    background: var(--color-error-light);
+    color: var(--color-error);
+}
+
+.voice-pulse {
+    width: 8px;
+    height: 8px;
+    background: var(--color-blue-light);
+    border-radius: 50%;
+    animation: pulse-dot 1s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+}
+
+.voice-status-indicator.error .voice-pulse {
+    background: var(--color-error);
+}
+
+.interim-text {
+    font-style: italic;
+    color: var(--color-grey-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .voice-assistant-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voice-assistant-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .voice-status-indicator {
+        width: 100%;
+    }
+}
+
+/* =====================================================
+   KILLER FEATURE #5: EXPRESS MODE STYLING
+   ===================================================== */
+
+.express-mode-panel {
+    background: var(--color-white);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.express-mode-header {
+    background: linear-gradient(135deg, var(--primary), var(--color-hover-2));
+    color: var(--color-white);
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 6px 6px 0 0;
+}
+
+.express-mode-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.express-mode-body {
+    padding: var(--spacing-lg);
+}
+
+.express-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-grey-light-1);
+}
+
+.express-section:last-child {
+    border-bottom: none;
+}
+
+.express-section h4 {
+    color: var(--color-blue-dark);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.badge {
+    background: var(--primary);
+    color: var(--color-white);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.express-common-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.express-quick-form {
+    background: var(--color-grey-light-2);
+    padding: var(--spacing-md);
+    border-radius: 6px;
+}
+
+.express-batch-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--color-grey-light-1);
+    border-radius: 6px;
+    padding: var(--spacing-sm);
+}
+
+.express-batch-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-grey-light-1);
+    border-radius: 6px;
+    margin-bottom: var(--spacing-sm);
+    transition: all 0.2s;
+}
+
+.express-batch-item:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.batch-item-number {
+    background: var(--primary);
+    color: var(--color-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.batch-item-info {
+    flex: 1;
+}
+
+.batch-item-info strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--color-blue-dark);
+}
+
+.batch-item-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--color-grey-dark);
+}
+
+.batch-item-info small {
+    color: var(--color-grey-dark);
+    font-size: 0.85rem;
+}
+
+.item-category-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    background: var(--color-grey-light-1);
+    color: var(--color-grey-darker);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+}
+
+.batch-item-remove {
+    background: var(--color-error);
+    color: var(--color-white);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.batch-item-remove:hover {
+    background: var(--color-darker-red);
+    transform: scale(1.1);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-grey-dark);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: var(--color-grey-light-1);
+    margin-bottom: var(--spacing-md);
+}
+
+.express-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding-top: var(--spacing-md);
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .express-common-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .express-batch-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .batch-item-remove {
+        align-self: flex-end;
+    }
+
+    .express-actions {
+        flex-direction: column;
+    }
+
+    .express-actions button {
+        width: 100%;
+    }
+}

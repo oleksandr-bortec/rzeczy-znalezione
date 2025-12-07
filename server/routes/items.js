@@ -7,6 +7,7 @@ const { body, query, validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 const db = require('../database');
 const { authenticateToken, requireRole, optionalAuth, logAudit } = require('../middleware/auth');
+const { standardizeItemData } = require('../services/dataStandardizer');
 
 const router = express.Router();
 
@@ -202,7 +203,9 @@ router.post('/', authenticateToken, requireRole('admin', 'official'), [
         }
 
         const publicId = generatePublicId();
-        const data = req.body;
+
+        // KILLER FEATURE #4: Standardize data before saving
+        const data = standardizeItemData(req.body);
 
         // Calculate collection deadline if not provided (2 years from date_found)
         let collectionDeadline = data.collection_deadline;
@@ -220,8 +223,8 @@ router.post('/', authenticateToken, requireRole('admin', 'official'), [
                 municipality, county, voivodeship,
                 estimated_value, status, collection_deadline,
                 office_name, office_address, office_phone, office_email, office_hours,
-                photo_url, notes, created_by
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                photo_url, notes, custom_fields, created_by
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `).run(
             publicId,
             data.item_name,
@@ -245,6 +248,7 @@ router.post('/', authenticateToken, requireRole('admin', 'official'), [
             data.office_hours || null,
             data.photo_url || null,
             data.notes || null,
+            data.custom_fields ? JSON.stringify(data.custom_fields) : null,
             req.user.id
         );
 
@@ -287,23 +291,30 @@ router.put('/:id', authenticateToken, requireRole('admin', 'official'), [
             return res.status(404).json({ error: 'Item not found' });
         }
 
+        // KILLER FEATURE #4: Standardize update data
+        const standardizedBody = standardizeItemData(req.body);
+
         const allowedFields = [
             'item_name', 'category', 'description', 'date_found', 'location_found',
             'location_type', 'coordinates_lat', 'coordinates_lon', 'municipality',
             'county', 'voivodeship', 'estimated_value', 'status', 'collection_deadline',
             'office_name', 'office_address', 'office_phone', 'office_email', 'office_hours',
-            'photo_url', 'notes'
+            'photo_url', 'notes', 'custom_fields'
         ];
 
         const updates = [];
         const params = [];
 
         for (const field of allowedFields) {
-            if (req.body[field] !== undefined) {
+            if (standardizedBody[field] !== undefined) {
                 updates.push(`${field} = ?`);
-                let value = req.body[field];
+                let value = standardizedBody[field];
                 if (value instanceof Date) {
                     value = value.toISOString().split('T')[0];
+                }
+                // KILLER FEATURE #2: Serialize custom_fields as JSON
+                if (field === 'custom_fields' && typeof value === 'object') {
+                    value = JSON.stringify(value);
                 }
                 params.push(value === '' ? null : value);
             }
@@ -483,6 +494,7 @@ function formatItem(item) {
         },
         photo_url: item.photo_url,
         notes: item.notes,
+        custom_fields: item.custom_fields ? JSON.parse(item.custom_fields) : null,
         entry_date: item.entry_date,
         update_date: item.update_date
     };

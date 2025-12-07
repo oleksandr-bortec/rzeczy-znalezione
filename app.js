@@ -10,6 +10,13 @@ let items = [];
 let currentStep = 1;
 let editingIndex = -1;
 
+// KILLER FEATURE #2: Dynamic Form Manager
+let dynamicFormManager = null;
+
+// KILLER FEATURE #3: Voice Assistant
+let voiceAssistant = null;
+let voiceAssistantUI = null;
+
 // Category mappings (English keys with Polish labels)
 // Use API_CATEGORIES from api.js if available, otherwise define locally
 const CATEGORIES = (typeof API_CATEGORIES !== 'undefined') ? API_CATEGORIES : {
@@ -53,6 +60,24 @@ async function initializeApp() {
     const deadlineInput = document.getElementById('dataWaznosci');
     if (deadlineInput) {
         deadlineInput.value = twoYearsLater.toISOString().split('T')[0];
+    }
+
+    // Initialize KILLER FEATURE #2: Dynamic Forms
+    if (typeof DYNAMIC_FORM_SCHEMAS !== 'undefined' && typeof DynamicFormManager !== 'undefined') {
+        dynamicFormManager = new DynamicFormManager(
+            '#dynamicFieldsContainer',
+            DYNAMIC_FORM_SCHEMAS,
+            i18n
+        );
+    }
+
+    // Initialize KILLER FEATURE #3: Voice Assistant
+    if (typeof VoiceAssistant !== 'undefined' && VoiceAssistant.isSupported()) {
+        voiceAssistant = new VoiceAssistant(i18n);
+        voiceAssistantUI = new VoiceAssistantUI(voiceAssistant, '#opis', i18n);
+        console.log('✓ Voice Assistant initialized');
+    } else {
+        console.warn('Voice Assistant not supported in this browser');
     }
 
     // Initialize event listeners
@@ -587,8 +612,27 @@ function initializeFormListeners() {
     const form = document.getElementById('itemForm');
     const startFormBtn = document.getElementById('startForm');
     const addAnotherBtn = document.getElementById('addAnother');
+    const categorySelect = document.getElementById('kategoria');
 
     if (!form) return;
+
+    // KILLER FEATURE #2: Category change - load dynamic fields
+    if (categorySelect && dynamicFormManager) {
+        categorySelect.addEventListener('change', (e) => {
+            const selectedCategory = e.target.value;
+            const dynamicContainer = document.getElementById('dynamicFieldsContainer');
+
+            if (selectedCategory && DYNAMIC_FORM_SCHEMAS[selectedCategory]) {
+                // Show and load dynamic fields for this category
+                dynamicFormManager.loadCategory(selectedCategory);
+                dynamicContainer.style.display = 'block';
+            } else {
+                // Hide dynamic fields for categories without schema
+                dynamicFormManager.clear();
+                dynamicContainer.style.display = 'none';
+            }
+        });
+    }
 
     // Start form button
     if (startFormBtn) {
@@ -641,6 +685,13 @@ function validateForm() {
     if (emailField && emailField.value && !isValidEmail(emailField.value)) {
         showFieldError(emailField, 'Podaj prawidlowy adres email');
         isValid = false;
+    }
+
+    // KILLER FEATURE #2: Validate dynamic fields
+    if (dynamicFormManager && dynamicFormManager.currentCategory) {
+        if (!dynamicFormManager.validateAll()) {
+            isValid = false;
+        }
     }
 
     return isValid;
@@ -723,6 +774,12 @@ function addItemFromForm() {
         notes: formData.get('notes')
     };
 
+    // KILLER FEATURE #2: Add custom fields from dynamic form
+    if (dynamicFormManager && dynamicFormManager.currentCategory) {
+        const dynamicData = dynamicFormManager.getValues();
+        item.custom_fields = dynamicData.custom_fields;
+    }
+
     if (editingIndex >= 0) {
         items[editingIndex] = item;
         editingIndex = -1;
@@ -749,6 +806,15 @@ function resetForm() {
     const deadlineInput = document.getElementById('dataWaznosci');
     if (deadlineInput) {
         deadlineInput.value = twoYearsLater.toISOString().split('T')[0];
+    }
+
+    // KILLER FEATURE #2: Reset dynamic form
+    if (dynamicFormManager) {
+        dynamicFormManager.clear();
+        const dynamicContainer = document.getElementById('dynamicFieldsContainer');
+        if (dynamicContainer) {
+            dynamicContainer.style.display = 'none';
+        }
     }
 
     editingIndex = -1;
