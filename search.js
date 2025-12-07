@@ -28,6 +28,8 @@ let currentFilters = {};
 let searchResults = [];
 let map = null;
 let markers = [];
+let leafletLoaded = false;
+let leafletLoading = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -420,13 +422,13 @@ function showNoResults() {
 /**
  * Render results based on current view
  */
-function renderResults(items) {
+async function renderResults(items) {
     if (currentView === 'grid') {
         renderGridView(items);
     } else if (currentView === 'list') {
         renderListView(items);
     } else if (currentView === 'map') {
-        renderMapView(items);
+        await renderMapView(items);
     }
 }
 
@@ -489,19 +491,72 @@ function renderListView(items) {
 }
 
 /**
+ * Lazy load Leaflet library
+ */
+async function loadLeaflet() {
+    if (leafletLoaded) {
+        return Promise.resolve();
+    }
+
+    if (leafletLoading) {
+        // Wait for existing load to complete
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                if (leafletLoaded) {
+                    clearInterval(checkInterval);
+                    resolve();
+                }
+            }, 100);
+        });
+    }
+
+    leafletLoading = true;
+
+    return new Promise((resolve, reject) => {
+        // Load CSS
+        const cssLink = document.createElement('link');
+        cssLink.rel = 'stylesheet';
+        cssLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(cssLink);
+
+        // Load JavaScript
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.async = true;
+
+        script.onload = () => {
+            console.log('[Lazy Load] Leaflet loaded successfully');
+            leafletLoaded = true;
+            leafletLoading = false;
+            resolve();
+        };
+
+        script.onerror = () => {
+            console.error('[Lazy Load] Failed to load Leaflet');
+            leafletLoading = false;
+            reject(new Error('Failed to load Leaflet'));
+        };
+
+        document.head.appendChild(script);
+    });
+}
+
+/**
  * Initialize map
  */
-function initializeMap() {
+async function initializeMap() {
     const mapContainer = document.getElementById('resultsMap');
     mapContainer.style.display = 'block';
 
-    // Check if Leaflet is loaded
-    if (typeof L === 'undefined') {
-        console.warn('Leaflet not loaded yet, retrying...');
-        setTimeout(() => {
-            initializeMap();
-        }, 100);
-        return;
+    // Lazy load Leaflet if not already loaded
+    if (!leafletLoaded) {
+        try {
+            await loadLeaflet();
+        } catch (error) {
+            console.error('Failed to load Leaflet:', error);
+            showToast('Nie udało się załadować mapy', 'error');
+            return;
+        }
     }
 
     // Create map centered on Poland
@@ -534,12 +589,17 @@ function initializeMap() {
 /**
  * Render map view
  */
-function renderMapView(items) {
+async function renderMapView(items) {
     const mapContainer = document.getElementById('resultsMap');
     mapContainer.style.display = 'block';
 
     if (!map) {
-        initializeMap();
+        // Show loading indicator while loading Leaflet
+        if (!leafletLoaded) {
+            mapContainer.innerHTML = '<div class="map-loading"><div class="spinner"></div><p>Ładowanie mapy...</p></div>';
+        }
+        await initializeMap();
+        mapContainer.innerHTML = ''; // Clear loading indicator
     } else {
         // Fix map size when switching views
         setTimeout(() => {

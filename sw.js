@@ -1,9 +1,9 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
- * Version: 2.0.7 (Auto-update enabled)
+ * Version: 2.0.8 (Auto-update enabled + Lazy loading)
  */
 
-const VERSION = '2.0.7';
+const VERSION = '2.0.8';
 const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
 const STATIC_CACHE = `static-v${VERSION}`;
 const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
@@ -38,9 +38,8 @@ const STATIC_FILES = [
     // External CDN resources
     'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+    // Leaflet is lazy-loaded when map view is used
 ];
 
 // API endpoints to cache with network-first strategy
