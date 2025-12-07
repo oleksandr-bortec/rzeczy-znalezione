@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Szukaj Rzeczy Znalezionych - dane.gov.pl</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="alternate icon" type="image/png" href="/icons/icon-192.png">
-
     <!-- Fonts (same as dane.gov.pl) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,20 +17,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#D4213D">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Rzeczy Znalezione">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-
     <!-- Our styles -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="public.css">
 </head>
 <body>
     <!-- Skip link for accessibility -->
+     
     <a href="#main-content" class="skip-link">Przejdź do treści głównej</a>
 
     <!-- Gov.pl Bar - official government bar -->
@@ -60,16 +49,9 @@
                         <span class="logo-subtitle">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
-                        <a href="public.html" class="nav-link active" data-i18n="nav_search">Szukaj rzeczy</a>
-                        <a href="index.html" class="nav-link" data-i18n="nav_admin">Panel urzędnika</a>
-                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener" data-i18n="nav_portal">Portal dane.gov.pl</a>
-                        <div class="nav-auth" id="navAuth">
-                            <a href="#" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>
-                        </div>
-                        <div class="lang-switcher">
-                            <button type="button" class="lang-btn" data-lang="pl">PL</button>
-                            <button type="button" class="lang-btn" data-lang="en">EN</button>
-                        </div>
+                        <a href="public.html" class="nav-link active">Szukaj rzeczy</a>
+                        <a href="index.html" class="nav-link">Panel urzędnika</a>
+                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener">Portal dane.gov.pl</a>
                     </nav>
                 </div>
             </div>
@@ -373,7 +355,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- JavaScript -->
-    <script src="i18n.js"></script>
     <script src="api.js"></script>
     <script src="search.js"></script>
 </body>
