@@ -1,9 +1,9 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
- * Version: 2.0.6 (Auto-update enabled)
+ * Version: 2.0.7 (Auto-update enabled)
  */
 
-const VERSION = '2.0.6';
+const VERSION = '2.0.7';
 const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
 const STATIC_CACHE = `static-v${VERSION}`;
 const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
@@ -11,8 +11,8 @@ const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
 // Development mode - disable aggressive caching
 const IS_DEVELOPMENT = self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1';
 
-// Auto-update check interval (every 5 minutes)
-const UPDATE_CHECK_INTERVAL = 5 * 60 * 1000;
+// Auto-update check interval (every 1 second for testing, 5 minutes for production)
+const UPDATE_CHECK_INTERVAL = IS_DEVELOPMENT ? 1000 : 5 * 60 * 1000;
 
 // Files to cache immediately
 const STATIC_FILES = [
@@ -117,12 +117,37 @@ self.addEventListener('activate', (event) => {
 });
 
 /**
+ * Message event - handle messages from clients
+ */
+self.addEventListener('message', (event) => {
+    console.log('[SW] Message received:', event.data);
+
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        console.log('[SW] SKIP_WAITING requested, activating new SW...');
+        self.skipWaiting();
+    }
+});
+
+/**
  * Periodic update check - checks for new SW version
  */
+let updateCheckTimer = null;
+
 function startPeriodicUpdateCheck() {
-    setInterval(() => {
+    // Clear any existing timer
+    if (updateCheckTimer) {
+        clearInterval(updateCheckTimer);
+    }
+
+    // Initial check
+    checkForUpdates();
+
+    // Set up periodic checks
+    updateCheckTimer = setInterval(() => {
         checkForUpdates();
     }, UPDATE_CHECK_INTERVAL);
+
+    console.log(`[SW] Update check scheduled every ${UPDATE_CHECK_INTERVAL / 1000}s`);
 }
 
 /**
@@ -134,11 +159,15 @@ async function checkForUpdates() {
 
         // Fetch version info from server
         const response = await fetch('/api/version', {
-            cache: 'no-store'
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
         });
 
         if (response.ok) {
             const data = await response.json();
+            console.log(`[SW] Server version: ${data.version}, Current version: ${VERSION}`);
 
             // If server version differs, trigger update
             if (data.version && data.version !== VERSION) {
@@ -146,6 +175,8 @@ async function checkForUpdates() {
 
                 // Notify all clients about update
                 const clients = await self.clients.matchAll();
+                console.log(`[SW] Notifying ${clients.length} clients about update`);
+
                 clients.forEach(client => {
                     client.postMessage({
                         type: 'UPDATE_AVAILABLE',
@@ -154,8 +185,10 @@ async function checkForUpdates() {
                     });
                 });
 
-                // Skip waiting and activate new SW immediately
-                self.skipWaiting();
+                // Note: We don't call skipWaiting() here anymore
+                // It will be called when user clicks "Update Now" button
+            } else {
+                console.log('[SW] Already on latest version');
             }
         }
     } catch (error) {

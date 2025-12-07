@@ -75,7 +75,7 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/dane-gov', daneGovRoutes);
 
 // Application version
-const APP_VERSION = '2.0.6';
+const APP_VERSION = '2.0.7';
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -92,7 +92,7 @@ app.get('/api/version', (req, res) => {
     res.json({
         version: APP_VERSION,
         timestamp: Date.now(),
-        serviceWorker: '2.0.6'
+        serviceWorker: APP_VERSION
     });
 });
 
