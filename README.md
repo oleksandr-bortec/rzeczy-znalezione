@@ -154,6 +154,7 @@ npm run dev
 ```
 
 **Szczegółowa dokumentacja:**
+- 💻 [COMMANDS.md](COMMANDS.md) - **Wszystkie komendy dla kolegi** ⭐
 - 📖 [QUICK-SETUP.md](QUICK-SETUP.md) - Błyskawiczny start
 - 📘 [SETUP-GUIDE.md](SETUP-GUIDE.md) - Pełny przewodnik instalacji
 - 📗 [START_HERE.md](START_HERE.md) - Pierwsze kroki
