@@ -1,9 +1,9 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
- * Version: 2.0.8 (Auto-update enabled + Lazy loading)
+ * Version: 2.0.9 (Auto-update enabled + Lazy loading fixed)
  */
 
-const VERSION = '2.0.8';
+const VERSION = '2.0.9';
 const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
 const STATIC_CACHE = `static-v${VERSION}`;
 const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
@@ -215,9 +215,17 @@ self.addEventListener('fetch', (event) => {
     // In development mode - always use network first
     if (IS_DEVELOPMENT) {
         event.respondWith(
-            fetch(request).catch(() => {
+            fetch(request).catch(async () => {
                 // Fallback to cache only if network fails
-                return caches.match(request);
+                const cachedResponse = await caches.match(request);
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+                // If not in cache, return network error
+                return new Response('Network error', {
+                    status: 503,
+                    statusText: 'Service Unavailable'
+                });
             })
         );
         return;
