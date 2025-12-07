@@ -49,11 +49,11 @@
                         <span class="logo-subtitle">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
-                        <a href="public.html" class="nav-link active">Szukaj rzeczy</a>
-                        <a href="index.html" class="nav-link">Panel urzędnika</a>
-                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener">Portal dane.gov.pl</a>
+                        <a href="public.html" class="nav-link active" data-i18n="nav_search">Szukaj rzeczy</a>
+                        <a href="index.html" class="nav-link" data-i18n="nav_admin">Panel urzędnika</a>
+                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener" data-i18n="nav_portal">Portal dane.gov.pl</a>
                         <div class="nav-auth" id="navAuth">
-                            <a href="#" class="nav-link" id="loginBtn">Zaloguj</a>
+                            <a href="javascript:void(0)" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>
                         </div>
                         <div class="lang-switcher">
                             <button type="button" class="lang-btn active" data-lang="pl">PL</button>
@@ -71,8 +71,8 @@
 
             <!-- Hero Section -->
             <section class="hero">
-                <h1><i class="fas fa-search-location"></i> Szukaj Rzeczy Znalezionych</h1>
-                <p class="lead">Centralna wyszukiwarka rzeczy znalezionych z całej Polski. Sprawdź, czy Twoja zgubiona rzecz została odnaleziona.</p>
+                <h1><i class="fas fa-search-location"></i> <span data-i18n="search_title">Szukaj Rzeczy Znalezionych</span></h1>
+                <p class="lead" data-i18n="search_subtitle">Centralna wyszukiwarka rzeczy znalezionych z całej Polski. Sprawdź, czy Twoja zgubiona rzecz została odnaleziona.</p>
             </section>
 
             <!-- Search Section -->
