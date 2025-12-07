@@ -495,6 +495,15 @@ function initializeMap() {
     const mapContainer = document.getElementById('resultsMap');
     mapContainer.style.display = 'block';
 
+    // Check if Leaflet is loaded
+    if (typeof L === 'undefined') {
+        console.warn('Leaflet not loaded yet, retrying...');
+        setTimeout(() => {
+            initializeMap();
+        }, 100);
+        return;
+    }
+
     // Create map centered on Poland
     map = L.map('resultsMap', {
         center: [52.0, 19.0],

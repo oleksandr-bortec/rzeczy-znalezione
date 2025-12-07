@@ -13,7 +13,7 @@ if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const dbPath = process.env.DATABASE_PATH || path.join(dataDir, 'database.sqlite');
+const dbPath = process.env.DATABASE_PATH || path.join(dataDir, 'rzeczy-znalezione.db');
 
 let db = null;
 let SQL = null;

@@ -245,6 +245,160 @@ function insertSampleData() {
             office_phone: '+48 61 878 56 78',
             office_email: 'brz@um.poznan.pl',
             office_hours: 'Pon-Pt: 7:30-15:30'
+        },
+        {
+            public_id: 'WR/2024/0030',
+            item_name: 'Plecak szkolny Nike',
+            category: 'other',
+            description: 'Plecak szkolny Nike, kolor czarno-zielony, zawiera zeszyty, piórnik i kalkulator',
+            date_found: '2024-03-15',
+            location_found: 'Tramwaj linia 10, przystanek Plac Grunwaldzki',
+            location_type: 'public_transport',
+            coordinates_lat: 51.1079,
+            coordinates_lon: 17.0385,
+            municipality: 'Wroclaw',
+            county: 'Wroclaw',
+            voivodeship: 'dolnoslaskie',
+            estimated_value: 250,
+            status: 'stored',
+            collection_deadline: '2026-03-15',
+            office_name: 'MPK Wroclaw - Biuro Rzeczy Znalezionych',
+            office_address: 'ul. Grabiszynska 105, 53-503 Wroclaw',
+            office_phone: '+48 71 700 44 44',
+            office_email: 'rzeczy.znalezione@mpk.wroc.pl',
+            office_hours: 'Pon-Pt: 7:00-15:00'
+        },
+        {
+            public_id: 'KA/2024/0015',
+            item_name: 'Parasol automatyczny',
+            category: 'other',
+            description: 'Parasol automatyczny, kolor bordowy, marki Doppler, drewniana raczka',
+            date_found: '2024-03-20',
+            location_found: 'Park Zadole, przy glownej alei',
+            location_type: 'park',
+            coordinates_lat: 50.2649,
+            coordinates_lon: 19.0238,
+            municipality: 'Katowice',
+            county: 'Katowice',
+            voivodeship: 'slaskie',
+            estimated_value: 80,
+            status: 'stored',
+            collection_deadline: '2026-03-20',
+            office_name: 'Biuro Rzeczy Znalezionych UM Katowice',
+            office_address: 'ul. Młynska 4, 40-098 Katowice',
+            office_phone: '+48 32 259 39 39',
+            office_email: 'brz@katowice.eu',
+            office_hours: 'Pon-Pt: 8:00-16:00'
+        },
+        {
+            public_id: 'LU/2024/0008',
+            item_name: 'Okulary sloneczne Ray-Ban',
+            category: 'other',
+            description: 'Okulary sloneczne Ray-Ban Aviator, zlote oprawki, szkla ciemnobrązowe, w czarnym etui',
+            date_found: '2024-04-01',
+            location_found: 'Cafe Literacka, przy stoliku przy oknie',
+            location_type: 'cafe',
+            coordinates_lat: 51.2465,
+            coordinates_lon: 22.5684,
+            municipality: 'Lublin',
+            county: 'Lublin',
+            voivodeship: 'lubelskie',
+            estimated_value: 600,
+            status: 'stored',
+            collection_deadline: '2026-04-01',
+            office_name: 'Biuro Rzeczy Znalezionych Lublin',
+            office_address: 'ul. Wieniawska 14, 20-071 Lublin',
+            office_phone: '+48 81 466 36 36',
+            office_email: 'rzeczy@lublin.eu',
+            office_hours: 'Pon-Pt: 8:00-16:00'
+        },
+        {
+            public_id: 'SZ/2024/0012',
+            item_name: 'Tablet Samsung Galaxy Tab',
+            category: 'electronics',
+            description: 'Tablet Samsung Galaxy Tab S8, kolor granatowy, 11 cali, z klawiatura bezprzewodowa w komplecie',
+            date_found: '2024-04-05',
+            location_found: 'Biblioteka Uniwersytecka, czytelnia glowna, stanowisko nr 23',
+            location_type: 'other',
+            coordinates_lat: 53.4285,
+            coordinates_lon: 14.5528,
+            municipality: 'Szczecin',
+            county: 'Szczecin',
+            voivodeship: 'zachodniopomorskie',
+            estimated_value: 2200,
+            status: 'stored',
+            collection_deadline: '2026-04-05',
+            office_name: 'Straz Miejska Szczecin',
+            office_address: 'ul. Potulicka 23, 70-329 Szczecin',
+            office_phone: '+48 91 424 55 55',
+            office_email: 'strazmiejska@um.szczecin.pl',
+            office_hours: 'Pon-Pt: 7:00-15:00'
+        },
+        {
+            public_id: 'BI/2024/0020',
+            item_name: 'Naszyjnik zloty z zawieszka',
+            category: 'jewelry',
+            description: 'Naszyjnik zloty, prob 585, zawieszka w ksztalcie serca z inicjalami "A&M", delikatny lancuszek',
+            date_found: '2024-04-10',
+            location_found: 'Basen Aqua Park, szatnia damska nr 45',
+            location_type: 'other',
+            coordinates_lat: 53.1235,
+            coordinates_lon: 23.1688,
+            municipality: 'Bialystok',
+            county: 'Bialystok',
+            voivodeship: 'podlaskie',
+            estimated_value: 1500,
+            status: 'stored',
+            collection_deadline: '2026-04-10',
+            office_name: 'Biuro Rzeczy Znalezionych Bialystok',
+            office_address: 'ul. Slowackiego 3A, 15-950 Bialystok',
+            office_phone: '+48 85 869 61 00',
+            office_email: 'brz@um.bialystok.pl',
+            office_hours: 'Pon-Pt: 8:00-16:00'
+        },
+        {
+            public_id: 'RZ/2024/0005',
+            item_name: 'Dokumenty - Dowod Osobisty',
+            category: 'documents',
+            description: 'Dowod osobisty na nazwisko Kowalski Jan, seria ABC123456',
+            date_found: '2024-04-12',
+            location_found: 'Urząd Miasta, hol glowny przy recepcji',
+            location_type: 'office',
+            coordinates_lat: 50.0413,
+            coordinates_lon: 19.9381,
+            municipality: 'Krakow',
+            county: 'Krakow',
+            voivodeship: 'malopolskie',
+            estimated_value: 0,
+            status: 'stored',
+            collection_deadline: '2026-04-12',
+            office_name: 'Biuro Rzeczy Znalezionych Starostwa Powiatowego',
+            office_address: 'ul. Glowna 1, pok. 101, 31-000 Krakow',
+            office_phone: '+48 12 345 67 89',
+            office_email: 'rzeczy.znalezione@powiat.krakow.pl',
+            office_hours: 'Pon-Pt: 8:00-16:00'
+        },
+        {
+            public_id: 'RZ/2024/0006',
+            item_name: 'Kurtka damska zimowa',
+            category: 'clothing',
+            description: 'Kurtka damska zimowa marki Columbia, kolor czarny, rozmiar M, kaptur z futerkiem',
+            date_found: '2024-04-15',
+            location_found: 'Restauracja Pod Wawelem, przy stoliku nr 8',
+            location_type: 'restaurant',
+            coordinates_lat: 50.0543,
+            coordinates_lon: 19.9350,
+            municipality: 'Krakow',
+            county: 'Krakow',
+            voivodeship: 'malopolskie',
+            estimated_value: 450,
+            status: 'liquidated',
+            collection_deadline: '2026-04-15',
+            office_name: 'Biuro Rzeczy Znalezionych Starostwa Powiatowego',
+            office_address: 'ul. Glowna 1, pok. 101, 31-000 Krakow',
+            office_phone: '+48 12 345 67 89',
+            office_email: 'rzeczy.znalezione@powiat.krakow.pl',
+            office_hours: 'Pon-Pt: 8:00-16:00'
         }
     ];
 
@@ -259,18 +413,25 @@ function insertSampleData() {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
+    let insertedCount = 0;
     for (const item of sampleItems) {
-        insertStmt.run(
-            item.public_id, item.item_name, item.category, item.description,
-            item.date_found, item.location_found, item.location_type,
-            item.coordinates_lat, item.coordinates_lon,
-            item.municipality, item.county, item.voivodeship,
-            item.estimated_value, item.status, item.collection_deadline,
-            item.office_name, item.office_address, item.office_phone, item.office_email, item.office_hours
-        );
+        try {
+            insertStmt.run(
+                item.public_id, item.item_name, item.category, item.description,
+                item.date_found, item.location_found, item.location_type,
+                item.coordinates_lat, item.coordinates_lon,
+                item.municipality, item.county, item.voivodeship,
+                item.estimated_value, item.status, item.collection_deadline,
+                item.office_name, item.office_address, item.office_phone, item.office_email, item.office_hours
+            );
+            insertedCount++;
+            console.log(`✓ Inserted: ${item.public_id} - ${item.item_name}`);
+        } catch (error) {
+            console.error(`✗ Failed to insert ${item.public_id}:`, error.message);
+        }
     }
 
-    console.log(`Inserted ${sampleItems.length} sample items.`);
+    console.log(`\nInserted ${insertedCount} of ${sampleItems.length} sample items.`);
 }
 
 // Main
