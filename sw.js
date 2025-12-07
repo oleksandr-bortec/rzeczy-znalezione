@@ -1,10 +1,15 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
+ * Version: 2.0.5 (Beta 0.2.0)
  */
 
-const CACHE_NAME = 'rzeczy-znalezione-v2.0.4';
-const STATIC_CACHE = 'static-v2.0.4';
-const DYNAMIC_CACHE = 'dynamic-v2.0.4';
+const VERSION = '2.0.5';
+const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
+const STATIC_CACHE = `static-v${VERSION}`;
+const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
+
+// Development mode - disable aggressive caching
+const IS_DEVELOPMENT = self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1';
 
 // Files to cache immediately
 const STATIC_FILES = [
@@ -45,7 +50,14 @@ const API_CACHE_URLS = [
  * Install event - cache static assets
  */
 self.addEventListener('install', (event) => {
-    console.log('[SW] Installing service worker...');
+    console.log(`[SW v${VERSION}] Installing service worker...`);
+
+    // In development, skip caching and activate immediately
+    if (IS_DEVELOPMENT) {
+        console.log('[SW] Development mode - skipping cache');
+        event.waitUntil(self.skipWaiting());
+        return;
+    }
 
     event.waitUntil(
         caches.open(STATIC_CACHE)
@@ -111,6 +123,17 @@ self.addEventListener('fetch', (event) => {
 
     // Skip Chrome extensions
     if (url.protocol === 'chrome-extension:') {
+        return;
+    }
+
+    // In development mode - always use network first
+    if (IS_DEVELOPMENT) {
+        event.respondWith(
+            fetch(request).catch(() => {
+                // Fallback to cache only if network fails
+                return caches.match(request);
+            })
+        );
         return;
     }
 

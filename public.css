@@ -884,6 +884,203 @@
     }
 }
 
+/* =====================================================
+   MAP ENHANCEMENTS
+   ===================================================== */
+
+/* Custom marker icon - remove default leaflet styling */
+.custom-marker-icon {
+    background: transparent;
+    border: none;
+}
+
+/* Map popup styling */
+.leaflet-popup-content-wrapper {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.map-popup {
+    padding: var(--spacing-sm);
+    min-width: 250px;
+}
+
+.map-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.map-popup-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text);
+    flex: 1;
+}
+
+.map-popup-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.map-popup-status.stored {
+    background: var(--color-blue-light);
+    color: var(--color-blue-dark);
+}
+
+.map-popup-status.returned {
+    background: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.map-popup-status.liquidated {
+    background: var(--color-gray-light);
+    color: var(--color-gray-dark);
+}
+
+.map-popup p {
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.map-popup i {
+    width: 16px;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.map-popup-category {
+    font-weight: 500;
+    color: var(--color-text) !important;
+}
+
+.map-popup .btn {
+    margin-top: var(--spacing-sm);
+    width: 100%;
+}
+
+/* Map Legend */
+.map-legend {
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    max-width: 250px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.map-legend-header {
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.map-legend-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.map-legend-header i {
+    color: var(--color-blue);
+}
+
+.map-legend-content {
+    font-size: 0.875rem;
+}
+
+.map-legend-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.map-legend-section:last-child {
+    margin-bottom: 0;
+}
+
+.map-legend-subtitle {
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    color: var(--color-text-muted);
+}
+
+.map-legend-item i {
+    width: 20px;
+    text-align: center;
+    color: var(--color-blue);
+}
+
+.map-legend-item span:first-of-type {
+    flex: 1;
+}
+
+.map-legend-count {
+    background: var(--color-gray-light);
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--color-text);
+}
+
+.map-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.map-legend-empty,
+.map-legend-loading {
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: var(--spacing-sm) 0;
+}
+
+/* Leaflet controls styling */
+.leaflet-control-scale {
+    background: white;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Fix map container height */
+.results-map {
+    height: 600px;
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
 @media (max-width: 576px) {
     .hero {
         padding: var(--spacing-xl) var(--spacing-sm);

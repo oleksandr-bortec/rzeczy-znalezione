@@ -79,7 +79,15 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
         timestamp: new Date().toISOString(),
-        version: '2.0.0'
+        version: '2.0.5'
+    });
+});
+
+// Cache version endpoint for cache busting
+app.get('/api/cache-version', (req, res) => {
+    res.json({
+        version: '2.0.5',
+        timestamp: Date.now()
     });
 });
 

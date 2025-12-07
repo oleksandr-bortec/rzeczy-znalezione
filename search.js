@@ -495,11 +495,31 @@ function initializeMap() {
     const mapContainer = document.getElementById('resultsMap');
     mapContainer.style.display = 'block';
 
-    map = L.map('resultsMap').setView([52.0, 19.0], 6);
+    // Create map centered on Poland
+    map = L.map('resultsMap', {
+        center: [52.0, 19.0],
+        zoom: 6,
+        zoomControl: true,
+        scrollWheelZoom: true
+    });
 
+    // Add tile layer with attribution
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        minZoom: 5
     }).addTo(map);
+
+    // Add scale control
+    L.control.scale({ imperial: false }).addTo(map);
+
+    // Add legend
+    addMapLegend();
+
+    // Fix map rendering issue when tab becomes visible
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 100);
 }
 
 /**
@@ -511,6 +531,11 @@ function renderMapView(items) {
 
     if (!map) {
         initializeMap();
+    } else {
+        // Fix map size when switching views
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
     }
 
     // Clear existing markers
@@ -519,31 +544,68 @@ function renderMapView(items) {
 
     // Add markers for items with coordinates
     const bounds = [];
+    const categoryGroups = {};
 
     items.forEach(item => {
         if (item.coordinates && item.coordinates.lat && item.coordinates.lon) {
-            const marker = L.marker([item.coordinates.lat, item.coordinates.lon])
+            // Create custom icon based on category
+            const icon = createCategoryIcon(item.category, item.status);
+
+            // Get translated labels
+            const viewDetailsText = typeof i18n !== 'undefined' ? i18n.t('view_details') : 'Zobacz szczegóły';
+            const categoryText = item.category_pl || CATEGORIES[item.category]?.pl || item.category;
+
+            const marker = L.marker([item.coordinates.lat, item.coordinates.lon], { icon })
                 .addTo(map)
                 .bindPopup(`
                     <div class="map-popup">
-                        <h4>${item.item_name}</h4>
-                        <p>${item.category_pl}</p>
-                        <p><i class="fas fa-calendar"></i> ${formatDate(item.date_found)}</p>
+                        <div class="map-popup-header">
+                            <h4>${item.item_name}</h4>
+                            <span class="map-popup-status ${item.status}">${STATUSES[item.status]?.pl || item.status}</span>
+                        </div>
+                        <p class="map-popup-category">
+                            <i class="fas ${getCategoryIcon(item.category)}"></i> ${categoryText}
+                        </p>
+                        <p class="map-popup-date">
+                            <i class="fas fa-calendar"></i> ${formatDate(item.date_found)}
+                        </p>
+                        <p class="map-popup-location">
+                            <i class="fas fa-map-marker-alt"></i> ${item.municipality}
+                        </p>
                         <button class="btn btn-primary btn-sm" onclick="showItemDetail('${item.id}')">
-                            Zobacz szczegoly
+                            <i class="fas fa-eye"></i> ${viewDetailsText}
                         </button>
                     </div>
-                `);
+                `, {
+                    maxWidth: 300,
+                    className: 'custom-popup'
+                });
 
             markers.push(marker);
             bounds.push([item.coordinates.lat, item.coordinates.lon]);
+
+            // Group by category for legend
+            if (!categoryGroups[item.category]) {
+                categoryGroups[item.category] = 0;
+            }
+            categoryGroups[item.category]++;
         }
     });
 
-    // Fit map to markers
+    // Fit map to markers with animation
     if (bounds.length > 0) {
-        map.fitBounds(bounds, { padding: [50, 50] });
+        map.fitBounds(bounds, {
+            padding: [50, 50],
+            maxZoom: 15,
+            animate: true
+        });
+    } else {
+        // No coordinates, show all of Poland
+        map.setView([52.0, 19.0], 6);
     }
+
+    // Update legend with counts
+    updateMapLegend(categoryGroups);
 }
 
 /**
@@ -684,6 +746,142 @@ async function loadStatistics() {
  */
 function getCategoryIcon(category) {
     return CATEGORIES[category]?.icon || 'fa-box';
+}
+
+/**
+ * Helper: Create custom map marker icon based on category and status
+ */
+function createCategoryIcon(category, status) {
+    // Color mapping for different statuses
+    const statusColors = {
+        'stored': '#3b82f6',      // Blue - available
+        'returned': '#10b981',    // Green - returned
+        'liquidated': '#6b7280'   // Gray - liquidated
+    };
+
+    // Category-specific colors (fallback)
+    const categoryColors = {
+        'phone': '#3b82f6',
+        'documents': '#8b5cf6',
+        'jewelry': '#f59e0b',
+        'keys': '#ef4444',
+        'wallet': '#059669',
+        'clothing': '#ec4899',
+        'electronics': '#6366f1',
+        'bicycle': '#14b8a6',
+        'other': '#6b7280'
+    };
+
+    const color = statusColors[status] || categoryColors[category] || '#3b82f6';
+    const iconClass = getCategoryIcon(category);
+
+    return L.divIcon({
+        className: 'custom-marker-icon',
+        html: `
+            <div style="
+                background-color: ${color};
+                width: 36px;
+                height: 36px;
+                border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg);
+                border: 3px solid white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+                <i class="fas ${iconClass}" style="
+                    color: white;
+                    font-size: 14px;
+                    transform: rotate(45deg);
+                "></i>
+            </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+    });
+}
+
+/**
+ * Helper: Add map legend
+ */
+function addMapLegend() {
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function(map) {
+        const div = L.DomUtil.create('div', 'map-legend');
+        const currentLang = typeof i18n !== 'undefined' ? i18n.getCurrentLanguage() : 'pl';
+        const legendTitle = currentLang === 'en' ? 'Legend' : 'Legenda';
+
+        div.innerHTML = `
+            <div class="map-legend-header">
+                <h4><i class="fas fa-info-circle"></i> ${legendTitle}</h4>
+            </div>
+            <div class="map-legend-content" id="mapLegendContent">
+                <p class="map-legend-loading">...</p>
+            </div>
+        `;
+
+        // Prevent map interactions when clicking legend
+        L.DomEvent.disableClickPropagation(div);
+        L.DomEvent.disableScrollPropagation(div);
+
+        return div;
+    };
+
+    legend.addTo(map);
+}
+
+/**
+ * Helper: Update map legend with category counts
+ */
+function updateMapLegend(categoryGroups) {
+    const legendContent = document.getElementById('mapLegendContent');
+    if (!legendContent) return;
+
+    const currentLang = typeof i18n !== 'undefined' ? i18n.getCurrentLanguage() : 'pl';
+    const statusColors = {
+        'stored': '#3b82f6',
+        'returned': '#10b981',
+        'liquidated': '#6b7280'
+    };
+
+    let html = '<div class="map-legend-section">';
+    html += `<div class="map-legend-subtitle">${currentLang === 'en' ? 'Categories' : 'Kategorie'}</div>`;
+
+    if (Object.keys(categoryGroups).length === 0) {
+        html += `<p class="map-legend-empty">${currentLang === 'en' ? 'No items on map' : 'Brak przedmiotów na mapie'}</p>`;
+    } else {
+        for (const [category, count] of Object.entries(categoryGroups)) {
+            const categoryName = CATEGORIES[category]?.pl || category;
+            const iconClass = getCategoryIcon(category);
+            html += `
+                <div class="map-legend-item">
+                    <i class="fas ${iconClass}"></i>
+                    <span>${categoryName}</span>
+                    <span class="map-legend-count">${count}</span>
+                </div>
+            `;
+        }
+    }
+    html += '</div>';
+
+    // Add status legend
+    html += '<div class="map-legend-section">';
+    html += `<div class="map-legend-subtitle">${currentLang === 'en' ? 'Status' : 'Status'}</div>`;
+    for (const [status, color] of Object.entries(statusColors)) {
+        const statusName = STATUSES[status]?.pl || status;
+        html += `
+            <div class="map-legend-item">
+                <span class="map-legend-dot" style="background-color: ${color};"></span>
+                <span>${statusName}</span>
+            </div>
+        `;
+    }
+    html += '</div>';
+
+    legendContent.innerHTML = html;
 }
 
 /**

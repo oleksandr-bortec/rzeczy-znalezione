@@ -175,6 +175,7 @@ const translations = {
         view_grid: 'Widok siatki',
         view_list: 'Widok listy',
         view_map: 'Widok mapy',
+        view_details: 'Zobacz szczegóły',
 
         // Steps
         step: 'Krok',
@@ -589,6 +590,7 @@ const translations = {
         view_grid: 'Grid view',
         view_list: 'List view',
         view_map: 'Map view',
+        view_details: 'View details',
 
         // Steps
         step: 'Step',
