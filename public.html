@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szukaj Rzeczy Znalezionych - dane.gov.pl</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="/icons/icon-192.png">
+
+    <!-- Fonts (same as dane.gov.pl) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4213D">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Rzeczy Znalezione">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+    <!-- Our styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="public.css">
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Przejdź do treści głównej</a>
+
+    <!-- Gov.pl Bar - official government bar -->
+    <div class="govpl">
+        <div class="container">
+            <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">
+                gov.pl
+            </a>
+            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+            <div class="govpl__eu-logo-wrapper">
+                <img src="https://dane.gov.pl/assets/images/eu-logo.svg" alt="Unia Europejska" class="govpl__eu-logo" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="public.html" class="logo">
+                        <span class="logo-text">dane.gov.pl</span>
+                        <span class="logo-subtitle">Otwarte Dane</span>
+                    </a>
+                    <nav class="nav">
+                        <a href="public.html" class="nav-link active" data-i18n="nav_search">Szukaj rzeczy</a>
+                        <a href="index.html" class="nav-link" data-i18n="nav_admin">Panel urzędnika</a>
+                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener" data-i18n="nav_portal">Portal dane.gov.pl</a>
+                        <div class="nav-auth" id="navAuth">
+                            <a href="#" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>
+                        </div>
+                        <div class="lang-switcher">
+                            <button type="button" class="lang-btn" data-lang="pl">PL</button>
+                            <button type="button" class="lang-btn" data-lang="en">EN</button>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" id="main-content">
+        <div class="container">
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1><i class="fas fa-search-location"></i> Szukaj Rzeczy Znalezionych</h1>
+                <p class="lead">Centralna wyszukiwarka rzeczy znalezionych z całej Polski. Sprawdź, czy Twoja zgubiona rzecz została odnaleziona.</p>
+            </section>
+
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="card search-card">
+                    <form id="searchForm" class="search-form">
+                        <!-- Main search bar -->
+                        <div class="search-bar">
+                            <div class="search-input-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchQuery" name="query"
+                                    placeholder="Wpisz czego szukasz, np. telefon Samsung, czarny portfel, klucze..."
+                                    autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-search">
+                                <i class="fas fa-search"></i> Szukaj
+                            </button>
+                        </div>
+
+                        <!-- Filters toggle -->
+                        <button type="button" class="btn btn-outline filters-toggle" id="filtersToggle">
+                            <i class="fas fa-filter"></i> Filtry zaawansowane
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+
+                        <!-- Advanced filters -->
+                        <div class="advanced-filters" id="advancedFilters">
+                            <div class="filters-grid">
+                                <div class="filter-group">
+                                    <label for="filterCategory">Kategoria</label>
+                                    <select id="filterCategory" name="category">
+                                        <option value="">Wszystkie kategorie</option>
+                                        <option value="phone">Telefon</option>
+                                        <option value="documents">Dokumenty</option>
+                                        <option value="jewelry">Biżuteria</option>
+                                        <option value="keys">Klucze</option>
+                                        <option value="wallet">Portfel</option>
+                                        <option value="clothing">Odzież</option>
+                                        <option value="electronics">Elektronika</option>
+                                        <option value="bicycle">Rower</option>
+                                        <option value="other">Inne</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label for="filterVoivodeship">Województwo</label>
+                                    <select id="filterVoivodeship" name="voivodeship">
+                                        <option value="">Wszystkie województwa</option>
+                                        <option value="dolnoslaskie">Dolnośląskie</option>
+                                        <option value="kujawsko-pomorskie">Kujawsko-pomorskie</option>
+                                        <option value="lubelskie">Lubelskie</option>
+                                        <option value="lubuskie">Lubuskie</option>
+                                        <option value="lodzkie">Łódzkie</option>
+                                        <option value="malopolskie">Małopolskie</option>
+                                        <option value="mazowieckie">Mazowieckie</option>
+                                        <option value="opolskie">Opolskie</option>
+                                        <option value="podkarpackie">Podkarpackie</option>
+                                        <option value="podlaskie">Podlaskie</option>
+                                        <option value="pomorskie">Pomorskie</option>
+                                        <option value="slaskie">Śląskie</option>
+                                        <option value="swietokrzyskie">Świętokrzyskie</option>
+                                        <option value="warminsko-mazurskie">Warmińsko-mazurskie</option>
+                                        <option value="wielkopolskie">Wielkopolskie</option>
+                                        <option value="zachodniopomorskie">Zachodniopomorskie</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label for="filterCounty">Powiat</label>
+                                    <input type="text" id="filterCounty" name="county" placeholder="Wpisz nazwę powiatu">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label for="filterDateFrom">Data znalezienia od</label>
+                                    <input type="date" id="filterDateFrom" name="date_from">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label for="filterDateTo">Data znalezienia do</label>
+                                    <input type="date" id="filterDateTo" name="date_to">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label for="filterStatus">Status</label>
+                                    <select id="filterStatus" name="status">
+                                        <option value="">Wszystkie statusy</option>
+                                        <option value="stored">Przechowywany</option>
+                                        <option value="returned">Zwrócony</option>
+                                        <option value="liquidated">Zlikwidowany</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="filters-actions">
+                                <button type="button" class="btn btn-outline" id="clearFilters">
+                                    <i class="fas fa-times"></i> Wyczyść filtry
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- View Toggle & Results Info -->
+            <section class="results-header" id="resultsHeader" style="display: none;">
+                <div class="results-info">
+                    <span id="resultsCount">0</span> wyników
+                    <span class="results-query" id="resultsQuery"></span>
+                </div>
+                <div class="view-toggle">
+                    <button type="button" class="view-btn active" data-view="grid" title="Widok siatki">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button type="button" class="view-btn" data-view="list" title="Widok listy">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button type="button" class="view-btn" data-view="map" title="Widok mapy">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Container -->
+            <section class="results-container" id="resultsContainer">
+                <!-- Loading state -->
+                <div class="loading-state" id="loadingState" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Wyszukiwanie...</p>
+                </div>
+
+                <!-- Empty state -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-search"></i>
+                    <h3>Rozpocznij wyszukiwanie</h3>
+                    <p>Wpisz czego szukasz lub skorzystaj z filtrów, aby znaleźć zgubiony przedmiot.</p>
+                </div>
+
+                <!-- No results state -->
+                <div class="no-results-state" id="noResultsState" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <h3>Brak wyników</h3>
+                    <p>Nie znaleziono przedmiotów pasujących do Twojego wyszukiwania.</p>
+                    <p class="suggestion">Spróbuj zmniejszyć liczbę filtrów lub użyć innych słów kluczowych.</p>
+                </div>
+
+                <!-- Results grid -->
+                <div class="results-grid" id="resultsGrid" style="display: none;"></div>
+
+                <!-- Results list -->
+                <div class="results-list" id="resultsList" style="display: none;"></div>
+
+                <!-- Map view -->
+                <div class="results-map" id="resultsMap" style="display: none;"></div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button type="button" class="btn btn-outline" id="prevPage" disabled>
+                        <i class="fas fa-chevron-left"></i> Poprzednia
+                    </button>
+                    <span class="page-info">
+                        Strona <span id="currentPage">1</span> z <span id="totalPages">1</span>
+                    </span>
+                    <button type="button" class="btn btn-outline" id="nextPage">
+                        Następna <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Item Detail Modal -->
+            <div class="modal" id="itemModal">
+                <div class="modal-overlay" id="modalOverlay"></div>
+                <div class="modal-content">
+                    <button type="button" class="modal-close" id="modalClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Content loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <h2><i class="fas fa-chart-bar"></i> Statystyki</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="statTotal">0</span>
+                            <span class="stat-label">Wszystkich przedmiotów</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stored">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="statStored">0</span>
+                            <span class="stat-label">Oczekujących na odbiór</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon returned">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="statReturned">0</span>
+                            <span class="stat-label">Zwróconych właścicielom</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon sources">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="statSources">0</span>
+                            <span class="stat-label">Źródeł danych (urzędów)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3><i class="fas fa-question-circle"></i> Jak to działa?</h3>
+                        <ol>
+                            <li>Wpisz opis zgubionego przedmiotu w wyszukiwarkę</li>
+                            <li>Użyj filtrów, aby zawęzić wyniki do odpowiedniego regionu</li>
+                            <li>Przeglądaj znalezione przedmioty</li>
+                            <li>Jeśli znajdziesz swoją rzecz, skontaktuj się z odpowiednim biurem</li>
+                        </ol>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> O projekcie</h3>
+                        <p>Centralna wyszukiwarka rzeczy znalezionych łączy dane z Biur Rzeczy Znalezionych z całej Polski. Dane są udostępniane przez portal <a href="https://dane.gov.pl" target="_blank">dane.gov.pl</a> w ramach otwartych danych publicznych.</p>
+                        <p>Zgodnie z ustawą z dnia 20 lutego 2015 r. o rzeczach znalezionych, przedmioty przechowywane są przez 2 lata od daty znalezienia.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-balance-scale"></i> Podstawa prawna</h3>
+                        <p>Ustawa z dnia 20 lutego 2015 r. o rzeczach znalezionych (Dz.U. 2015 poz. 397)</p>
+                        <a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20150000397" target="_blank" class="btn btn-outline btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Zobacz ustawę
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer - like dane.gov.pl -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Rzeczy Znalezione</h4>
+                    <p>Centralna wyszukiwarka rzeczy znalezionych z całej Polski</p>
+                    <p class="footer-note">Projekt stworzony na HackNation 2024</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Linki</h4>
+                    <ul>
+                        <li><a href="https://dane.gov.pl" target="_blank">Portal dane.gov.pl</a></li>
+                        <li><a href="https://dane.gov.pl/pl/knowledgebase" target="_blank">Baza wiedzy</a></li>
+                        <li><a href="https://api.dane.gov.pl/doc" target="_blank">API dokumentacja</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Dla urzędników</h4>
+                    <ul>
+                        <li><a href="index.html">Panel administracyjny</a></li>
+                        <li><a href="schema.json" target="_blank">Schemat danych (JSON)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="i18n.js"></script>
+    <script src="api.js"></script>
+    <script src="search.js"></script>
+</body>
+</html>

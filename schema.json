@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://dane.gov.pl/schemas/rzeczy-znalezione/v1.0.0",
+  "$id": "https://dane.gov.pl/schemas/rzeczy-znalezione/v2.0.0",
   "title": "Rzeczy Znalezione - Wzorcowy Zakres Danych",
-  "description": "Standard danych dla rzeczy znalezionych udostępnianych w portalu dane.gov.pl. Opracowany na HackNation 2024.",
-  "version": "1.0.0",
+  "description": "Standard danych dla rzeczy znalezionych udostępnianych w portalu dane.gov.pl. Zgodny z ustawą z dnia 20 lutego 2015 r. o rzeczach znalezionych.",
+  "version": "2.0.0",
   "type": "object",
   "required": ["metadata", "data"],
   "properties": {
@@ -100,15 +100,21 @@
   "definitions": {
     "RzeczZnaleziona": {
       "type": "object",
-      "description": "Pojedynczy rekord rzeczy znalezionej",
+      "description": "Pojedynczy rekord rzeczy znalezionej zgodny z ustawą z dnia 20 lutego 2015 r.",
       "required": [
         "id",
-        "kategoria",
-        "opis",
-        "data_znalezienia",
-        "miejsce_znalezienia",
-        "miejsce_przechowywania",
-        "kontakt"
+        "item_name",
+        "category",
+        "description",
+        "date_found",
+        "location_found",
+        "municipality",
+        "county",
+        "voivodeship",
+        "status",
+        "collection_deadline",
+        "lost_and_found_office",
+        "entry_date"
       ],
       "properties": {
         "id": {
@@ -117,80 +123,79 @@
           "pattern": "^[A-Z]{2,3}/\\d{4}/\\d{4,}$",
           "example": "RZ/2024/0001"
         },
-        "kategoria": {
+        "item_name": {
           "type": "string",
-          "description": "Kod kategorii przedmiotu",
+          "description": "Nazwa przedmiotu",
+          "minLength": 3,
+          "maxLength": 200,
+          "example": "Telefon Samsung Galaxy"
+        },
+        "category": {
+          "type": "string",
+          "description": "Kategoria przedmiotu",
           "enum": [
-            "telefon",
-            "portfel",
-            "klucze",
-            "torba",
-            "odziez",
-            "bizuteria",
-            "elektronika",
-            "dokumenty",
-            "inne"
+            "phone",
+            "documents",
+            "jewelry",
+            "keys",
+            "wallet",
+            "clothing",
+            "electronics",
+            "bicycle",
+            "other"
           ]
         },
-        "kategoria_nazwa": {
+        "category_pl": {
           "type": "string",
-          "description": "Czytelna nazwa kategorii",
+          "description": "Kategoria przedmiotu (polska nazwa)",
           "enum": [
             "Telefon",
-            "Portfel / Dokumenty",
-            "Klucze",
-            "Torba / Plecak",
-            "Odzież",
-            "Biżuteria / Zegarek",
-            "Elektronika",
             "Dokumenty",
+            "Biżuteria",
+            "Klucze",
+            "Portfel",
+            "Odzież",
+            "Elektronika",
+            "Rower",
             "Inne"
           ]
         },
-        "opis": {
+        "description": {
           "type": "string",
-          "description": "Szczegółowy opis przedmiotu umożliwiający identyfikację",
+          "description": "Szczegółowy opis przedmiotu (kolor, cechy szczególne)",
           "minLength": 10,
-          "maxLength": 1000,
-          "example": "iPhone 14 Pro, kolor czarny, bez etui, ekran pęknięty w prawym górnym rogu"
+          "maxLength": 2000,
+          "example": "Telefon Samsung Galaxy S23, kolor czarny, pęknięty ekran w lewym górnym rogu, etui silikonowe niebieskie"
         },
-        "kolor": {
-          "type": "string",
-          "description": "Kolor przedmiotu",
-          "example": "czarny"
-        },
-        "marka": {
-          "type": "string",
-          "description": "Marka lub producent przedmiotu",
-          "example": "Apple"
-        },
-        "data_znalezienia": {
+        "date_found": {
           "type": "string",
           "format": "date",
           "description": "Data znalezienia przedmiotu (YYYY-MM-DD)",
           "example": "2024-01-15"
         },
-        "miejsce_znalezienia": {
+        "location_found": {
           "type": "string",
           "description": "Dokładny adres lub opis miejsca znalezienia",
           "minLength": 5,
           "maxLength": 500,
           "example": "Autobus linii 144, przystanek Rynek Główny"
         },
-        "typ_miejsca": {
+        "location_type": {
           "type": "string",
           "description": "Typ miejsca znalezienia",
           "enum": [
-            "transport_publiczny",
-            "urzad",
-            "sklep",
+            "public_transport",
+            "office",
+            "shop",
             "park",
-            "ulica",
+            "street",
             "parking",
-            "inne"
+            "school",
+            "hospital",
+            "other"
           ]
         },
-        "wspolrzedne": {
+        "coordinates": {
           "type": "object",
           "description": "Współrzędne geograficzne miejsca znalezienia (opcjonalne)",
           "properties": {
@@ -209,69 +214,123 @@
           },
           "required": ["lat", "lon"]
         },
-        "miejsce_przechowywania": {
+        "municipality": {
           "type": "string",
-          "description": "Adres miejsca, gdzie można odebrać przedmiot",
-          "minLength": 10,
-          "maxLength": 500,
-          "example": "Biuro Rzeczy Znalezionych, ul. Główna 1, pok. 101, 31-000 Kraków"
+          "description": "Gmina",
+          "example": "Kraków"
         },
-        "kontakt": {
+        "county": {
+          "type": "string",
+          "description": "Powiat",
+          "example": "Kraków"
+        },
+        "voivodeship": {
+          "type": "string",
+          "description": "Województwo",
+          "enum": [
+            "dolnośląskie",
+            "kujawsko-pomorskie",
+            "lubelskie",
+            "lubuskie",
+            "łódzkie",
+            "małopolskie",
+            "mazowieckie",
+            "opolskie",
+            "podkarpackie",
+            "podlaskie",
+            "pomorskie",
+            "śląskie",
+            "świętokrzyskie",
+            "warmińsko-mazurskie",
+            "wielkopolskie",
+            "zachodniopomorskie"
+          ],
+          "example": "małopolskie"
+        },
+        "estimated_value": {
+          "type": "number",
+          "description": "Szacunkowa wartość przedmiotu w PLN (wymagane jeśli > 100 PLN)",
+          "minimum": 0,
+          "example": 2500
+        },
+        "status": {
+          "type": "string",
+          "description": "Aktualny status przedmiotu",
+          "enum": [
+            "stored",
+            "returned",
+            "liquidated"
+          ],
+          "default": "stored"
+        },
+        "status_pl": {
+          "type": "string",
+          "description": "Aktualny status przedmiotu (polska nazwa)",
+          "enum": [
+            "Przechowywany",
+            "Zwrócony właścicielowi",
+            "Zlikwidowany"
+          ]
+        },
+        "collection_deadline": {
+          "type": "string",
+          "format": "date",
+          "description": "Termin odbioru (2 lata od znalezienia zgodnie z ustawą)",
+          "example": "2026-01-15"
+        },
+        "lost_and_found_office": {
           "type": "object",
-          "description": "Dane kontaktowe do odbioru przedmiotu",
-          "required": ["telefon"],
+          "description": "Dane Biura Rzeczy Znalezionych",
+          "required": ["name", "address", "phone"],
           "properties": {
-            "telefon": {
+            "name": {
               "type": "string",
-              "description": "Numer telefonu kontaktowego",
+              "description": "Nazwa biura",
+              "example": "Biuro Rzeczy Znalezionych Starostwa Powiatowego"
+            },
+            "address": {
+              "type": "string",
+              "description": "Adres biura",
+              "example": "ul. Główna 1, 31-000 Kraków"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Telefon kontaktowy",
               "pattern": "^[\\+]?[\\d\\s\\-\\(\\)]{9,}$",
               "example": "+48 12 345 67 89"
             },
             "email": {
               "type": "string",
               "format": "email",
-              "description": "Adres email kontaktowy",
-              "example": "biuro@urzad.gov.pl"
+              "description": "Email kontaktowy",
+              "example": "rzeczy.znalezione@powiat.krakow.pl"
+            },
+            "opening_hours": {
+              "type": "string",
+              "description": "Godziny otwarcia",
+              "example": "Pon-Pt: 8:00-16:00"
             }
           }
         },
-        "status": {
+        "entry_date": {
           "type": "string",
-          "description": "Aktualny status przedmiotu",
-          "enum": [
-            "oczekuje_na_wlasciciela",
-            "odebrane",
-            "przekazane_do_skarbu"
-          ],
-          "default": "oczekuje_na_wlasciciela"
+          "format": "date",
+          "description": "Data wpisu do rejestru",
+          "example": "2024-01-15"
         },
-        "status_nazwa": {
+        "update_date": {
           "type": "string",
-          "description": "Czytelna nazwa statusu",
-          "enum": [
-            "Oczekuje na właściciela",
-            "Odebrane przez właściciela",
-            "Przekazane do Skarbu Państwa"
-          ]
+          "format": "date",
+          "description": "Data ostatniej aktualizacji rekordu",
+          "example": "2024-01-20"
         },
-        "zdjecie_url": {
+        "photo_url": {
           "type": "string",
           "format": "uri",
           "description": "Link do zdjęcia przedmiotu",
           "example": "https://example.com/zdjecia/rz-2024-0001.jpg"
         },
-        "data_waznosci": {
-          "type": "string",
-          "format": "date",
-          "description": "Data, do której przedmiot będzie przechowywany (zgodnie z ustawą - 2 lata od znalezienia)",
-          "example": "2026-01-15"
-        },
-        "ostatnia_aktualizacja": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Data i czas ostatniej aktualizacji rekordu"
-        },
-        "uwagi": {
+        "notes": {
           "type": "string",
           "description": "Dodatkowe uwagi lub informacje",
           "maxLength": 1000
@@ -301,52 +360,64 @@
       "data": [
         {
           "id": "RZ/2024/0001",
-          "kategoria": "telefon",
-          "kategoria_nazwa": "Telefon",
-          "opis": "iPhone 14 Pro, kolor czarny, bez etui, ekran pęknięty w prawym górnym rogu",
-          "kolor": "czarny",
-          "marka": "Apple",
-          "data_znalezienia": "2024-01-15",
-          "miejsce_znalezienia": "Autobus linii 144, przystanek Rynek Główny",
-          "typ_miejsca": "transport_publiczny",
-          "wspolrzedne": {
+          "item_name": "Telefon Samsung Galaxy S23",
+          "category": "phone",
+          "category_pl": "Telefon",
+          "description": "Telefon Samsung Galaxy S23, kolor czarny, pęknięty ekran w lewym górnym rogu, etui silikonowe niebieskie",
+          "date_found": "2024-01-15",
+          "location_found": "Autobus linii 144, przystanek Rynek Główny",
+          "location_type": "public_transport",
+          "coordinates": {
             "lat": 50.0614,
             "lon": 19.9366
           },
-          "miejsce_przechowywania": "Biuro Rzeczy Znalezionych, ul. Główna 1, pok. 101, 31-000 Kraków",
-          "kontakt": {
-            "telefon": "+48 12 345 67 89",
-            "email": "rzeczy.znalezione@powiat.krakow.pl"
+          "municipality": "Kraków",
+          "county": "Kraków",
+          "voivodeship": "małopolskie",
+          "estimated_value": 2500,
+          "status": "stored",
+          "status_pl": "Przechowywany",
+          "collection_deadline": "2026-01-15",
+          "lost_and_found_office": {
+            "name": "Biuro Rzeczy Znalezionych Starostwa Powiatowego",
+            "address": "ul. Główna 1, pok. 101, 31-000 Kraków",
+            "phone": "+48 12 345 67 89",
+            "email": "rzeczy.znalezione@powiat.krakow.pl",
+            "opening_hours": "Pon-Pt: 8:00-16:00"
           },
-          "status": "oczekuje_na_wlasciciela",
-          "status_nazwa": "Oczekuje na właściciela",
-          "zdjecie_url": "https://example.com/zdjecia/rz-2024-0001.jpg",
-          "data_waznosci": "2026-01-15",
-          "ostatnia_aktualizacja": "2024-01-15T10:30:00Z"
+          "entry_date": "2024-01-15",
+          "update_date": "2024-01-15",
+          "photo_url": "https://example.com/zdjecia/rz-2024-0001.jpg"
         },
         {
           "id": "RZ/2024/0002",
-          "kategoria": "portfel",
-          "kategoria_nazwa": "Portfel / Dokumenty",
-          "opis": "Portfel skórzany brązowy, zawiera dokumenty (dowód osobisty, prawo jazdy)",
-          "kolor": "brązowy",
-          "marka": "",
-          "data_znalezienia": "2024-01-16",
-          "miejsce_znalezienia": "Park Miejski, przy fontannie głównej",
-          "typ_miejsca": "park",
-          "wspolrzedne": {
+          "item_name": "Portfel skórzany",
+          "category": "wallet",
+          "category_pl": "Portfel",
+          "description": "Portfel skórzany brązowy, zawiera dokumenty (dowód osobisty, prawo jazdy). Wydawnictwo Wittchen.",
+          "date_found": "2024-01-16",
+          "location_found": "Park Miejski, przy fontannie głównej",
+          "location_type": "park",
+          "coordinates": {
             "lat": 50.0647,
             "lon": 19.9450
           },
-          "miejsce_przechowywania": "Biuro Rzeczy Znalezionych, ul. Główna 1, pok. 101, 31-000 Kraków",
-          "kontakt": {
-            "telefon": "+48 12 345 67 89",
-            "email": "rzeczy.znalezione@powiat.krakow.pl"
+          "municipality": "Kraków",
+          "county": "Kraków",
+          "voivodeship": "małopolskie",
+          "estimated_value": 150,
+          "status": "stored",
+          "status_pl": "Przechowywany",
+          "collection_deadline": "2026-01-16",
+          "lost_and_found_office": {
+            "name": "Biuro Rzeczy Znalezionych Starostwa Powiatowego",
+            "address": "ul. Główna 1, pok. 101, 31-000 Kraków",
+            "phone": "+48 12 345 67 89",
+            "email": "rzeczy.znalezione@powiat.krakow.pl",
+            "opening_hours": "Pon-Pt: 8:00-16:00"
           },
-          "status": "oczekuje_na_wlasciciela",
-          "status_nazwa": "Oczekuje na właściciela",
-          "data_waznosci": "2026-01-16",
-          "ostatnia_aktualizacja": "2024-01-16T14:15:00Z"
+          "entry_date": "2024-01-16",
+          "update_date": "2024-01-16"
         }
       ]
     }

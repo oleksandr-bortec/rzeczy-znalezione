@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 60" width="50" height="60">
+  <!-- Simplified Polish Eagle (Godło Polski) -->
+  <rect width="50" height="60" fill="#fff"/>
+  <path d="M25,5 L30,15 L40,15 L32,22 L35,32 L25,25 L15,32 L18,22 L10,15 L20,15 Z" fill="#DC143C"/>
+  <circle cx="25" cy="18" r="2" fill="#FFD700"/>
+  <path d="M20,20 Q25,25 30,20" stroke="#DC143C" stroke-width="1" fill="none"/>
+</svg>

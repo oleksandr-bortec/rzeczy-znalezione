@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administratora - Rzeczy Znalezione</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="/icons/icon-192.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-card-icon.users { background: #E3F2FD; color: #1976D2; }
+        .stat-card-icon.items { background: #F3E5F5; color: #7B1FA2; }
+        .stat-card-icon.activity { background: #FFF3E0; color: #F57C00; }
+        .stat-card-icon.storage { background: #E8F5E9; color: #388E3C; }
+
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-card-label {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .users-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .users-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-admin { background: #D4213D; color: white; }
+        .badge-official { background: #FFA000; color: white; }
+        .badge-user { background: #0277BD; color: white; }
+
+        .status-active { color: #4CAF50; }
+        .status-inactive { color: #F44336; }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            position: sticky;
+            top: 1rem;
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            font-size: 4rem;
+            color: #D4213D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-nav {
+            margin-top: 1.5rem;
+        }
+
+        .profile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .profile-nav-link:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .profile-nav-link.active {
+            background: #D4213D;
+            color: white;
+        }
+
+        .profile-tab {
+            display: none;
+        }
+
+        .profile-tab.active {
+            display: block;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-left: 3px solid #ddd;
+            margin-bottom: 1rem;
+            background: #f9f9f9;
+        }
+
+        .activity-item.create { border-color: #4CAF50; }
+        .activity-item.update { border-color: #2196F3; }
+        .activity-item.delete { border-color: #F44336; }
+        .activity-item.login { border-color: #9C27B0; }
+
+        @media (max-width: 768px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Gov.pl Bar -->
+    <div class="govpl">
+        <div class="container">
+            <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">gov.pl</a>
+            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <span class="logo-text">dane.gov.pl</span>
+                        <span class="logo-subtitle">Otwarte Dane</span>
+                    </a>
+                    <nav class="nav">
+                        <a href="index.html" class="nav-link">Panel urzędnika</a>
+                        <a href="public.html" class="nav-link">Szukaj rzeczy</a>
+                        <div class="nav-auth" id="navAuth"></div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-user-shield"></i> Panel Administratora</h1>
+                <p class="lead">Zarządzaj użytkownikami, uprawnieniami i systemem</p>
+            </div>
+
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <div class="card">
+                        <nav class="profile-nav">
+                            <a href="#" class="profile-nav-link active" data-tab="dashboard">
+                                <i class="fas fa-chart-line"></i> Dashboard
+                            </a>
+                            <a href="#" class="profile-nav-link" data-tab="users">
+                                <i class="fas fa-users"></i> Użytkownicy
+                            </a>
+                            <a href="#" class="profile-nav-link" data-tab="permissions">
+                                <i class="fas fa-shield-alt"></i> Uprawnienia
+                            </a>
+                            <a href="#" class="profile-nav-link" data-tab="audit">
+                                <i class="fas fa-history"></i> Dziennik zdarzeń
+                            </a>
+                            <a href="#" class="profile-nav-link" data-tab="system">
+                                <i class="fas fa-cog"></i> Ustawienia systemu
+                            </a>
+                            <a href="profile.html" class="profile-nav-link">
+                                <i class="fas fa-user"></i> Mój profil
+                            </a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="profile-content">
+                    <!-- Dashboard Tab -->
+                    <div class="profile-tab active" id="tab-dashboard">
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div>
+                                        <div class="stat-card-value" id="statsUsers">0</div>
+                                        <div class="stat-card-label">Użytkowników</div>
+                                    </div>
+                                    <div class="stat-card-icon users">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div>
+                                        <div class="stat-card-value" id="statsItems">0</div>
+                                        <div class="stat-card-label">Przedmiotów</div>
+                                    </div>
+                                    <div class="stat-card-icon items">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div>
+                                        <div class="stat-card-value" id="statsActivity">0</div>
+                                        <div class="stat-card-label">Zdarzeń (dzisiaj)</div>
+                                    </div>
+                                    <div class="stat-card-icon activity">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-card-header">
+                                    <div>
+                                        <div class="stat-card-value" id="statsStorage">0 KB</div>
+                                        <div class="stat-card-label">Baza danych</div>
+                                    </div>
+                                    <div class="stat-card-icon storage">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-chart-bar"></i> Najnowsza aktywność</h2>
+                            </div>
+                            <div class="card-body" id="recentActivity">
+                                <p class="text-muted">Ładowanie...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div class="profile-tab" id="tab-users">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-users"></i> Zarządzanie użytkownikami</h2>
+                                <button type="button" class="btn btn-primary" id="addUserBtn">
+                                    <i class="fas fa-user-plus"></i> Dodaj użytkownika
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <table class="users-table" id="usersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Użytkownik</th>
+                                            <th>Email</th>
+                                            <th>Rola</th>
+                                            <th>Organizacja</th>
+                                            <th>Status</th>
+                                            <th>Akcje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <tr>
+                                            <td colspan="6" style="text-align: center; padding: 2rem;">
+                                                Ładowanie użytkowników...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Permissions Tab -->
+                    <div class="profile-tab" id="tab-permissions">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-shield-alt"></i> Uprawnienia użytkowników</h2>
+                            </div>
+                            <div class="card-body">
+                                <h3>Role i uprawnienia</h3>
+                                <p class="text-muted">System obsługuje trzy role użytkowników z różnymi poziomami dostępu:</p>
+
+                                <div style="margin: 2rem 0;">
+                                    <h4><span class="badge badge-admin">Administrator</span></h4>
+                                    <ul>
+                                        <li>Pełny dostęp do wszystkich funkcji systemu</li>
+                                        <li>Zarządzanie użytkownikami i uprawnieniami</li>
+                                        <li>Dostęp do panelu administratora</li>
+                                        <li>Przeglądanie dziennika zdarzeń</li>
+                                        <li>Konfiguracja systemu</li>
+                                        <li>Tworzenie, edycja i usuwanie wszystkich danych</li>
+                                    </ul>
+
+                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-official">Urzędnik</span></h4>
+                                    <ul>
+                                        <li>Dodawanie i edycja rzeczy znalezionych</li>
+                                        <li>Zarządzanie danymi swojej organizacji</li>
+                                        <li>Eksport danych do dane.gov.pl</li>
+                                        <li>Przeglądanie statystyk</li>
+                                    </ul>
+
+                                    <h4 style="margin-top: 1.5rem;"><span class="badge badge-user">Użytkownik</span></h4>
+                                    <ul>
+                                        <li>Przeglądanie publicznego portalu</li>
+                                        <li>Wyszukiwanie rzeczy znalezionych</li>
+                                        <li>Dostęp tylko do odczytu</li>
+                                    </ul>
+                                </div>
+
+                                <div class="info-box">
+                                    <h4><i class="fas fa-info-circle"></i> Zmiana uprawnień</h4>
+                                    <p>Aby zmienić rolę użytkownika, przejdź do zakładki "Użytkownicy" i kliknij przycisk "Edytuj" przy wybranym użytkowniku.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audit Log Tab -->
+                    <div class="profile-tab" id="tab-audit">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-history"></i> Dziennik zdarzeń</h2>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <select id="auditFilter" class="form-control" style="width: auto;">
+                                        <option value="">Wszystkie akcje</option>
+                                        <option value="create">Utworzenie</option>
+                                        <option value="update">Aktualizacja</option>
+                                        <option value="delete">Usunięcie</option>
+                                        <option value="login">Logowanie</option>
+                                    </select>
+                                    <button type="button" class="btn btn-outline" id="refreshAuditBtn">
+                                        <i class="fas fa-sync"></i> Odśwież
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body" id="auditLog">
+                                <p class="text-muted">Ładowanie...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Settings Tab -->
+                    <div class="profile-tab" id="tab-system">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-cog"></i> Ustawienia systemu</h2>
+                            </div>
+                            <div class="card-body">
+                                <h3>Informacje o systemie</h3>
+                                <div style="margin: 1.5rem 0;">
+                                    <p><strong>Wersja:</strong> 2.0.0</p>
+                                    <p><strong>Baza danych:</strong> SQLite (sql.js)</p>
+                                    <p><strong>Środowisko:</strong> <span id="envInfo">development</span></p>
+                                </div>
+
+                                <h3 style="margin-top: 2rem;">Konserwacja</h3>
+                                <div style="margin: 1.5rem 0;">
+                                    <button type="button" class="btn btn-outline" id="backupDbBtn">
+                                        <i class="fas fa-download"></i> Pobierz kopię zapasową bazy danych
+                                    </button>
+                                    <button type="button" class="btn btn-outline" id="clearCacheBtn">
+                                        <i class="fas fa-trash"></i> Wyczyść cache
+                                    </button>
+                                </div>
+
+                                <div class="card card-danger" style="margin-top: 2rem;">
+                                    <div class="card-header">
+                                        <h3><i class="fas fa-exclamation-triangle"></i> Strefa niebezpieczna</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted">Poniższe akcje są nieodwracalne. Zachowaj ostrożność.</p>
+                                        <button type="button" class="btn btn-danger" id="resetDbBtn">
+                                            <i class="fas fa-database"></i> Zresetuj bazę danych
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-overlay" onclick="closeUserModal()"></div>
+        <div class="modal-content" style="max-width: 600px;">
+            <button type="button" class="modal-close" onclick="closeUserModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h2 id="userModalTitle"><i class="fas fa-user-plus"></i> Dodaj użytkownika</h2>
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+
+                    <div class="form-group">
+                        <label for="userName" class="required">Imię i nazwisko</label>
+                        <input type="text" id="userName" name="name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userEmail" class="required">Email</label>
+                            <input type="email" id="userEmail" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPhone">Telefon</label>
+                            <input type="tel" id="userPhone" name="phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="passwordGroup">
+                        <label for="userPassword" class="required">Hasło</label>
+                        <input type="password" id="userPassword" name="password" required minlength="8">
+                        <span class="hint">Minimum 8 znaków</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userOrganization">Organizacja</label>
+                        <input type="text" id="userOrganization" name="organization">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userRole" class="required">Rola</label>
+                        <select id="userRole" name="role" required>
+                            <option value="user">Użytkownik</option>
+                            <option value="official">Urzędnik</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="userActive" name="is_active" checked>
+                            Konto aktywne
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeUserModal()">Anuluj</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Zapisz
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="i18n.js"></script>
+    <script src="api.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

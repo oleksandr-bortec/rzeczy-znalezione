@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rzeczy Znalezione - dane.gov.pl</title>
-    
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="/icons/icon-192.png">
+
     <!-- Fonts (same as dane.gov.pl) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,31 +20,54 @@
     <!-- SheetJS for Excel parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4213D">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Rzeczy Znalezione">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
     <!-- Our styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header - exactly like dane.gov.pl -->
-    <header class="header">
-        <div class="header-top">
-            <div class="container">
-                <a href="https://www.gov.pl" class="gov-link" target="_blank">
-                    <img src="https://dane.gov.pl/assets/images/godlo.svg" alt="Godło Polski" class="godlo" onerror="this.style.display='none'">
-                    <span>gov.pl</span>
-                </a>
-                <span class="header-divider">Serwis Rzeczypospolitej Polskiej</span>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Przejdź do treści głównej</a>
+
+    <!-- Gov.pl Bar - official government bar -->
+    <div class="govpl">
+        <div class="container">
+            <a href="https://www.gov.pl" class="govpl__logo" target="_blank" rel="noopener">
+                gov.pl
+            </a>
+            <span class="govpl__text">Serwis Rzeczypospolitej Polskiej</span>
+            <div class="govpl__eu-logo-wrapper">
+                <img src="https://dane.gov.pl/assets/images/eu-logo.svg" alt="Unia Europejska" class="govpl__eu-logo" onerror="this.style.display='none'">
             </div>
         </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
         <div class="header-main">
             <div class="container">
                 <div class="header-content">
-                    <a href="#" class="logo">
+                    <a href="index.html" class="logo">
                         <span class="logo-text">dane.gov.pl</span>
                         <span class="logo-subtitle">Otwarte Dane</span>
                     </a>
                     <nav class="nav">
-                        <a href="#" class="nav-link active">Rzeczy Znalezione</a>
-                        <a href="https://dane.gov.pl" class="nav-link" target="_blank">Portal dane.gov.pl</a>
+                        <a href="index.html" class="nav-link active" data-i18n="nav_admin">Panel urzędnika</a>
+                        <a href="public.html" class="nav-link" data-i18n="nav_search">Szukaj rzeczy</a>
+                        <a href="https://dane.gov.pl" class="nav-link" target="_blank" rel="noopener" data-i18n="nav_portal">Portal dane.gov.pl</a>
+                        <div class="nav-auth" id="navAuth">
+                            <a href="#" class="nav-link" id="loginBtn" data-i18n="nav_login">Zaloguj</a>
+                        </div>
+                        <div class="lang-switcher">
+                            <button type="button" class="lang-btn" data-lang="pl">PL</button>
+                            <button type="button" class="lang-btn" data-lang="en">EN</button>
+                        </div>
                     </nav>
                 </div>
             </div>
@@ -48,9 +75,9 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main">
+    <main class="main" id="main-content">
         <div class="container">
-            
+
             <!-- Page Title -->
             <div class="page-header">
                 <h1><i class="fas fa-search"></i> Rzeczy Znalezione</h1>
@@ -138,117 +165,194 @@
                     <h2><i class="fas fa-edit"></i> Krok 2: Wprowadź dane o rzeczy znalezionej</h2>
                     
                     <form id="itemForm" class="item-form">
+                        <!-- Podstawowe informacje -->
+                        <h3 class="form-section-title"><i class="fas fa-info-circle"></i> Podstawowe informacje</h3>
+
+                        <div class="form-group">
+                            <label for="itemName" class="required">Nazwa przedmiotu</label>
+                            <input type="text" id="itemName" name="item_name" required
+                                placeholder="Np. Telefon Samsung Galaxy S23, Portfel skorzany">
+                            <span class="error-message"></span>
+                        </div>
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="kategoria" class="required">Kategoria przedmiotu</label>
-                                <select id="kategoria" name="kategoria" required>
+                                <select id="kategoria" name="category" required>
                                     <option value="">-- Wybierz kategorię --</option>
-                                    <option value="telefon">📱 Telefon</option>
-                                    <option value="portfel">👛 Portfel / Dokumenty</option>
-                                    <option value="klucze">🔑 Klucze</option>
-                                    <option value="torba">👜 Torba / Plecak</option>
-                                    <option value="odziez">👕 Odzież</option>
-                                    <option value="bizuteria">💍 Biżuteria / Zegarek</option>
-                                    <option value="elektronika">💻 Elektronika</option>
-                                    <option value="dokumenty">📄 Dokumenty</option>
-                                    <option value="inne">📦 Inne</option>
+                                    <option value="phone">Telefon</option>
+                                    <option value="documents">Dokumenty</option>
+                                    <option value="jewelry">Biżuteria / Zegarek</option>
+                                    <option value="keys">Klucze</option>
+                                    <option value="wallet">Portfel</option>
+                                    <option value="clothing">Odzież</option>
+                                    <option value="electronics">Elektronika</option>
+                                    <option value="bicycle">Rower</option>
+                                    <option value="other">Inne</option>
                                 </select>
                                 <span class="error-message"></span>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="dataZnalezienia" class="required">Data znalezienia</label>
-                                <input type="date" id="dataZnalezienia" name="data_znalezienia" required>
+                                <input type="date" id="dataZnalezienia" name="date_found" required>
                                 <span class="error-message"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="opis" class="required">Opis przedmiotu</label>
-                            <textarea id="opis" name="opis" rows="3" required 
-                                placeholder="Np. iPhone 14 Pro, kolor czarny, bez etui, ekran pęknięty w prawym górnym rogu"></textarea>
-                            <span class="hint">Podaj szczegółowy opis, który pomoże właścicielowi rozpoznać przedmiot</span>
+                            <textarea id="opis" name="description" rows="3" required
+                                placeholder="Np. Telefon Samsung Galaxy S23, kolor czarny, pęknięty ekran w lewym górnym rogu, etui silikonowe niebieskie"></textarea>
+                            <span class="hint">Podaj szczegółowy opis z kolorem, marką, cechami szczególnymi</span>
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kolor">Kolor</label>
-                                <input type="text" id="kolor" name="kolor" placeholder="Np. czarny, srebrny">
+                                <label for="szacunkowaWartosc">Szacunkowa wartość (PLN)</label>
+                                <input type="number" id="szacunkowaWartosc" name="estimated_value" min="0" step="1"
+                                    placeholder="Np. 2500">
+                                <span class="hint">Wymagane dla przedmiotów o wartości powyżej 100 PLN</span>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="marka">Marka / Producent</label>
-                                <input type="text" id="marka" name="marka" placeholder="Np. Samsung, Nike">
+                                <label for="status">Status</label>
+                                <select id="status" name="status">
+                                    <option value="stored">Przechowywany</option>
+                                    <option value="returned">Zwrócony właścicielowi</option>
+                                    <option value="liquidated">Zlikwidowany</option>
+                                </select>
                             </div>
                         </div>
 
+                        <!-- Lokalizacja znalezienia -->
+                        <h3 class="form-section-title"><i class="fas fa-map-marker-alt"></i> Lokalizacja znalezienia</h3>
+
                         <div class="form-group">
                             <label for="miejsceZnalezienia" class="required">Miejsce znalezienia</label>
-                            <input type="text" id="miejsceZnalezienia" name="miejsce_znalezienia" required
-                                placeholder="Np. Autobus linii 144, przystanek Rynek Główny">
+                            <input type="text" id="miejsceZnalezienia" name="location_found" required
+                                placeholder="Np. Autobus linii 144, przystanek Rynek Glowny">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="typMiejsca">Typ miejsca</label>
-                                <select id="typMiejsca" name="typ_miejsca">
+                                <select id="typMiejsca" name="location_type">
                                     <option value="">-- Wybierz --</option>
-                                    <option value="transport_publiczny">🚌 Transport publiczny</option>
-                                    <option value="urzad">🏛️ Urząd / Instytucja</option>
-                                    <option value="sklep">🛒 Sklep / Centrum handlowe</option>
-                                    <option value="park">🌳 Park / Teren zielony</option>
-                                    <option value="ulica">🛣️ Ulica / Chodnik</option>
-                                    <option value="parking">🅿️ Parking</option>
-                                    <option value="inne">📍 Inne</option>
+                                    <option value="public_transport">Transport publiczny</option>
+                                    <option value="office">Urząd / Instytucja</option>
+                                    <option value="shop">Sklep / Centrum handlowe</option>
+                                    <option value="park">Park / Teren zielony</option>
+                                    <option value="street">Ulica / Chodnik</option>
+                                    <option value="parking">Parking</option>
+                                    <option value="school">Szkoła / Uczelnia</option>
+                                    <option value="hospital">Szpital / Przychodnia</option>
+                                    <option value="other">Inne</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="status">Status</label>
-                                <select id="status" name="status">
-                                    <option value="oczekuje_na_wlasciciela">⏳ Oczekuje na właściciela</option>
-                                    <option value="odebrane">✅ Odebrane</option>
-                                    <option value="przekazane_do_skarbu">📦 Przekazane do Skarbu Państwa</option>
-                                </select>
+                                <label for="gmina" class="required">Gmina</label>
+                                <input type="text" id="gmina" name="municipality" required
+                                    placeholder="Np. Kraków">
+                                <span class="error-message"></span>
                             </div>
                         </div>
 
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="powiat" class="required">Powiat</label>
+                                <input type="text" id="powiat" name="county" required
+                                    placeholder="Np. Kraków">
+                                <span class="error-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="wojewodztwo" class="required">Województwo</label>
+                                <select id="wojewodztwo" name="voivodeship" required>
+                                    <option value="">-- Wybierz województwo --</option>
+                                    <option value="dolnoslaskie">Dolnośląskie</option>
+                                    <option value="kujawsko-pomorskie">Kujawsko-pomorskie</option>
+                                    <option value="lubelskie">Lubelskie</option>
+                                    <option value="lubuskie">Lubuskie</option>
+                                    <option value="lodzkie">Łódzkie</option>
+                                    <option value="malopolskie">Małopolskie</option>
+                                    <option value="mazowieckie">Mazowieckie</option>
+                                    <option value="opolskie">Opolskie</option>
+                                    <option value="podkarpackie">Podkarpackie</option>
+                                    <option value="podlaskie">Podlaskie</option>
+                                    <option value="pomorskie">Pomorskie</option>
+                                    <option value="slaskie">Śląskie</option>
+                                    <option value="swietokrzyskie">Świętokrzyskie</option>
+                                    <option value="warminsko-mazurskie">Warmińsko-mazurskie</option>
+                                    <option value="wielkopolskie">Wielkopolskie</option>
+                                    <option value="zachodniopomorskie">Zachodniopomorskie</option>
+                                </select>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <!-- Biuro Rzeczy Znalezionych -->
+                        <h3 class="form-section-title"><i class="fas fa-building"></i> Biuro Rzeczy Znalezionych</h3>
+
                         <div class="form-group">
-                            <label for="miejscePrzechowywania" class="required">Miejsce przechowywania / odbioru</label>
-                            <input type="text" id="miejscePrzechowywania" name="miejsce_przechowywania" required
-                                placeholder="Np. Biuro Rzeczy Znalezionych, ul. Główna 1, pok. 101">
+                            <label for="officeName" class="required">Nazwa biura</label>
+                            <input type="text" id="officeName" name="office_name" required
+                                placeholder="Np. Biuro Rzeczy Znalezionych Starostwa Powiatowego">
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="officeAddress" class="required">Adres biura</label>
+                            <input type="text" id="officeAddress" name="office_address" required
+                                placeholder="Np. ul. Glowna 1, pok. 101, 31-000 Krakow">
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kontaktTelefon" class="required">Telefon kontaktowy</label>
-                                <input type="tel" id="kontaktTelefon" name="kontakt_telefon" required
+                                <label for="officePhone" class="required">Telefon kontaktowy</label>
+                                <input type="tel" id="officePhone" name="office_phone" required
                                     placeholder="+48 12 345 67 89">
                                 <span class="error-message"></span>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="kontaktEmail">Email kontaktowy</label>
-                                <input type="email" id="kontaktEmail" name="kontakt_email"
-                                    placeholder="biuro@urzad.gov.pl">
+                                <label for="officeEmail">Email kontaktowy</label>
+                                <input type="email" id="officeEmail" name="office_email"
+                                    placeholder="rzeczy.znalezione@urzad.gov.pl">
                                 <span class="error-message"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <label for="officeHours">Godziny otwarcia</label>
+                            <input type="text" id="officeHours" name="office_hours"
+                                placeholder="Np. Pon-Pt: 8:00-16:00">
+                        </div>
+
+                        <!-- Dodatkowe informacje -->
+                        <h3 class="form-section-title"><i class="fas fa-plus-circle"></i> Dodatkowe informacje</h3>
+
+                        <div class="form-group">
                             <label for="zdjecieUrl">Link do zdjęcia (opcjonalne)</label>
-                            <input type="url" id="zdjecieUrl" name="zdjecie_url"
+                            <input type="url" id="zdjecieUrl" name="photo_url"
                                 placeholder="https://example.com/zdjecie.jpg">
                             <span class="hint">Podaj link do zdjęcia przedmiotu (jeśli dostępne)</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="dataWaznosci">Data ważności (do kiedy przechowywane)</label>
-                            <input type="date" id="dataWaznosci" name="data_waznosci">
+                            <label for="dataWaznosci">Termin odbioru</label>
+                            <input type="date" id="dataWaznosci" name="collection_deadline">
                             <span class="hint">Zgodnie z ustawą, rzeczy znalezione przechowywane są przez 2 lata</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uwagi">Dodatkowe uwagi</label>
+                            <textarea id="uwagi" name="notes" rows="2"
+                                placeholder="Dodatkowe informacje o przedmiocie..."></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -405,7 +509,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
+                <p>&copy; 2025 Otwarte Dane - Kancelaria Prezesa Rady Ministrów</p>
             </div>
         </div>
     </footer>
@@ -414,6 +518,8 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Our JavaScript -->
+    <script src="i18n.js"></script>
+    <script src="api.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

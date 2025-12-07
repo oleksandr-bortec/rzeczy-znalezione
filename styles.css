@@ -1,78 +1,95 @@
 /* =====================================================
-   RZECZY ZNALEZIONE - Styles matching dane.gov.pl
-   HackNation 2024
+   RZECZY ZNALEZIONE - dane.gov.pl Design System
+   Aligned with official Otwarte Dane 2025 Frontend
    ===================================================== */
 
-/* CSS Variables - dane.gov.pl color palette */
+/* =====================================================
+   CSS VARIABLES - Matching dane.gov.pl palette exactly
+   ===================================================== */
 :root {
-    /* Primary Colors */
-    --color-primary: #D4213D;
-    --color-primary-dark: #B71C34;
-    --color-primary-light: #E8486A;
-    
-    /* Secondary Colors - Polish blue */
-    --color-secondary: #0052A5;
-    --color-secondary-dark: #003D7A;
-    --color-secondary-light: #1976D2;
-    
-    /* Government colors */
-    --color-gov-red: #D4213D;
-    --color-gov-white: #FFFFFF;
-    
-    /* Neutrals */
-    --color-white: #FFFFFF;
-    --color-background: #F5F5F5;
-    --color-surface: #FFFFFF;
-    --color-text: #212121;
-    --color-text-secondary: #616161;
-    --color-text-muted: #9E9E9E;
-    --color-border: #E0E0E0;
-    --color-border-dark: #BDBDBD;
-    
+    /* Primary Colors - from dane.gov.pl _variables.scss */
+    --color-white: #fff;
+    --color-black: #000;
+    --color-blue-light: #0865c9;
+    --color-blue-dark: #0f2648;
+    --color-outline: #50a6ff;
+    --color-highlight: #b0d5fe;
+    --color-gov-primary: #0052a5;
+    --primary: #0865c9;
+    --primary-hover: #0753a4;
+    --color-hover: #def;
+    --color-hover-2: #05407f;
+
+    /* Alert Colors */
+    --color-yellow: #ff0;
+    --color-special-alert: #ffc605;
+    --color-red: #d40043;
+    --color-darker-red: #a91e2c;
+
+    /* Grey Scale - dane.gov.pl */
+    --color-grey-dark: #5e5e5e;
+    --color-grey-light-1: #f9f9f9;
+    --color-grey-light-2: #e4e4e4;
+    --color-grey-light-3: #bababa;
+    --color-grey-light-4: #bfbfbf;
+    --color-grey-light-5: #d8d8d8;
+    --color-grey-light-6: #eee;
+    --color-grey-light-7: #9b9b9b;
+    --color-grey-light-8: #ced4da;
+
+    /* Text Colors */
+    --color-heading: #333;
+    --color-text: #555;
+    --color-text-muted: #9b9b9b;
+
     /* Status Colors */
-    --color-success: #4CAF50;
-    --color-success-light: #E8F5E9;
-    --color-warning: #FF9800;
-    --color-warning-light: #FFF3E0;
-    --color-error: #F44336;
-    --color-error-light: #FFEBEE;
-    --color-info: #2196F3;
-    --color-info-light: #E3F2FD;
-    
-    /* Typography */
-    --font-family: 'Lato', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
+    --color-success: #28a745;
+    --color-success-light: #d4edda;
+    --color-warning: #ffc107;
+    --color-warning-light: #fff3cd;
+    --color-info: #17a2b8;
+    --color-info-light: #d1ecf1;
+    --color-error: #dc3545;
+    --color-error-light: #f8d7da;
+
+    /* Typography - dane.gov.pl */
+    --font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --heading-lg-size: 2.5rem;
+    --heading-md-size: 2rem;
+    --heading-sm-size: 1.5rem;
+    --heading-xs-size: 1.25rem;
     --font-size-base: 1rem;
+    --font-size-sm: 0.875rem;
+    --font-size-xs: 0.75rem;
     --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
-    
-    /* Spacing */
+
+    /* Spacing - dane.gov.pl */
+    --vertical-spacing: 30px;
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
-    
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    
-    /* Shadows */
+
+    /* Border & Effects - NO rounded corners like dane.gov.pl */
+    --border-radius: 0;
+    --outline: 3px solid var(--color-outline);
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
     --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
-    
+
+    /* Container */
+    --container-max-width: 1140px;
+
     /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
 }
 
-/* Reset & Base */
+/* =====================================================
+   RESET & BASE STYLES
+   ===================================================== */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -80,8 +97,8 @@
 }
 
 html {
-    font-size: 16px;
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -89,71 +106,156 @@ body {
     font-size: var(--font-size-base);
     line-height: 1.6;
     color: var(--color-text);
-    background-color: var(--color-background);
+    background-color: var(--color-white);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Focus styles for accessibility (WCAG 2.1) */
-:focus {
-    outline: 3px solid var(--color-secondary);
+/* Typography - dane.gov.pl heading style */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-heading);
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+h1, .heading { font-size: var(--heading-lg-size); }
+h2, .heading--md { font-size: var(--heading-md-size); }
+h3, .heading--sm { font-size: var(--heading-sm-size); }
+h4, .heading--xs { font-size: var(--heading-xs-size); }
+
+p { margin-bottom: var(--spacing-md); }
+
+a {
+    color: var(--color-blue-light);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-hover-2);
+    text-decoration: underline;
+}
+
+/* Focus styles - accessibility */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: var(--outline);
     outline-offset: 2px;
 }
 
-:focus:not(:focus-visible) {
-    outline: none;
-}
-
-:focus-visible {
-    outline: 3px solid var(--color-secondary);
-    outline-offset: 2px;
-}
-
-/* Skip link for accessibility */
+/* Skip link */
 .skip-link {
     position: absolute;
-    top: -40px;
+    top: -100px;
     left: 0;
-    background: var(--color-primary);
-    color: white;
+    background: var(--color-blue-dark);
+    color: var(--color-white);
     padding: var(--spacing-sm) var(--spacing-md);
-    z-index: 1000;
+    z-index: 10000;
 }
 
-.skip-link:focus {
-    top: 0;
-}
+.skip-link:focus { top: 0; }
 
 /* Container */
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
 
 /* =====================================================
-   HEADER - dane.gov.pl style
+   GOV.PL BAR - Official government bar
+   ===================================================== */
+.govpl {
+    background-color: var(--color-white);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-grey-light-6);
+}
+
+.govpl .container {
+    display: flex;
+    align-items: center;
+}
+
+.govpl__logo {
+    background-image: url("/images/godlo-polski.png");
+    background-size: 2.5rem auto;
+    background-repeat: no-repeat;
+    background-position: left center;
+    color: var(--color-black);
+    text-decoration: none;
+    padding-left: 3rem;
+    font-weight: bold;
+    font-size: 1.6rem;
+    height: 3rem;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Fallback if external logo fails */
+.govpl__logo::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-image: url("/images/herb-polski-fallback.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.govpl__logo:hover {
+    text-decoration: underline;
+    color: var(--color-hover-2);
+}
+
+.govpl__text {
+    margin-left: 2rem;
+    padding-left: 2rem;
+    border-left: 2px solid var(--color-red);
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+.govpl__eu-logo-wrapper {
+    margin-left: auto;
+    border-left: 2px solid var(--color-grey-light-6);
+    padding-left: 1.25rem;
+}
+
+.govpl__eu-logo {
+    width: 4.875rem;
+    height: auto;
+}
+
+/* =====================================================
+   HEADER - dane.gov.pl gov-nav-section style
    ===================================================== */
 .header {
-    background: var(--color-white);
-    box-shadow: var(--shadow-sm);
+    background-color: var(--color-white);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
 }
 
 .header-top {
-    background: var(--color-background);
-    padding: var(--spacing-xs) 0;
-    border-bottom: 1px solid var(--color-border);
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-grey-light-6);
 }
 
 .header-top .container {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    padding: 0.75rem var(--spacing-md);
 }
 
 .gov-link {
@@ -161,355 +263,386 @@ body {
     align-items: center;
     gap: var(--spacing-sm);
     text-decoration: none;
-    color: var(--color-text);
-    font-size: var(--font-size-sm);
-    font-weight: 700;
+    color: var(--color-black);
+    font-weight: bold;
+    font-size: 1.25rem;
+    background-image: url("https://www.gov.pl/img/Herb_Polski.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 2.5rem;
+    height: 2rem;
 }
 
 .gov-link:hover {
-    color: var(--color-primary);
+    color: var(--color-hover-2);
+    text-decoration: underline;
 }
 
-.godlo {
-    height: 24px;
-    width: auto;
-}
+.godlo { display: none; }
 
 .header-divider {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
+    margin-left: var(--spacing-lg);
+    padding-left: var(--spacing-lg);
+    border-left: 2px solid var(--color-red);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
 }
 
 .header-main {
-    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-grey-light-6);
 }
 
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
 }
 
+/* Logo - dane.gov.pl style */
 .logo {
-    text-decoration: none;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    padding: 0;
 }
 
 .logo-text {
-    font-size: var(--font-size-2xl);
-    font-weight: 900;
-    color: var(--color-primary);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-blue-light);
 }
 
 .logo-subtitle {
     font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-text);
 }
 
+/* Navigation - dane.gov.pl gov-nav style */
 .nav {
     display: flex;
-    gap: var(--spacing-lg);
+    align-items: center;
+    margin-left: auto;
 }
 
 .nav-link {
+    color: var(--color-heading);
+    display: inline-flex;
+    align-items: center;
+    padding: 0 24px;
+    height: 72px;
+    border-bottom: 4px solid transparent;
+    font-size: var(--font-size-lg);
     text-decoration: none;
-    color: var(--color-text);
-    font-weight: 500;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-sm);
     transition: var(--transition-fast);
+    margin-top: 3px;
 }
 
 .nav-link:hover {
-    background: var(--color-background);
-    color: var(--color-primary);
+    border-bottom-color: var(--color-blue-light);
+    text-decoration: none;
 }
 
 .nav-link.active {
-    background: var(--color-primary);
+    font-weight: bold;
+    border-bottom-color: var(--color-blue-light);
+}
+
+/* Language Switcher */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid var(--color-grey-light-5);
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--color-grey-light-5);
+    padding: 6px 10px;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.lang-btn:hover {
+    background: var(--color-hover);
+    border-color: var(--color-blue-light);
+}
+
+.lang-btn.active {
+    background: var(--color-blue-light);
     color: var(--color-white);
+    border-color: var(--color-blue-light);
+}
+
+/* Auth Navigation */
+.nav-auth {
+    display: flex;
+    align-items: center;
+}
+
+.nav-auth .nav-link {
+    padding: 0 16px;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    color: var(--color-heading);
+    font-size: var(--font-size-base);
+}
+
+.user-menu-btn i {
+    font-size: 1.25rem;
+}
+
+.user-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--color-white);
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    display: none;
+    z-index: 1001;
+}
+
+.user-menu-dropdown.show {
+    display: block;
+}
+
+.user-menu-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--color-heading);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-grey-light-6);
+}
+
+.user-menu-dropdown a:hover {
+    background: var(--color-hover);
+}
+
+.user-menu-dropdown a:last-child {
+    border-bottom: none;
 }
 
 /* =====================================================
-   MAIN CONTENT
+   MAIN CONTENT AREA
    ===================================================== */
 .main {
     flex: 1;
     padding: var(--spacing-xl) 0;
+    background-color: var(--color-grey-light-1);
 }
 
+/* Page Header */
 .page-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
 }
 
 .page-header h1 {
-    font-size: var(--font-size-3xl);
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .page-header h1 i {
-    color: var(--color-primary);
+    color: var(--color-blue-light);
 }
 
 .lead {
     font-size: var(--font-size-lg);
-    color: var(--color-text-secondary);
-    max-width: 600px;
-    margin: 0 auto;
+    color: var(--color-text);
+}
+
+/* Heading with separator - dane.gov.pl style */
+.heading--separator {
+    position: relative;
+}
+
+.heading--separator::after {
+    content: "";
+    display: block;
+    height: 5px;
+    width: 25px;
+    background-color: var(--color-grey-light-4);
+    margin-top: 15px;
 }
 
 /* =====================================================
-   PROGRESS STEPS
+   CARDS - dane.gov.pl style (no border-radius)
+   ===================================================== */
+.card {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.card h2, .card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.card h2 i, .card h3 i {
+    color: var(--color-blue-light);
+}
+
+/* =====================================================
+   WIZARD STEPS - dane.gov.pl style
    ===================================================== */
 .steps-container {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: var(--spacing-2xl);
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
 }
 
 .step {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xs);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
 }
 
 .step-number {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--color-border);
-    color: var(--color-text-secondary);
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: var(--font-size-lg);
-    transition: var(--transition-base);
+    background: var(--color-grey-light-6);
+    color: var(--color-text);
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    transition: var(--transition-fast);
 }
 
-.step.active .step-number,
-.step.completed .step-number {
-    background: var(--color-primary);
+.step.active .step-number {
+    background: var(--color-blue-light);
     color: var(--color-white);
 }
 
 .step.completed .step-number {
     background: var(--color-success);
+    color: var(--color-white);
 }
 
 .step-label {
     font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    text-align: center;
+    color: var(--color-text);
+    font-weight: 500;
 }
 
 .step.active .step-label {
-    color: var(--color-text);
-    font-weight: 600;
+    color: var(--color-blue-light);
+    font-weight: bold;
 }
 
 .step-line {
-    width: 60px;
-    height: 3px;
-    background: var(--color-border);
-    margin: 0 var(--spacing-sm);
-}
-
-/* =====================================================
-   CARDS
-   ===================================================== */
-.card {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    padding: var(--spacing-xl);
-    margin-bottom: var(--spacing-lg);
-}
-
-.card h2 {
-    font-size: var(--font-size-xl);
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.card h2 i {
-    color: var(--color-primary);
-}
-
-.card h3 {
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-}
-
-.card p {
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-md);
-}
-
-/* =====================================================
-   SOURCE OPTIONS (Step 1)
-   ===================================================== */
-.source-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
-}
-
-.source-option {
-    background: var(--color-background);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
-    text-align: center;
-    transition: var(--transition-base);
-    cursor: pointer;
-}
-
-.source-option:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
-}
-
-.source-icon {
     width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin: 0 auto var(--spacing-md);
+    height: 2px;
+    background: var(--color-grey-light-5);
+    margin: 0 var(--spacing-md);
+    margin-bottom: 30px;
 }
 
-.source-option h3 {
-    margin-bottom: var(--spacing-sm);
+.step-content { display: none; }
+
+.step-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
 }
 
-.source-option p {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-md);
-}
-
-/* Drop Zone */
-.drop-zone {
-    border: 3px dashed var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
-    text-align: center;
-    transition: var(--transition-base);
-    margin: var(--spacing-md) 0;
-}
-
-.drop-zone.drag-over {
-    border-color: var(--color-primary);
-    background: var(--color-primary-light);
-    background: rgba(212, 33, 61, 0.05);
-}
-
-.drop-zone i {
-    font-size: 3rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-sm);
-}
-
-.drop-zone p {
-    margin-bottom: var(--spacing-xs);
-}
-
-.drop-zone span {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-.file-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    background: var(--color-success-light);
-    border-radius: var(--radius-sm);
-    color: var(--color-success);
-}
-
-.file-info i {
-    color: var(--color-success);
-}
-
-.template-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    color: var(--color-secondary);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    margin-top: var(--spacing-md);
-}
-
-.template-link:hover {
-    text-decoration: underline;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* =====================================================
-   BUTTONS
+   BUTTONS - dane.gov.pl style
    ===================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: 0.5rem 1rem;
     font-family: var(--font-family);
     font-size: var(--font-size-base);
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     border: 2px solid transparent;
-    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: var(--transition-fast);
-    min-height: 44px; /* WCAG touch target */
+    min-height: 44px;
+}
+
+.btn .icon {
+    height: 24px;
+    width: 24px;
+    fill: currentColor;
+    stroke: currentColor;
 }
 
 .btn-primary {
-    background: var(--color-primary);
+    background: var(--color-blue-light);
     color: var(--color-white);
-    border-color: var(--color-primary);
+    border-color: var(--color-blue-light);
 }
 
 .btn-primary:hover {
-    background: var(--color-primary-dark);
-    border-color: var(--color-primary-dark);
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    text-decoration: none;
+    color: var(--color-white);
 }
 
 .btn-secondary {
-    background: var(--color-secondary);
+    background: var(--color-blue-dark);
     color: var(--color-white);
-    border-color: var(--color-secondary);
+    border-color: var(--color-blue-dark);
 }
 
 .btn-secondary:hover {
-    background: var(--color-secondary-dark);
-    border-color: var(--color-secondary-dark);
+    background: #0a1a30;
+    border-color: #0a1a30;
+    text-decoration: none;
+    color: var(--color-white);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-blue-light);
+    border-color: var(--color-blue-light);
+}
+
+.btn-outline:hover {
+    background: var(--color-blue-light);
+    color: var(--color-white);
+    text-decoration: none;
 }
 
 .btn-success {
@@ -518,211 +651,232 @@ body {
     border-color: var(--color-success);
 }
 
-.btn-outline {
-    background: transparent;
-    color: var(--color-text);
-    border-color: var(--color-border-dark);
-}
-
-.btn-outline:hover {
-    background: var(--color-background);
-    border-color: var(--color-text);
+.btn-success:hover {
+    background: #218838;
+    border-color: #218838;
+    text-decoration: none;
+    color: var(--color-white);
 }
 
 .btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
     background: transparent;
     border: none;
-    color: var(--color-text-secondary);
+    color: var(--color-text);
     cursor: pointer;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-icon:hover {
-    color: var(--color-error);
-    background: var(--color-error-light);
+    color: var(--color-blue-light);
+    background: var(--color-hover);
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: var(--font-size-sm);
+    min-height: 32px;
 }
 
 /* =====================================================
-   FORM STYLES
+   FORMS - dane.gov.pl style
    ===================================================== */
 .item-form {
     margin-top: var(--spacing-lg);
 }
 
+.form-section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--color-heading);
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-blue-light);
+}
+
+.form-section-title:first-child { margin-top: 0; }
+
+.form-section-title i { color: var(--color-blue-light); }
+
 .form-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
 }
 
 .form-group {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
     display: block;
+    margin-bottom: var(--spacing-sm);
     font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text);
+    color: var(--color-heading);
 }
 
 .form-group label.required::after {
     content: " *";
-    color: var(--color-error);
+    color: var(--color-red);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 0.5rem 0.75rem;
     font-family: var(--font-family);
     font-size: var(--font-size-base);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
+    line-height: 1.5;
+    color: var(--color-text);
     background: var(--color-white);
-}
-
-.form-group input:hover,
-.form-group select:hover,
-.form-group textarea:hover {
-    border-color: var(--color-border-dark);
+    border: 1px solid var(--color-grey-light-8);
+    transition: var(--transition-fast);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: var(--color-secondary);
+    border-color: var(--color-blue-light);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 82, 165, 0.1);
+    box-shadow: 0 0 0 3px rgba(8, 101, 201, 0.15);
 }
 
 .form-group input.error,
 .form-group select.error,
 .form-group textarea.error {
-    border-color: var(--color-error);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
+    border-color: var(--color-red);
 }
 
 .form-group .hint {
     display: block;
+    margin-top: var(--spacing-xs);
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
-    margin-top: var(--spacing-xs);
 }
 
 .form-group .error-message {
     display: block;
-    font-size: var(--font-size-sm);
-    color: var(--color-error);
     margin-top: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-red);
 }
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
     gap: var(--spacing-md);
+    justify-content: flex-end;
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-grey-light-6);
 }
 
 /* =====================================================
-   ITEMS LIST
+   SOURCE OPTIONS - File upload / Manual form
    ===================================================== */
-.items-list {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+.source-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
 }
 
-.item-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-bottom: 1px solid var(--color-border);
+.source-option {
+    padding: var(--spacing-xl);
+    border: 2px solid var(--color-grey-light-6);
+    text-align: center;
     transition: var(--transition-fast);
 }
 
-.item-row:last-child {
-    border-bottom: none;
+.source-option:hover {
+    border-color: var(--color-blue-light);
+    box-shadow: var(--shadow-md);
 }
 
-.item-row:hover {
-    background: var(--color-background);
+.source-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    background: var(--color-grey-light-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-blue-light);
 }
 
-.item-info {
+.source-option h3 { margin-bottom: var(--spacing-sm); }
+
+.source-option p {
+    color: var(--color-text);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Drop Zone */
+.drop-zone {
+    padding: var(--spacing-2xl);
+    border: 2px dashed var(--color-grey-light-5);
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: var(--color-blue-light);
+    background: var(--color-hover);
+}
+
+.drop-zone i {
+    font-size: 3rem;
+    color: var(--color-grey-light-3);
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+.drop-zone p {
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.drop-zone span { color: var(--color-text-muted); }
+
+.file-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-grey-light-1);
+    margin: var(--spacing-lg) 0;
 }
 
-.item-category {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-white);
-    display: flex;
+.file-info i {
+    color: var(--color-blue-light);
+    font-size: 1.5rem;
+}
+
+.template-link {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
     font-size: var(--font-size-sm);
-}
-
-.item-details h4 {
-    font-size: var(--font-size-base);
-    margin-bottom: 2px;
-}
-
-.item-details p {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    margin: 0;
 }
 
 /* =====================================================
-   PREVIEW STATS
-   ===================================================== */
-.preview-stats {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-2xl);
-    margin: var(--spacing-xl) 0;
-}
-
-.stat {
-    text-align: center;
-}
-
-.stat-number {
-    display: block;
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    color: var(--color-primary);
-}
-
-.stat-label {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-}
-
-/* =====================================================
-   DATA TABLE
+   DATA TABLE - dane.gov.pl style
    ===================================================== */
 .table-container {
     overflow-x: auto;
     margin: var(--spacing-lg) 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
 }
 
 .data-table {
@@ -735,132 +889,163 @@ body {
 .data-table td {
     padding: var(--spacing-sm) var(--spacing-md);
     text-align: left;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-grey-light-6);
 }
 
 .data-table th {
-    background: var(--color-background);
+    background: var(--color-grey-light-1);
     font-weight: 600;
-    color: var(--color-text);
+    color: var(--color-heading);
     white-space: nowrap;
 }
 
 .data-table tr:hover {
-    background: var(--color-background);
+    background: var(--color-hover);
 }
 
-.data-table tr:last-child td {
-    border-bottom: none;
+.data-table .error-row {
+    background: var(--color-error-light);
 }
 
 /* =====================================================
-   EXPORT OPTIONS (Step 4)
+   PREVIEW STATS
+   ===================================================== */
+.preview-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--color-grey-light-1);
+}
+
+.stat { text-align: center; }
+
+.stat-number {
+    display: block;
+    font-size: var(--heading-md-size);
+    font-weight: bold;
+    color: var(--color-heading);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+/* =====================================================
+   EXPORT OPTIONS
    ===================================================== */
 .export-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
     margin: var(--spacing-xl) 0;
 }
 
 .export-option {
-    text-align: center;
     padding: var(--spacing-xl);
-    background: var(--color-background);
-    border-radius: var(--radius-md);
-    border: 2px solid var(--color-border);
+    border: 2px solid var(--color-grey-light-6);
+    text-align: center;
 }
 
 .export-icon {
     width: 80px;
     height: 80px;
-    border-radius: 50%;
+    margin: 0 auto var(--spacing-lg);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    margin: 0 auto var(--spacing-md);
-}
-
-.export-icon.json {
-    background: var(--color-warning);
     color: var(--color-white);
 }
 
-.export-icon.csv {
-    background: var(--color-success);
-    color: var(--color-white);
-}
+.export-icon.json { background: var(--color-blue-light); }
+.export-icon.csv { background: var(--color-success); }
 
-.export-option h3 {
-    margin-bottom: var(--spacing-sm);
-}
+.export-option h3 { margin-bottom: var(--spacing-sm); }
 
 .export-option p {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-lg);
 }
 
 /* Info Box */
 .info-box {
-    background: var(--color-info-light);
-    border-left: 4px solid var(--color-info);
-    border-radius: var(--radius-sm);
     padding: var(--spacing-lg);
-    margin: var(--spacing-xl) 0;
+    background: var(--color-grey-light-1);
+    border-left: 4px solid var(--color-blue-light);
+    margin-top: var(--spacing-xl);
 }
 
 .info-box h4 {
-    color: var(--color-info);
-    margin-bottom: var(--spacing-sm);
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
-.info-box ol {
-    margin-left: var(--spacing-lg);
-    color: var(--color-text);
-}
+.info-box h4 i { color: var(--color-blue-light); }
 
-.info-box li {
-    margin-bottom: var(--spacing-xs);
-}
+.info-box ol { padding-left: var(--spacing-xl); }
 
-.info-box a {
-    color: var(--color-secondary);
-}
+.info-box li { margin-bottom: var(--spacing-sm); }
 
 /* =====================================================
-   STEP CONTENT - Show/Hide
+   ITEMS LIST
    ===================================================== */
-.step-content {
-    display: none;
+.items-list { margin: var(--spacing-lg) 0; }
+
+.item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-grey-light-6);
+    transition: var(--transition-fast);
 }
 
-.step-content.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
+.item-row:hover { background: var(--color-hover); }
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.item-category {
+    width: 48px;
+    height: 48px;
+    background: var(--color-grey-light-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--color-blue-light);
+}
+
+.item-details h4 {
+    margin-bottom: 0;
+    font-size: var(--font-size-base);
+}
+
+.item-details p {
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.item-actions {
+    display: flex;
+    gap: var(--spacing-xs);
 }
 
 /* =====================================================
-   FOOTER
+   FOOTER - dane.gov.pl page-footer style
    ===================================================== */
 .footer {
-    background: var(--color-text);
+    background-color: var(--color-blue-dark);
     color: var(--color-white);
-    padding: var(--spacing-2xl) 0 var(--spacing-lg);
+    padding-top: 2.5rem;
     margin-top: auto;
 }
 
@@ -868,55 +1053,52 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
 }
 
 .footer-section h4 {
     color: var(--color-white);
+    font-weight: bold;
+    padding-bottom: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
 }
 
 .footer-section p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: var(--spacing-sm);
 }
 
 .footer-section ul {
     list-style: none;
+    padding: 0;
 }
 
-.footer-section li {
-    margin-bottom: var(--spacing-xs);
-}
+.footer-section ul li { margin-bottom: var(--spacing-sm); }
 
-.footer-section a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-}
-
-.footer-section a:hover {
+.footer-section ul a {
     color: var(--color-white);
     text-decoration: underline;
 }
 
+.footer-section ul a:hover {
+    color: var(--color-hover);
+}
+
 .footer-note {
-    color: var(--color-primary) !important;
-    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .footer-bottom {
+    padding: var(--spacing-lg) 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: var(--spacing-lg);
     text-align: center;
 }
 
 .footer-bottom p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: var(--font-size-sm);
     margin: 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--font-size-sm);
 }
 
 /* =====================================================
@@ -924,45 +1106,34 @@ body {
    ===================================================== */
 .toast-container {
     position: fixed;
-    top: var(--spacing-lg);
+    bottom: var(--spacing-lg);
     right: var(--spacing-lg);
-    z-index: 1000;
+    z-index: 10000;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
 }
 
 .toast {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-lg);
     min-width: 300px;
     max-width: 400px;
     animation: slideIn 0.3s ease;
 }
 
-.toast.success {
-    border-left: 4px solid var(--color-success);
-}
-
-.toast.error {
-    border-left: 4px solid var(--color-error);
-}
-
-.toast.warning {
-    border-left: 4px solid var(--color-warning);
-}
-
-.toast.info {
-    border-left: 4px solid var(--color-info);
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .toast i {
-    font-size: var(--font-size-xl);
+    font-size: 1.25rem;
+    margin-top: 2px;
 }
 
 .toast.success i { color: var(--color-success); }
@@ -970,158 +1141,174 @@ body {
 .toast.warning i { color: var(--color-warning); }
 .toast.info i { color: var(--color-info); }
 
-.toast-content {
-    flex: 1;
-}
+.toast-content { flex: 1; }
 
 .toast-title {
     font-weight: 600;
-    margin-bottom: 2px;
+    color: var(--color-heading);
 }
 
 .toast-message {
     font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    color: var(--color-text);
 }
 
 /* =====================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - dane.gov.pl breakpoints
    ===================================================== */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        text-align: center;
+@media (max-width: 1200px) {
+    .govpl__logo, .gov-link {
+        height: 2rem;
+        line-height: 1.5;
+        font-size: 1.25rem;
+        padding-left: 2rem;
     }
-    
+
+    .govpl__text, .header-divider { display: none; }
+    .govpl__eu-logo { width: 3rem; }
+
+    .nav-link {
+        font-size: var(--font-size-base);
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 992px) {
     .nav {
         flex-wrap: wrap;
         justify-content: center;
+        padding: var(--spacing-md) 0;
     }
-    
-    .page-header h1 {
-        font-size: var(--font-size-2xl);
-        flex-direction: column;
-    }
-    
+
+    .nav-link { height: 48px; }
+
     .steps-container {
-        flex-direction: column;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
     }
-    
-    .step-line {
-        width: 3px;
-        height: 30px;
-        margin: var(--spacing-xs) 0;
+
+    .step-line { display: none; }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --heading-lg-size: 1.75rem;
+        --heading-md-size: 1.5rem;
+        --heading-sm-size: 1.25rem;
     }
-    
-    .source-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .form-actions {
-        flex-direction: column;
-    }
-    
-    .form-actions .btn {
-        width: 100%;
-    }
-    
+
+    .header-content { flex-direction: column; }
+
+    .nav { width: 100%; justify-content: center; }
+
+    .form-row { grid-template-columns: 1fr; }
+
+    .form-actions { flex-direction: column; }
+
+    .form-actions .btn { width: 100%; }
+
+    .source-options, .export-options { grid-template-columns: 1fr; }
+
     .preview-stats {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
-    .export-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .toast-container {
-        left: var(--spacing-md);
-        right: var(--spacing-md);
-    }
-    
-    .toast {
-        min-width: auto;
-        max-width: none;
-    }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0 var(--spacing-sm);
+@media (max-width: 576px) {
+    .container { padding: 0 var(--spacing-sm); }
+
+    .card { padding: var(--spacing-md); }
+
+    .toast-container {
+        left: var(--spacing-sm);
+        right: var(--spacing-sm);
     }
-    
-    .card {
-        padding: var(--spacing-md);
-    }
-    
-    .source-option {
-        padding: var(--spacing-md);
-    }
-    
-    .drop-zone {
-        padding: var(--spacing-md);
-    }
+
+    .toast { min-width: auto; max-width: none; }
 }
 
 /* =====================================================
-   PRINT STYLES
+   PRINT & ACCESSIBILITY
    ===================================================== */
 @media print {
-    .header,
-    .footer,
-    .steps-container,
-    .form-actions,
-    .toast-container {
-        display: none;
-    }
-    
-    .card {
-        box-shadow: none;
-        border: 1px solid var(--color-border);
-    }
+    .header, .footer, .steps-container, .form-actions, .toast-container { display: none; }
+    .card { box-shadow: none; border: 1px solid var(--color-grey-light-5); }
 }
 
-/* =====================================================
-   ACCESSIBILITY ENHANCEMENTS
-   ===================================================== */
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    :root {
-        --color-border: #000000;
-        --color-text-secondary: #000000;
-    }
-    
-    .btn {
-        border-width: 3px;
-    }
+/* =====================================================
+   MODAL
+   ===================================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.modal-content {
+    position: relative;
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    z-index: 2001;
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text);
+    padding: var(--spacing-sm);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--color-error);
+}
+
+.modal-body h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-heading);
+}
+
+.modal-body h2 i {
+    color: var(--color-blue-light);
 }

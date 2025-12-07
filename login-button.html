@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Button Example</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Login Button Styles */
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #D4213D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #b01830;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 33, 61, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Outline variant */
+        .login-btn-outline {
+            background: transparent;
+            color: #D4213D;
+            border: 2px solid #D4213D;
+        }
+
+        .login-btn-outline:hover {
+            background: #D4213D;
+            color: white;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .form-group label.required::after {
+            content: ' *';
+            color: #D4213D;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #D4213D;
+            box-shadow: 0 0 0 3px rgba(212, 33, 61, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #D4213D;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b01830;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn-outline:hover {
+            background: #f0f0f0;
+        }
+
+        /* Demo section */
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .demo-section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .demo-section p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .button-variants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Demo Section -->
+        <div class="demo-section">
+            <h2>Login Button Variants</h2>
+            <p>Click any button to open the login modal</p>
+
+            <div class="button-variants">
+                <!-- Solid Button -->
+                <button type="button" class="login-btn" onclick="openLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Zaloguj
+                </button>
+
+                <!-- Outline Button -->
+                <button type="button" class="login-btn login-btn-outline" onclick="openLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Zaloguj
+                </button>
+
+                <!-- As a link -->
+                <a href="#" class="login-btn" onclick="openLoginModal(); return false;">
+                    <i class="fas fa-user-circle"></i>
+                    Logowanie
+                </a>
+
+                <!-- Icon only -->
+                <button type="button" class="login-btn" onclick="openLoginModal()" title="Zaloguj się">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Code Example -->
+        <div class="demo-section">
+            <h2>HTML Code Examples</h2>
+
+            <h3 style="margin: 1rem 0 0.5rem;">Solid Button:</h3>
+            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>&lt;button type="button" class="login-btn" onclick="openLoginModal()"&gt;
+    &lt;i class="fas fa-sign-in-alt"&gt;&lt;/i&gt;
+    Zaloguj
+&lt;/button&gt;</code></pre>
+
+            <h3 style="margin: 1rem 0 0.5rem;">Outline Button:</h3>
+            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>&lt;button type="button" class="login-btn login-btn-outline" onclick="openLoginModal()"&gt;
+    &lt;i class="fas fa-sign-in-alt"&gt;&lt;/i&gt;
+    Zaloguj
+&lt;/button&gt;</code></pre>
+
+            <h3 style="margin: 1rem 0 0.5rem;">As Link:</h3>
+            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>&lt;a href="#" class="login-btn" onclick="openLoginModal(); return false;"&gt;
+    &lt;i class="fas fa-user-circle"&gt;&lt;/i&gt;
+    Logowanie
+&lt;/a&gt;</code></pre>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-overlay" onclick="closeLoginModal()"></div>
+        <div class="modal-content">
+            <button type="button" class="modal-close" onclick="closeLoginModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h2>
+                    <i class="fas fa-sign-in-alt"></i>
+                    Logowanie
+                </h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail" class="required">Email</label>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            required
+                            placeholder="twoj@email.pl"
+                            autocomplete="email"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="required">Hasło</label>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            required
+                            placeholder="Twoje hasło"
+                            autocomplete="current-password"
+                        >
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeLoginModal()">
+                            Anuluj
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Zaloguj
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Open login modal
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Focus on email input
+            setTimeout(() => {
+                document.getElementById('loginEmail').focus();
+            }, 100);
+        }
+
+        // Close login modal
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Handle login form submission
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            console.log('Login attempt:', { email, password: '***' });
+
+            // Here you would typically make an API call
+            // For demo purposes, just show an alert
+            alert(`Login attempt for: ${email}\n\nIn a real application, this would call your API.`);
+
+            // Close modal after successful login
+            closeLoginModal();
+
+            // Reset form
+            document.getElementById('loginForm').reset();
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+            }
+        });
+    </script>
+</body>
+</html>

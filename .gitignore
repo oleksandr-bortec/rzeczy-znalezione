@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Environment files (keep .env.example)
+.env
+.env.local
+.env.*.local
+
+# Database
+data/
+*.db
+*.db-journal
+*.db-wal
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+
+# SSL certificates (should be mounted separately)
+ssl/
+
+# PWA icons (generated)
+# icons/
