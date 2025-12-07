@@ -1,9 +1,9 @@
 /**
  * Service Worker for Rzeczy Znalezione PWA
- * Version: 2.0.9 (Auto-update enabled + Lazy loading fixed)
+ * Version: 2.1.0 (Auto-update + Lazy loading + No CDN interception)
  */
 
-const VERSION = '2.0.9';
+const VERSION = '2.1.0';
 const CACHE_NAME = `rzeczy-znalezione-v${VERSION}`;
 const STATIC_CACHE = `static-v${VERSION}`;
 const DYNAMIC_CACHE = `dynamic-v${VERSION}`;
@@ -209,6 +209,12 @@ self.addEventListener('fetch', (event) => {
 
     // Skip Chrome extensions
     if (url.protocol === 'chrome-extension:') {
+        return;
+    }
+
+    // Skip external CDN requests - let browser handle them directly
+    if (!url.origin.includes('localhost') && !url.origin.includes('127.0.0.1')) {
+        // Don't intercept external requests, let them pass through
         return;
     }
 
