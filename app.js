@@ -149,6 +149,12 @@ function updateAuthUI(isLoggedIn) {
             }
         });
 
+        // Profile handler
+        document.getElementById('profileBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'profile.html';
+        });
+
         // Logout handler
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
