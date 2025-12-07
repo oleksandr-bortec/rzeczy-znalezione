@@ -207,7 +207,20 @@ function standardizeVoivodeship(voivodeship) {
 
     const normalized = voivodeship.toLowerCase().trim();
 
-    return VOIVODESHIP_MAPPINGS[normalized] || voivodeship;
+    // Try local mapping first
+    let standardized = VOIVODESHIP_MAPPINGS[normalized];
+    if (standardized) return standardized;
+
+    // Try TERYT integration if available
+    try {
+        const terytService = require('./terytService');
+        standardized = terytService.standardizeWojewodztwo(voivodeship);
+        if (standardized) return standardized;
+    } catch (e) {
+        // TERYT service not available, continue
+    }
+
+    return voivodeship;
 }
 
 /**
@@ -353,16 +366,46 @@ function standardizeItemData(data) {
         standardized.location_found = standardizeLocation(standardized.location_found);
     }
 
-    if (standardized.municipality) {
-        standardized.municipality = standardizeCapitalization(standardized.municipality);
-    }
+    // TERYT Integration: Standardize territorial divisions
+    try {
+        const terytService = require('./terytService');
 
-    if (standardized.county) {
-        standardized.county = standardizeCapitalization(standardized.county);
-    }
+        if (standardized.voivodeship) {
+            standardized.voivodeship = terytService.standardizeWojewodztwo(standardized.voivodeship);
+        }
 
-    if (standardized.voivodeship) {
-        standardized.voivodeship = standardizeVoivodeship(standardized.voivodeship);
+        if (standardized.county && standardized.voivodeship) {
+            const standardizedPowiat = terytService.standardizePowiat(standardized.county, standardized.voivodeship);
+            if (standardizedPowiat) {
+                standardized.county = standardizedPowiat;
+            } else {
+                standardized.county = standardizeCapitalization(standardized.county);
+            }
+        }
+
+        if (standardized.municipality && standardized.county && standardized.voivodeship) {
+            const standardizedGmina = terytService.standardizeGmina(
+                standardized.municipality,
+                standardized.county,
+                standardized.voivodeship
+            );
+            if (standardizedGmina) {
+                standardized.municipality = standardizedGmina;
+            } else {
+                standardized.municipality = standardizeCapitalization(standardized.municipality);
+            }
+        }
+    } catch (e) {
+        // Fallback to basic capitalization if TERYT not available
+        if (standardized.municipality) {
+            standardized.municipality = standardizeCapitalization(standardized.municipality);
+        }
+        if (standardized.county) {
+            standardized.county = standardizeCapitalization(standardized.county);
+        }
+        if (standardized.voivodeship) {
+            standardized.voivodeship = standardizeVoivodeship(standardized.voivodeship);
+        }
     }
 
     // Standardize dates

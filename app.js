@@ -80,6 +80,12 @@ async function initializeApp() {
         console.warn('Voice Assistant not supported in this browser');
     }
 
+    // Initialize TERYT Auto-complete
+    if (typeof initTerytAutocomplete === 'function') {
+        initTerytAutocomplete();
+        console.log('✓ TERYT Auto-complete initialized');
+    }
+
     // Initialize event listeners
     initializeDropZone();
     initializeFormListeners();

@@ -18,6 +18,7 @@ const itemsRoutes = require('./routes/items');
 const usersRoutes = require('./routes/users');
 const statsRoutes = require('./routes/stats');
 const daneGovRoutes = require('./routes/dane-gov');
+const terytRoutes = require('./routes/teryt');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -73,6 +74,7 @@ app.use('/api/items', itemsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/dane-gov', daneGovRoutes);
+app.use('/api/teryt', terytRoutes);
 
 // Application version
 const APP_VERSION = '2.1.0';
