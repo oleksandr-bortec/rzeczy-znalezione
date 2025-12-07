@@ -32,6 +32,11 @@ Thumbs.db
 dist/
 build/
 
+# Submission packages (distribution files)
+rzeczy-znalezione-submission/
+*.tar.gz
+*.zip
+
 # Test coverage
 coverage/
 .nyc_output/
