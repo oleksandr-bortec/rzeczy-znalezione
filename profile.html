@@ -77,18 +77,18 @@
                         <span id="sidebarRole" class="badge"></span>
 
                         <nav class="profile-nav">
-                            <a href="#" class="profile-nav-link active" data-tab="info">
+                            <button type="button" class="profile-nav-link active" data-tab="info">
                                 <i class="fas fa-user"></i> Informacje
-                            </a>
-                            <a href="#" class="profile-nav-link" data-tab="security">
+                            </button>
+                            <button type="button" class="profile-nav-link" data-tab="security">
                                 <i class="fas fa-lock"></i> Bezpieczeństwo
-                            </a>
-                            <a href="#" class="profile-nav-link" data-tab="settings">
+                            </button>
+                            <button type="button" class="profile-nav-link" data-tab="settings">
                                 <i class="fas fa-cog"></i> Ustawienia
-                            </a>
-                            <a href="#" class="profile-nav-link" data-tab="activity" id="activityTab" style="display: none;">
+                            </button>
+                            <button type="button" class="profile-nav-link" data-tab="activity" id="activityTab" style="display: none;">
                                 <i class="fas fa-history"></i> Aktywność
-                            </a>
+                            </button>
                             <a href="admin.html" class="profile-nav-link" id="adminLink" style="display: none;">
                                 <i class="fas fa-user-shield"></i> Panel administratora
                             </a>
@@ -351,11 +351,8 @@
 
         // Initialize tabs
         function initializeTabs() {
-            document.querySelectorAll('.profile-nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    if (link.id === 'adminLink') return;
-
-                    e.preventDefault();
+            document.querySelectorAll('.profile-nav-link[data-tab]').forEach(link => {
+                link.addEventListener('click', () => {
                     const tab = link.dataset.tab;
 
                     // Update active state
