@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Start - Rzeczy Znalezione</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .credential-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .credential-card h3 {
+            color: #1a202c;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .credential-row {
+            display: flex;
+            margin-bottom: 10px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        .credential-label {
+            font-weight: 600;
+            color: #4a5568;
+            width: 100px;
+        }
+        .credential-value {
+            color: #667eea;
+            font-weight: 700;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .credential-value:hover {
+            background: #667eea;
+            color: white;
+        }
+        .permission-list {
+            margin-top: 15px;
+            padding-left: 20px;
+            color: #4a5568;
+        }
+        .permission-list li {
+            margin-bottom: 5px;
+        }
+        .step-card {
+            background: #f7fafc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: start;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content h4 {
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+        .code {
+            background: #1a202c;
+            color: #00ff00;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        .url-list {
+            list-style: none;
+            padding: 0;
+        }
+        .url-list li {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .url-list a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: monospace;
+        }
+        .url-list a:hover {
+            text-decoration: underline;
+        }
+        .badge {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.admin { background: #fef3c7; color: #92400e; }
+        .badge.public { background: #d1fae5; color: #065f46; }
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        .alert p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Rzeczy Znalezione</h1>
+            <p>Quick Start Guide - HackNation 2025</p>
+        </div>
+
+        <div class="content">
+            <!-- Setup Steps -->
+            <div class="section">
+                <h2>🚀 3-Step Setup</h2>
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Install Dependencies</h4>
+                        <div class="code">npm install</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Start Server</h4>
+                        <div class="code">npm run dev</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Open Browser</h4>
+                        <div class="code">http://localhost:3000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Credentials -->
+            <div class="section">
+                <h2>🔑 Login Credentials</h2>
+
+                <div class="credential-card">
+                    <h3>👑 Administrator (Full Access)</h3>
+                    <div class="credential-row">
+                        <span class="credential-label">Email:</span>
+                        <span class="credential-value" onclick="copyText('admin@example.com')">admin@example.com</span>
+                    </div>
+                    <div class="credential-row">
+                        <span class="credential-label">Password:</span>
+                        <span class="credential-value" onclick="copyText('admin123')">admin123</span>
+                    </div>
+                    <ul class="permission-list">
+                        <li>✅ User management & all admin features</li>
+                        <li>✅ Data export & system settings</li>
+                    </ul>
+                </div>
+
+                <div class="credential-card">
+                    <h3>👔 Official/Urzędnik (Data Entry)</h3>
+                    <div class="credential-row">
+                        <span class="credential-label">Email:</span>
+                        <span class="credential-value" onclick="copyText('official@example.com')">official@example.com</span>
+                    </div>
+                    <div class="credential-row">
+                        <span class="credential-label">Password:</span>
+                        <span class="credential-value" onclick="copyText('official123')">official123</span>
+                    </div>
+                    <ul class="permission-list">
+                        <li>✅ Add/edit items & export data</li>
+                        <li>✅ View statistics</li>
+                    </ul>
+                </div>
+
+                <div class="credential-card">
+                    <h3>👤 User (View Only)</h3>
+                    <div class="credential-row">
+                        <span class="credential-label">Email:</span>
+                        <span class="credential-value" onclick="copyText('user@example.com')">user@example.com</span>
+                    </div>
+                    <div class="credential-row">
+                        <span class="credential-label">Password:</span>
+                        <span class="credential-value" onclick="copyText('user123')">user123</span>
+                    </div>
+                    <ul class="permission-list">
+                        <li>✅ Search & view items</li>
+                        <li>✅ Browse public portal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Important Pages -->
+            <div class="section">
+                <h2>📍 Important Pages</h2>
+                <ul class="url-list">
+                    <li>
+                        <span>
+                            <strong>Admin Panel</strong>
+                            <span class="badge admin">Login Required</span>
+                        </span>
+                        <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+                    </li>
+                    <li>
+                        <span>
+                            <strong>Public Search + Map</strong>
+                            <span class="badge public">No Login</span>
+                        </span>
+                        <a href="http://localhost:3000/search" target="_blank">http://localhost:3000/search</a>
+                    </li>
+                    <li>
+                        <span>
+                            <strong>User Management</strong>
+                            <span class="badge admin">Admin Only</span>
+                        </span>
+                        <a href="http://localhost:3000/admin.html" target="_blank">http://localhost:3000/admin.html</a>
+                    </li>
+                    <li>
+                        <span>
+                            <strong>Clear Cache Tool</strong>
+                            <span class="badge public">No Login</span>
+                        </span>
+                        <a href="http://localhost:3000/clear-cache.html" target="_blank">http://localhost:3000/clear-cache.html</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Clear Cache -->
+            <div class="section">
+                <div class="alert">
+                    <h3>🧹 Clear Cache (If you see old content)</h3>
+                    <p><strong>Method 1:</strong> Visit <a href="http://localhost:3000/clear-cache.html" target="_blank">http://localhost:3000/clear-cache.html</a> and click the button</p>
+                    <p><strong>Method 2:</strong> Press <code>Cmd+Shift+R</code> (Mac) or <code>Ctrl+Shift+R</code> (Windows)</p>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="section">
+                <h2>✨ Key Features to Test</h2>
+                <div class="step-card">
+                    <div class="step-number">🗺️</div>
+                    <div class="step-content">
+                        <h4>Interactive Map</h4>
+                        <p>Visit Public Search → Click Map View → See custom colored markers (Blue/Green/Gray)</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">🌐</div>
+                    <div class="step-content">
+                        <h4>Multilingual (PL/EN)</h4>
+                        <p>Click PL/EN buttons in top-right corner → Instant translation</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">📊</div>
+                    <div class="step-content">
+                        <h4>Data Export</h4>
+                        <p>Login → Add item → Preview → Export to JSON for dane.gov.pl</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied: ' + text);
+            }).catch(err => {
+                prompt('Copy this:', text);
+            });
+        }
+    </script>
+</body>
+</html>
